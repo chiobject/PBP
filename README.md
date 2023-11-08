@@ -1,3 +1,1 @@
-# PBP
-Programing Basic Project
-ㅎㅇ
+# 세포땅따먹기
