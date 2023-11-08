@@ -1,1 +1,1 @@
-Create main branch
+#2023 프로그램이기초프로젝트 프로젝트2
