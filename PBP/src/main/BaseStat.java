@@ -51,4 +51,6 @@ public class BaseStat {
 	public void addNowPopulationCount(int addCount) {
 		this.nowPopulationCount += addCount;
 	}
+	
+	//생산할 때 한번에 처리할 것인가 따로 할것인가?? 따로 하는게 나을것 같음 겹치면 동시에 올라가게 되는 경우도 있음
 }
