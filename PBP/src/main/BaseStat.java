@@ -3,28 +3,28 @@ package main;
 
 public class BaseStat {
 	
-	private int AD;		// 공격력
-	private int speed; 	// 이동력
+	private double AD;		// 공격력
+	private double speed; 	// 이동력
 	private int nowPopulationCount;	// 기지 현재 인구수
 	private int maxPopulationCount;	// 기지 최대 인구수
 
-	public BaseStat(int AD, int speed, int nowPopulationCount, int maxPopulationCount) {
+	public BaseStat(double AD, double speed, int nowPopulationCount, int maxPopulationCount) {
 		this.AD = AD;
 		this.speed = speed;
 		this.nowPopulationCount = nowPopulationCount;
 		this.maxPopulationCount = maxPopulationCount;
 	}
 	
-	public int getAD() {
+	public double getAD() {
 		return AD;
 	}
-	public void setAD(int AD) {
+	public void setAD(double AD) {
 		this.AD = AD;
 	}
-	public int getspeed() {
+	public double getspeed() {
 		return speed;
 	}
-	public void setspeed(int speed) {
+	public void setspeed(double speed) {
 		this.speed = speed;
 	}
 	public int getNowPopulationCount() {
