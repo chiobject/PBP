@@ -11,8 +11,6 @@ public abstract class field {
 		this.name = name;
 	}
 	
-	
-	
 	void setunit(int player, int p[]) {
 		if(player == 1) {
 			p1 = p;

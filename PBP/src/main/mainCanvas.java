@@ -20,8 +20,8 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     int x,y;
     Point field = new Point(x,y);
     
-    ImageIcon seaicon2= new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea2.jpg");
-    ImageIcon seaicon1 = new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea1.png");
+    ImageIcon seaicon2= new ImageIcon("images\\background\\sea2.jpg"); //64 px
+    ImageIcon seaicon1 = new ImageIcon("images\\background\\sea1.png");	//65 px
 
     public mainCanvas() {
         setLayout(new GridLayout(9, 9));
