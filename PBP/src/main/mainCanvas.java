@@ -2,35 +2,42 @@ package main;
 
 import javax.swing.*;
 
+import unit.unit;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
 
-public class mainCanvas extends JPanel implements ActionListener, Runnable, MouseListener {
+public class mainCanvas extends JPanel implements ActionListener, Runnable, MouseListener, KeyListener {
     private static final int RECTANGLE_SIZE = 64;
-    public map map = new map();	
-    
     private Thread worker;
     private Timer timer;
     private boolean stop;
     int x,y;
     Point field = new Point(x,y);
+    private int seaIconX = 90;
+    private int seaIconY = 50;
+    public Graphics g;
+    public unit unit = new unit(0,0,0,0);
     
-    ImageIcon seaicon2= new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea2.jpg");
+    ImageIcon seaicon2= new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sample 60.jpg");
     ImageIcon seaicon1 = new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea1.png");
 
     public mainCanvas() {
         setLayout(new GridLayout(9, 9));
 
-        map.reset();
-        map.create();
-
+        gameGUI.map.reset();
+        gameGUI.map.create();
         // Adding MouseListener to the panel
         addMouseListener(this);
+        addKeyListener(this);
+        setFocusable(true);
     }
     
     public void start() {
@@ -38,6 +45,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		worker = new Thread(this);
 		worker.start();
 		repaint();
+		unit.start();
     }
     public void paint(Graphics g) {
     	super.paint(g);
@@ -45,8 +53,8 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
         timer.start();
 
         // 그림의 크기
-        int imageWidth = map.max_x * RECTANGLE_SIZE;
-        int imageHeight = map.max_y * RECTANGLE_SIZE;
+        int imageWidth = gameGUI.map.max_x * RECTANGLE_SIZE;
+        int imageHeight = gameGUI.map.max_y * RECTANGLE_SIZE;
 
         // 패널의 크기
         int panelWidth = getWidth();
@@ -57,22 +65,32 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
         field.y = (panelHeight - imageHeight) / 2;
 
         // 그림 그리기
-        for (int i = 0; i < map.max_x*2; i ++) {
-        	for(int j = 0; j < map.max_y*1.5; j++) {
+        for (int i = 0; i < gameGUI.map.max_x*2; i ++) {
+        	for(int j = 0; j < gameGUI.map.max_y*1.5; j++) {
         		g.drawImage(seaicon1.getImage(),i*RECTANGLE_SIZE,j*RECTANGLE_SIZE-7,this);
         	}
         }
 
-        for (int i = 0; i < map.max_x; i++) {
-            for (int j = 0; j < map.max_y; j++) {
-                if (map.field[i][j].type != 0)
-                    g.drawRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE);
-                g.drawString(map.field[i][j].name, field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE);
+        for (int i = 0; i < gameGUI.map.max_x; i++) {
+            for (int j = 0; j < gameGUI.map.max_y; j++) {
+                if (gameGUI.map.field[i][j].type != 0){
+                    Rectangle rectangle = new Rectangle(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE);
+                    g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+                    
+                    if (rectangle.intersects(new Rectangle(seaIconX, seaIconY, seaicon2.getIconWidth(), seaicon2.getIconHeight()))) {
+                        // 부딪칠 경우 seaicon2 이미지를 숨김
+                        seaIconX = -seaicon2.getIconWidth();
+                    }
+                    
+                    else {
+                    	g.drawImage(seaicon2.getImage(), seaIconX, seaIconY, this);
+                    }
+                    
+                }
+                g.drawString(gameGUI.map.field[i][j].name, field.x + i * RECTANGLE_SIZE + RECTANGLE_SIZE/2, field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE/2);
             }
         }
-        
-        
-        System.out.println("repaint");
+        unit.paint(g,this);
     }
 
     // Implementing the mouseClicked method
@@ -82,10 +100,11 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
         int mouseY = e.getY();
 
         // Check if the click is inside any field
-        for (int i = 0; i < map.max_x; i++) {
-            for (int j = 0; j < map.max_y; j++) {
+        for (int i = 0; i < gameGUI.map.max_x; i++) {
+            for (int j = 0; j < gameGUI.map.max_y; j++) {
                 if (isMouseInsideRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
-                    System.out.println("Field Clicked at: (" + i + ", " + j + ") class : (" + map.field[i][j].name + ")");
+                    System.out.println("Field Clicked at: (" + i + ", " + j + ") class : (" + gameGUI.map.field[i][j].name + ")");
+                    System.out.println(e.getX()+"/"+e.getY());
                     break;
                 }
             }
@@ -94,17 +113,17 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     
     public void run() {
     	while(!stop) {
+    		seaIconX += 5;
     		repaint();
-    		System.out.println("Hi!");
     		try {
-				worker.sleep(1000);
+				worker.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
     }
-
+ 
     // Helper method to check if the mouse is inside a rectangle
     private boolean isMouseInsideRect(int rectX, int rectY, int rectWidth, int rectHeight, int mouseX, int mouseY) {
         return mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight;
@@ -129,6 +148,20 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
