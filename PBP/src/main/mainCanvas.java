@@ -11,13 +11,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 
 public class mainCanvas extends JPanel implements ActionListener, Runnable, MouseListener, KeyListener {
     private static final int RECTANGLE_SIZE = 64;
     private Thread worker;
-    private Timer timer;
+    private Timer timer = new Timer();
     private boolean stop;
     int x,y;
     Point field = new Point(x,y);
@@ -25,6 +27,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     private int seaIconY = 50;
     public Graphics g;
     public unit unit = new unit(0,0,0,0);
+    double time = 0;
     
     ImageIcon seaicon2= new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sample 60.jpg");
     ImageIcon seaicon1 = new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea1.png");
@@ -41,16 +44,25 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     }
     
     public void start() {
+    	timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                // 0.1초마다 변수를 0.1씩 증가
+                time += 0.1;
+                time = Math.round(time * 10.0) / 10.0;
+                // 변수 출력 (예시로 출력만 함)
+                System.out.println("변수 값: " + time);
+            }
+        }, 0, 100);
     	stop = false;
 		worker = new Thread(this);
 		worker.start();
 		repaint();
 		unit.start();
+		
     }
     public void paint(Graphics g) {
     	super.paint(g);
-        timer = new Timer(1000, this);  // 1000ms마다 actionPerformed 호출
-        timer.start();
 
         // 그림의 크기
         int imageWidth = gameGUI.map.max_x * RECTANGLE_SIZE;
@@ -113,7 +125,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     
     public void run() {
     	while(!stop) {
-    		seaIconX += 5;
+//    		seaIconX += 5;
     		repaint();
     		try {
 				worker.sleep(100);
@@ -123,7 +135,17 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			}
     	}
     }
- 
+    
+    private void unitproduction() {
+    	for (int i = 0; i < gameGUI.map.max_x; i++) {
+            for (int j = 0; j < gameGUI.map.max_y; j++) {
+                if(time % gameGUI.map.field[i][j].p[1] * 10 == 0) {
+                	gameGUI.map.field[i][j].p[] += gameGUI.map.field[i][j];
+                }
+            }
+        }
+    }
+    
     // Helper method to check if the mouse is inside a rectangle
     private boolean isMouseInsideRect(int rectX, int rectY, int rectWidth, int rectHeight, int mouseX, int mouseY) {
         return mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight;
