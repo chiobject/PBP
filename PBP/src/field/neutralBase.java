@@ -1,14 +1,14 @@
 package field;
 
+import main.gameGUI;
+
 public class neutralBase extends field {
 	public neutralBase() {
-		super(3,"중립");
+		super(3,"중립",2);
 	}
 
 	@Override
 	public void button1() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

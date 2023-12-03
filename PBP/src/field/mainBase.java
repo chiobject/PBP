@@ -2,13 +2,15 @@ package field;
 
 public class mainBase extends field{
 	public mainBase() {
-		super(1,"기지");
+		super(1,"기지",4);
+		buttonName1 = "소환하기";
 	}
 
 	@Override
 	public void button1() {
 		// TODO Auto-generated method stub
 		
+		System.out.println("소환!");
 	}
 
 	@Override

@@ -23,20 +23,22 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     private boolean stop;
     int x,y;
     Point field = new Point(x,y);
+    Point select = new Point(x,y);
     private int seaIconX = 90;
     private int seaIconY = 50;
     public Graphics g;
-    public unit unit = new unit(0,0,0,0);
+    public unit unit;
     double time = 0;
     
-    ImageIcon seaicon2= new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sample 60.jpg");
-    ImageIcon seaicon1 = new ImageIcon("C:\\Users\\Chiobject\\git\\PBP\\images\\background\\sea1.png");
+    
+    ImageIcon seaicon2= new ImageIcon("images\\background\\sample 60.jpg");
+    ImageIcon seaicon1 = new ImageIcon("images\\background\\sea1.png");
 
     public mainCanvas() {
         setLayout(new GridLayout(9, 9));
 
-        gameGUI.map.reset();
-        gameGUI.map.create();
+        gameGUI.getMap().reset();
+        gameGUI.getMap().create();
         // Adding MouseListener to the panel
         addMouseListener(this);
         addKeyListener(this);
@@ -47,26 +49,26 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
     	timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                // 0.1초마다 변수를 0.1씩 증가
-                time += 0.1;
-                time = Math.round(time * 10.0) / 10.0;
-                // 변수 출력 (예시로 출력만 함)
-                System.out.println("변수 값: " + time);
+//                // 0.1초마다 변수를 0.1씩 증가
+//                time += 0.1;
+//                time = Math.round(time * 10.0) / 10.0;
+//                // 변수 출력 (예시로 출력만 함)
+//                System.out.println("변수 값: " + time);
             }
         }, 0, 100);
     	stop = false;
 		worker = new Thread(this);
 		worker.start();
 		repaint();
-		unit.start();
+//		unit.start();
 		
     }
     public void paint(Graphics g) {
     	super.paint(g);
 
         // 그림의 크기
-        int imageWidth = gameGUI.map.max_x * RECTANGLE_SIZE;
-        int imageHeight = gameGUI.map.max_y * RECTANGLE_SIZE;
+        int imageWidth = gameGUI.getMap().max_x * RECTANGLE_SIZE;
+        int imageHeight = gameGUI.getMap().max_y * RECTANGLE_SIZE;
 
         // 패널의 크기
         int panelWidth = getWidth();
@@ -77,15 +79,15 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
         field.y = (panelHeight - imageHeight) / 2;
 
         // 그림 그리기
-        for (int i = 0; i < gameGUI.map.max_x*2; i ++) {
-        	for(int j = 0; j < gameGUI.map.max_y*1.5; j++) {
+        for (int i = 0; i < gameGUI.getMap().max_x*2; i ++) {
+        	for(int j = 0; j < gameGUI.getMap().max_y*1.5; j++) {
         		g.drawImage(seaicon1.getImage(),i*RECTANGLE_SIZE,j*RECTANGLE_SIZE-7,this);
         	}
         }
 
-        for (int i = 0; i < gameGUI.map.max_x; i++) {
-            for (int j = 0; j < gameGUI.map.max_y; j++) {
-                if (gameGUI.map.field[i][j].type != 0){
+        for (int i = 0; i < gameGUI.getMap().max_x; i++) {
+            for (int j = 0; j < gameGUI.getMap().max_y; j++) {
+                if (gameGUI.getMap().field[i][j].type != 0){
                     Rectangle rectangle = new Rectangle(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE);
                     g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
                     
@@ -99,10 +101,10 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
                     }
                     
                 }
-                g.drawString(gameGUI.map.field[i][j].name, field.x + i * RECTANGLE_SIZE + RECTANGLE_SIZE/2, field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE/2);
+                g.drawString(gameGUI.getMap().field[i][j].name, field.x + i * RECTANGLE_SIZE + RECTANGLE_SIZE/2, field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE/2);
             }
         }
-        unit.paint(g,this);
+//        unit.paint(g,this);
     }
 
     // Implementing the mouseClicked method
@@ -112,11 +114,14 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
         int mouseY = e.getY();
 
         // Check if the click is inside any field
-        for (int i = 0; i < gameGUI.map.max_x; i++) {
-            for (int j = 0; j < gameGUI.map.max_y; j++) {
+        for (int i = 0; i < gameGUI.getMap().max_x; i++) {
+            for (int j = 0; j < gameGUI.getMap().max_y; j++) {
                 if (isMouseInsideRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
-                    System.out.println("Field Clicked at: (" + i + ", " + j + ") class : (" + gameGUI.map.field[i][j].name + ")");
+                    System.out.println("Field Clicked at: (" + i + ", " + j + ") class : (" + gameGUI.getMap().field[i][j].name + ")");
+                    select.x = i;
+                    select.y= j;
                     System.out.println(e.getX()+"/"+e.getY());
+                    
                     break;
                 }
             }
@@ -134,16 +139,6 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 				e.printStackTrace();
 			}
     	}
-    }
-    
-    private void unitproduction() {
-    	for (int i = 0; i < gameGUI.map.max_x; i++) {
-            for (int j = 0; j < gameGUI.map.max_y; j++) {
-                if(time % gameGUI.map.field[i][j].p[1] * 10 == 0) {
-                	gameGUI.map.field[i][j].p[] += gameGUI.map.field[i][j];
-                }
-            }
-        }
     }
     
     // Helper method to check if the mouse is inside a rectangle

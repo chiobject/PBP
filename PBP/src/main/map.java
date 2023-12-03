@@ -8,7 +8,8 @@ import field.subBase;
 
 public class map extends Area {
 	int type = 0; // 0: 평야 | 1: 사막 | 2: 설원 | 3:유적지
-	int max_x = 9, max_y = 9;
+	public int max_x = 9;
+	public int max_y = 9;
 
 	public field[][] field = new field[max_x][max_y];
 

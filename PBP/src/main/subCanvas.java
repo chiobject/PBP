@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -17,8 +18,14 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 	private JLabel button3 = new JLabel("버튼 3");
 	private JLabel button4 = new JLabel("버튼 4");
 	protected Point mouse = new Point();
-
+	int x,y;
+	private Point select = new Point(x,y);
 	protected Thread worker;
+	private String field_Name;
+	private LineBorder lineborder = new LineBorder(Color.black, 1, true);
+	private Font fontTitle = new Font("굴림", Font.BOLD, 27);
+	private Font fontButton = new Font("굴림", Font.BOLD, 20);
+	private BufferedImage offScreenImage;
 	
 	subCanvas(){
 		addMouseListener(this);
@@ -27,17 +34,48 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 		add(button3);
 		add(button4);
 		setLayout(null);
-		
 		button1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // 클릭 시 수행할 동작을 여기에 추가
-                
+                gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button1();
             }
         });
+		button2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 클릭 시 수행할 동작을 여기에 추가
+                gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button2();
+            }
+        });
+		button3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 클릭 시 수행할 동작을 여기에 추가
+                gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button3();
+            }
+        });
+		button4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 클릭 시 수행할 동작을 여기에 추가
+                gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button4();
+            }
+        });
+		button1.setFont(fontButton);
+		button2.setFont(fontButton);
+		button3.setFont(fontButton);
+		button4.setFont(fontButton);
+		button1.setHorizontalAlignment(JLabel.CENTER);
+		button1.setVerticalAlignment(JLabel.CENTER);
+		button2.setHorizontalAlignment(JLabel.CENTER);
+		button2.setVerticalAlignment(JLabel.CENTER);
+		button3.setHorizontalAlignment(JLabel.CENTER);
+		button3.setVerticalAlignment(JLabel.CENTER);
+		button4.setHorizontalAlignment(JLabel.CENTER);
+		button4.setVerticalAlignment(JLabel.CENTER);
 
 	}
-	
 	void start() {
 		stop = false;
 		
@@ -53,15 +91,97 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 	}
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.setColor(Color.lightGray);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.black);
-		g.drawRect(30, 50, getWidth()-150, getWidth()-150);
-		button1.setBorder(new LineBorder(Color.black, 1, true));    //원하는 라벨에 사용
-		button1.setBounds(getWidth()/2 - 50, getHeight() / 2, 100, 20); // 필요에 따라 위치 및 크기 조정
-		button2.setBounds(150, 0, 100, 20); // 필요에 따라 위치 및 크기 조정
+		if (offScreenImage == null) {
+            offScreenImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        }
+
+        Graphics offScreenGraphics = offScreenImage.getGraphics();
+        
+        super.paintComponent(offScreenGraphics);
+        
+		field_Name = gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].name;
+		offScreenGraphics.setColor(Color.lightGray);
+		offScreenGraphics.fillRect(0, 0, getWidth(), getHeight());
+		offScreenGraphics.setColor(Color.black);
+		offScreenGraphics.drawRect(getWidth()/8, 50, getWidth()-100, getWidth()-100);
 		
+		offScreenGraphics.setFont(fontTitle);
+		offScreenGraphics.drawString("["+field_Name+"]", getWidth()/2-43, getWidth()-5);
+		
+		switch(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].getbuttonCount()) {
+		case 0:
+			button1.setBorder(null);
+			button2.setBorder(null);
+			button3.setBorder(null);
+			button4.setBorder(null);
+			break;
+		case 1:
+			gameGUI.getSubCanvas().getButton(1).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(1));
+			button1.setBorder(lineborder);  
+			button2.setBorder(null);
+			button3.setBorder(null);
+			button4.setBorder(null);
+			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50);
+			System.out.println("1");
+			break;
+		
+		case 2:
+			gameGUI.getSubCanvas().getButton(1).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(1));
+			gameGUI.getSubCanvas().getButton(2).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(2));
+			button1.setBorder(lineborder);    
+			button2.setBorder(lineborder);  
+			button3.setBorder(null);
+			button4.setBorder(null);
+			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
+			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
+			System.out.println("2");
+			break;
+			
+		case 3:
+			gameGUI.getSubCanvas().getButton(1).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(1));
+			gameGUI.getSubCanvas().getButton(2).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(2));
+			gameGUI.getSubCanvas().getButton(3).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(3));
+			button1.setBorder(lineborder);    
+			button2.setBorder(lineborder);    
+			button3.setBorder(lineborder);   
+			button4.setBorder(null);
+			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
+			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
+			button3.setBounds(getWidth()/6, getHeight() / 2 + 210, 100, 50);
+			System.out.println("3");
+			break;
+			
+		case 4:
+			gameGUI.getSubCanvas().getButton(1).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(1));
+			gameGUI.getSubCanvas().getButton(2).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(2));
+			gameGUI.getSubCanvas().getButton(3).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(3));
+			gameGUI.getSubCanvas().getButton(4).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
+					[gameGUI.getMainCanvas().select.y].getButtonName(4));
+			button1.setBorder(lineborder);    
+			button2.setBorder(lineborder);  
+			button3.setBorder(lineborder); 
+			button4.setBorder(lineborder);  
+			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
+			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
+			button3.setBounds(getWidth()/6, getHeight() / 2 + 210, 100, 50);
+			button4.setBounds(getWidth()/2+35 , getHeight() / 2 + 210, 100, 50); 
+			break;
+		}
+		
+		offScreenGraphics.dispose();
+
+        // 더블 버퍼링을 사용하여 이미지를 화면에 그립니다.
+        g.drawImage(offScreenImage, 0, 0, this);
+        
 	}
 	
 	@Override
@@ -69,7 +189,6 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 		// TODO Auto-generated method stub
 		 int mouseX = e.getX();
 	     int mouseY = e.getY();
-//	     
 //	     if (isMouseInsideRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
 //             
 //             break;
@@ -113,5 +232,13 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public JLabel getButton(int number) {
+		if(number == 1) {return button1;}
+		else if(number==2) {return button2;}
+		else if(number==3) {return button3;}
+		else {return button4;}
+		
 	}
 }

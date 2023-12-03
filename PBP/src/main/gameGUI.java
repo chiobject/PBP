@@ -11,9 +11,9 @@ public class gameGUI {
 
     private JFrame frame;
     private JTextArea logTextArea;  // logTextArea를 멤버 변수로 이동
-    public static map map = new map();	
-    public static mainCanvas maincanvas = new mainCanvas();
-    public static subCanvas subcanvas = new subCanvas();
+    private static map map = new map();	
+    private static mainCanvas maincanvas = new mainCanvas();
+    private static subCanvas subcanvas = new subCanvas();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -55,7 +55,7 @@ public class gameGUI {
 
         // logPanel 추가
         JPanel logPanel = new JPanel(new BorderLayout());
-        logPanel.setPreferredSize(new Dimension(1280, 100));
+        logPanel.setPreferredSize(new Dimension(1300, 110));
         logTextArea = new JTextArea();
         logTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(logTextArea);
@@ -123,11 +123,11 @@ public class gameGUI {
     	return map;
     }
     
-    public static mainCanvas getMainCnavas() {
+    public static mainCanvas getMainCanvas() {
 		return maincanvas;
 	}
 	
-	static subCanvas getSubCanvas() {
+    public static subCanvas getSubCanvas() {
 		return subcanvas;
 	}
 	
