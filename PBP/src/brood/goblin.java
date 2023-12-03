@@ -56,5 +56,5 @@ public class goblin extends brood {
 //            productionTime /= PRODUCTION_BONUS_MULTIPLIER;
 //        }
 //        return productionTime;
-    }
+//    }
 }

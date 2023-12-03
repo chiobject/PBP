@@ -110,20 +110,30 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 		
 		switch(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].getbuttonCount()) {
 		case 0:
-			button1.setBorder(null);
-			button2.setBorder(null);
-			button3.setBorder(null);
-			button4.setBorder(null);
+			System.out.println("d");
+			button1.setText("");  // 버튼 텍스트 지우기
+		    button2.setText("");
+		    button3.setText("");
+		    button4.setText("");
+		    
+		    button1.setBorder(null);  // 버튼 경계 초기화
+		    button2.setBorder(null);
+		    button3.setBorder(null);
+		    button4.setBorder(null);
 			break;
 		case 1:
 			gameGUI.getSubCanvas().getButton(1).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
 					[gameGUI.getMainCanvas().select.y].getButtonName(1));
-			button1.setBorder(lineborder);  
+			button2.setText("");
+		    button3.setText("");
+		    button4.setText("");
+		    
+			button1.setBorder(lineborder); 
+		    
 			button2.setBorder(null);
 			button3.setBorder(null);
 			button4.setBorder(null);
 			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50);
-			System.out.println("1");
 			break;
 		
 		case 2:
@@ -131,13 +141,16 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 					[gameGUI.getMainCanvas().select.y].getButtonName(1));
 			gameGUI.getSubCanvas().getButton(2).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
 					[gameGUI.getMainCanvas().select.y].getButtonName(2));
+			button3.setText("");
+			button4.setText("");
+			
 			button1.setBorder(lineborder);    
-			button2.setBorder(lineborder);  
+			button2.setBorder(lineborder); 
+			
 			button3.setBorder(null);
 			button4.setBorder(null);
 			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
 			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
-			System.out.println("2");
 			break;
 			
 		case 3:
@@ -147,10 +160,13 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 					[gameGUI.getMainCanvas().select.y].getButtonName(2));
 			gameGUI.getSubCanvas().getButton(3).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
 					[gameGUI.getMainCanvas().select.y].getButtonName(3));
+			button4.setText("");
+			
 			button1.setBorder(lineborder);    
 			button2.setBorder(lineborder);    
 			button3.setBorder(lineborder);   
 			button4.setBorder(null);
+			
 			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
 			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
 			button3.setBounds(getWidth()/6, getHeight() / 2 + 210, 100, 50);
@@ -166,10 +182,12 @@ public class subCanvas extends JPanel implements Runnable, MouseListener{
 					[gameGUI.getMainCanvas().select.y].getButtonName(3));
 			gameGUI.getSubCanvas().getButton(4).setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x]
 					[gameGUI.getMainCanvas().select.y].getButtonName(4));
+			
 			button1.setBorder(lineborder);    
 			button2.setBorder(lineborder);  
 			button3.setBorder(lineborder); 
 			button4.setBorder(lineborder);  
+			
 			button1.setBounds(getWidth()/6, getHeight() / 2 + 130, 100, 50); 
 			button2.setBounds(getWidth()/2+35 , getHeight() / 2 + 130, 100, 50); 
 			button3.setBounds(getWidth()/6, getHeight() / 2 + 210, 100, 50);
