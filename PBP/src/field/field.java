@@ -8,11 +8,9 @@ public abstract class field implements Runnable {
 	private int buttonCount;
 	protected String buttonName1, buttonName2, buttonName3, buttonName4;
 	private int fieldOwner;
-	private int unitType;
-	private int unitCount; 
 	private boolean running = false;
 	private Thread worker;
-
+	private int unitType;
 	
 	field(int type, String name, int buttonCount){
 		this.type = type;
@@ -40,6 +38,7 @@ public abstract class field implements Runnable {
 	public void run() {
 		while (running) {
 			try {
+				
 				worker.sleep(1000); // 원하는 갱신 주기로 조절
 
 			} catch (InterruptedException e) {
@@ -65,6 +64,14 @@ public abstract class field implements Runnable {
 		else {return "None";}
 	}
 	
+	public int getFieldOwner() {
+		return fieldOwner;
+	}
+	
+	public void setFieldOwner(int fieldOwner) {
+		this.fieldOwner = fieldOwner;
+	}
+	
 	private void unitproduction() {
     	for (int i = 0; i < gameGUI.getMap().max_x; i++) {
             for (int j = 0; j < gameGUI.getMap().max_y; j++) {
@@ -74,4 +81,8 @@ public abstract class field implements Runnable {
             }
         }
     }
+	
+	public int getUnitType() {
+		return unitType;
+	}
 }

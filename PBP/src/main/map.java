@@ -35,7 +35,10 @@ public class map extends Area {
 				} else {
 					field[i][j] = new neutralBase();
 				}
+				field[i][j].start();
 			}
 		}
+		field[0][0].setFieldOwner(1);
+		field[max_x-1][max_y-1].setFieldOwner(2);
 	}
 }
