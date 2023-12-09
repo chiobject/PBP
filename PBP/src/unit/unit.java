@@ -57,7 +57,6 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	}
 	
 	public void paint() {
-		System.out.println("gjr");
 		gameGUI.getMainCanvas().offScreenGraphics.drawImage(seaicon2.getImage(), x,y, this);
 	}
 	
@@ -84,7 +83,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 			unitmove(dir);
 			repaint();
 			try {
-				worker.sleep((long) speed * 1000); // 원하는 갱신 주기로 조절
+				worker.sleep((long) speed * 100); // 원하는 갱신 주기로 조절
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();

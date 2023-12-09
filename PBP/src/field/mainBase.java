@@ -12,20 +12,7 @@ public class mainBase extends field {
 	@Override
 	public void button1() {
 		// TODO Auto-generated method stub
-		if(gameGUI.getMap().field[gameGUI.getMainCanvas().getSelect().x]
-				[gameGUI.getMainCanvas().getSelect().y].getFieldOwner() != 0) {
-			unit unit = new unit(gameGUI.getMap().field[gameGUI.getMainCanvas().getSelect().x]
-					[gameGUI.getMainCanvas().getSelect().y].getUnitType());
-			unit.setPosition(gameGUI.getMainCanvas().getFieldSelect().x,gameGUI.getMainCanvas().getFieldSelect().y);
-			unit.setAttack(50);
-			unit.setHp(2000);
-			unit.speed = 1;
-			unit.unitmove(1);
-			unit.start();
-			
-			// mainCanvas에 unit 추가
-            gameGUI.getMainCanvas().addUnit(unit);
-		}
+		unitSummon();
 	}
 
 	@Override

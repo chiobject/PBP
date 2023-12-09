@@ -36,7 +36,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	public Graphics offScreenGraphics; // 더블 버퍼링을 위한 그래픽스
 	private Image ScreenImage; // 더블 버퍼링을 위한 이미지
 	public Graphics ScreenGraphics; // 더블 버퍼링을 위한 그래픽스
-	private ArrayList<unit> units = new ArrayList<>();
+
 	
 
 	ImageIcon seaicon2 = new ImageIcon("images\\background\\sample 60.jpg");
@@ -160,6 +160,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		while (!stop) {
 //    		seaIconX += 5;
 			repaint();
+			
 			try {
 				worker.sleep(100);
 			} catch (InterruptedException e) {
@@ -168,7 +169,8 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			}
 		}
 	}
-	
+
+
 	public Point getSelect() {
 		return select;
 	}

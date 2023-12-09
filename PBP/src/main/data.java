@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import field.field;
 
 public class data {
+	
 	public data() {
 		map map = new map();
 		player player = new player();
