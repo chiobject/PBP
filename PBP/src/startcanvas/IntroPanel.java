@@ -26,7 +26,7 @@ public class IntroPanel extends JPanel{
 	@Override
 	public void paint(Graphics g) {
 		//이미지를 그려준다. 이미지객체,시작x,시작y,가로,세로,보여줄 옵저버;
-		g.drawImage(intro_image,0,0,1310,800,this);
+		g.drawImage(intro_image,0,0,1310,780,this);
 		//g객체에 폰트스타일을 바꾸어준다. 이코드에서는 굵은글씨에 30포인트
 //		g.setFont(new Font("myFont",Font.BOLD ,30));
 //		//폰트색을 빨강으로 변경
