@@ -1,15 +1,19 @@
 package main;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import field.field;
+import java.util.ArrayList;
+import java.util.List;
+import unit.unit;
 
 public class data {
-	
+	public List<unit> units = new ArrayList<>();
+	public map map = new map();
+	public player player = new player();
+
 	public data() {
-		map map = new map();
-		player player = new player();
 	}
+
+	public void addUnit(unit unit) {
+		units.add(unit);
+	}
+
 }

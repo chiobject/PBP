@@ -36,30 +36,30 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		setLayout(null);
 		button1.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button1();
+				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button1();
 			}
 		});
 		button2.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button2();
+				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button2();
 			}
 		});
 		button3.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button3();
+				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button3();
 			}
 		});
 		button4.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button4();
+				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].button4();
 			}
 		});
 		button1.setFont(fontButton);
@@ -98,7 +98,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		Graphics offScreenGraphics = offScreenImage.getGraphics();
 		super.paintComponent(offScreenGraphics);
 
-		field_Name = gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].name;
+		field_Name = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y].name;
 		offScreenGraphics.setColor(Color.lightGray);
 		offScreenGraphics.fillRect(0, 0, getWidth(), getHeight());
 		offScreenGraphics.setColor(Color.black);
@@ -107,7 +107,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		offScreenGraphics.setFont(fontTitle);
 		offScreenGraphics.drawString("[" + field_Name + "]", getWidth() / 2 - 43, getWidth() - 5);
 
-		switch (gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+		switch (gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 				.getbuttonCount()) {
 		case 0:
 			button(0);
@@ -139,12 +139,6 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		int mouseX = e.getX();
-		int mouseY = e.getY();
-//	     if (isMouseInsideRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
-//             
-//             break;
-//         }
 
 	}
 
@@ -178,7 +172,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		while (!stop) {
 			repaint();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -212,7 +206,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			button4.setBorder(null);
 		} else if (num == 1) {
 			gameGUI.getSubCanvas().getButton(1)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(1));
 			button2.setText("");
 			button3.setText("");
@@ -226,10 +220,10 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			button1.setBounds(getWidth() / 6, getHeight() / 2 + 130, 100, 50);
 		} else if (num == 2) {
 			gameGUI.getSubCanvas().getButton(1)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(1));
 			gameGUI.getSubCanvas().getButton(2)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(2));
 			button3.setText("");
 			button4.setText("");
@@ -245,13 +239,13 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 		else if (num == 3) {
 			gameGUI.getSubCanvas().getButton(1)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(1));
 			gameGUI.getSubCanvas().getButton(2)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(2));
 			gameGUI.getSubCanvas().getButton(3)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(3));
 			button4.setText("");
 
@@ -265,16 +259,16 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			button3.setBounds(getWidth() / 6, getHeight() / 2 + 210, 100, 50);
 		} else if (num == 4) {
 			gameGUI.getSubCanvas().getButton(1)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(1));
 			gameGUI.getSubCanvas().getButton(2)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(2));
 			gameGUI.getSubCanvas().getButton(3)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(3));
 			gameGUI.getSubCanvas().getButton(4)
-					.setText(gameGUI.getMap().field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+					.setText(gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
 							.getButtonName(4));
 
 			button1.setBorder(lineborder);
