@@ -14,10 +14,10 @@ public class howtokeyEvent implements KeyListener {
 	 public void keyPressed(KeyEvent e) {
 
 		    if (e.getKeyCode() == 38) {
-		    	howPlay.chose = (howPlay.chose - 1+3) % 3; // 이전 선택지로 이동
+		    	howPlay.chose = (howPlay.chose - 1+4) % 4; // 이전 선택지로 이동
 		    	System.out.println("새로운 chose 값: " + howPlay.chose);
 		    } else if (e.getKeyCode() == 40) { // 키값이 40 즉, 방향키 아래쪽이면
-		    	howPlay.chose = (howPlay.chose + 1) % 3; // 다음 선택지로 이동
+		    	howPlay.chose = (howPlay.chose + 1) % 4; // 다음 선택지로 이동
 		    	System.out.println("새로운 chose 값: " + howPlay.chose);
 		    	
 		    } else if (e.getKeyCode() == 10) { // 엔터 키
@@ -28,6 +28,8 @@ public class howtokeyEvent implements KeyListener {
 		        //	howtoplay.How_To_Play();
 		        } else if (howPlay.chose == 2) {
 		        //    System.exit(0);
+		        }else if (howPlay.chose ==3) {
+		        	howPlay.goBack();
 		        }
 		    }
 

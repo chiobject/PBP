@@ -28,8 +28,8 @@ public class viewController {
 
 	public void showHowPlay() {
 		 contentPane.remove(introPanel);
-		 howPlay = new howToPlay(controller);
-		 howPlay.addKeyListener(new howtokeyEvent(howPlay));
+		 howPlay = new howToPlay(this);
+		// howPlay.addKeyListener(new howtokeyEvent(howPlay));
 		 contentPane.add(howPlay);
 		 mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
 		 mainFrame.setVisible(true);
