@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
+
 //Panel단위로 화면이동을 하기위해 각화면은 Panel을 
 //상속받아 클래스를 작성한다
 public class IntroPanel extends JPanel{
