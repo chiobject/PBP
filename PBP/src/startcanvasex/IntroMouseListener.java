@@ -32,18 +32,18 @@ public class IntroMouseListener extends MouseAdapter implements MouseMotionListe
     }
 
     private void handleMouseMovement(int mouseX, int mouseY) {
-        if (mouseX >= 450 && mouseX <= 650) {
+        if (mouseX >= 400 && mouseX <= 650) {
             if (mouseY >= 400 && mouseY <= 500) {
                 introPanel.select = 0;
             } else if (mouseY >= 535 && mouseY <= 635) {
                 introPanel.select = 1;
-            } else if (mouseY >= 680 && mouseY <= 780) {
+            } else if (mouseY >= 640 && mouseY <= 750) {
                 introPanel.select = 2;
             } else {
                 introPanel.select = -1;
             }
         } else {
-            introPanel.select = -1;
+            introPanel.select = 0;
         }
         introPanel.repaint();
     }

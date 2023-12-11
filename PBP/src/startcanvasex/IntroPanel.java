@@ -20,7 +20,9 @@ public class IntroPanel extends JPanel{
 		//기본툴킷 객체로부터 getImage메소드를 활용하여 이미지를 불러온다.
 		intro_image = Toolkit.getDefaultToolkit().getImage("images/main.png");
 		this.addKeyListener(new IntroKeyEvent(this));
-		this.addMouseListener(new IntroMouseListener(this));
+		IntroMouseListener mouseListener = new IntroMouseListener(this);
+		this.addMouseMotionListener(mouseListener);
+		this.addMouseListener(mouseListener);
 	}	
 	//패널의 paint 메소드를 오버라이드 하여 그려줌
 	//메소드가 실행될때 Graphics타입의 g를 인자로 받는다
@@ -39,15 +41,16 @@ public class IntroPanel extends JPanel{
 		g.setFont(new Font("secondFont",Font.PLAIN,60));
 		g.setColor(Color.WHITE);
 		g.drawString("GameStart",500,450);
-		g.drawString("How to Play", 500, 585);
-		g.drawString("Quit",590,730);
+		g.drawString("Information", 500, 585);
+		g.drawString("Quit",590,710);
 		//기본값 게임시작바로 옆에 화살표를 위치시킨다
 		if(select ==0)
 			g.drawString("→", 450, 450);
 		else if(select == 1)
 			g.drawString("→", 450, 585);
-		else
-			g.drawString("→", 540, 730);
+		else 
+			g.drawString("→", 540, 710);
+
 	}
 	
 	public void gameStart(){
@@ -55,7 +58,7 @@ public class IntroPanel extends JPanel{
 	}
 	
 	public void How_To_Play() {
-		controller.showHowPlay();
+		controller.showInformation();
 	}
 
 }

@@ -20,6 +20,7 @@ public class MainFrame extends JFrame{
 		//프레임창을 닫을 경우 프로세스를 종료하기 위해 사용해야한다. 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//사진
+		this.setResizable(false);
 	//	this.getContentPane().add(new IntroPanel(controller));
 		//뷰컨트롤러
 		controller = new viewController(this);
