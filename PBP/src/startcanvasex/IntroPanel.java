@@ -40,14 +40,14 @@ public class IntroPanel extends JPanel{
 		g.setColor(Color.WHITE);
 		g.drawString("GameStart",500,450);
 		g.drawString("How to Play", 500, 585);
-		g.drawString("Quit",590,730);
+		g.drawString("Quit",590,710);
 		//기본값 게임시작바로 옆에 화살표를 위치시킨다
 		if(select ==0)
 			g.drawString("→", 450, 450);
 		else if(select == 1)
 			g.drawString("→", 450, 585);
 		else
-			g.drawString("→", 540, 730);
+			g.drawString("→", 540, 710);
 	}
 	
 	public void gameStart(){

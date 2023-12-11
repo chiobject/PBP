@@ -24,6 +24,7 @@ public class howToPlay extends JPanel {
 
         // KeyListener를 패널에 추가
         addKeyListener(new howtokeyEvent(this));
+        this.addMouseListener(new howToPlayMouseListener(this));
     }
 
     public void paint(Graphics g) {
