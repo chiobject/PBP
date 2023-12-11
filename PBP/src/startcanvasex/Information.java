@@ -9,12 +9,12 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
-public class howToPlay extends JPanel {
+public class Information extends JPanel {
     int chose = 0;
-    Image intro_image, button_image;
+    Image intro_image;
     viewController controller;
 
-    public howToPlay(viewController controller) {
+    public Information(viewController controller) {
         this.controller = controller;
         
         intro_image = Toolkit.getDefaultToolkit().getImage("images/background.png");
@@ -23,8 +23,10 @@ public class howToPlay extends JPanel {
         setFocusable(true);
 
         // KeyListener를 패널에 추가
-        addKeyListener(new howtokeyEvent(this));
-        this.addMouseListener(new howToPlayMouseListener(this));
+        addKeyListener(new InformationkeyEvent(this));
+        InformationMouseListener mouseListener = new InformationMouseListener(this);
+        this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
     }
 
     public void paint(Graphics g) {
@@ -32,7 +34,7 @@ public class howToPlay extends JPanel {
         g.drawImage(intro_image, 0, 0, 1310, 800, this);
         g.setFont(new Font("myFont", Font.BOLD, 40));
         g.setColor(Color.BLACK);
-        g.drawString("How to Play", 200, 400);
+        g.drawString("Information", 200, 400);
         g.setFont(new Font("secondFont", Font.ITALIC, 20));
         g.setColor(Color.BLACK);
         g.drawString("How Play", 200, 450);

@@ -5,7 +5,7 @@ public class viewController {
 	MainFrame mainFrame;  
 	Container contentPane; 
 	IntroPanel introPanel; 
-	howToPlay howPlay;
+	Information Information;
 	viewController controller;
 	public viewController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame; //생성자로 매인프레임을 받는다
@@ -26,18 +26,20 @@ public class viewController {
 		System.out.println("헉");
 	}
 
-	public void showHowPlay() {
+	public void showInformation() {
 		 contentPane.remove(introPanel);
-		 howPlay = new howToPlay(this);
+		 Information = new Information(this);
 		// howPlay.addKeyListener(new howtokeyEvent(howPlay));
-		 contentPane.add(howPlay);
+		 contentPane.add(Information);
 		 mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
 		 mainFrame.setVisible(true);
 		 System.out.println("헉");
 	}
 	
+	//public void 
+	
 	public void goBack() {
-	    contentPane.remove(howPlay);
+	    contentPane.remove(Information);
 	    contentPane.add(introPanel);
 	    mainFrame.setVisible(false);
 	    mainFrame.setVisible(true);

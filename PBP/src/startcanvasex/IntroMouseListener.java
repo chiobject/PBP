@@ -43,7 +43,7 @@ public class IntroMouseListener extends MouseAdapter implements MouseMotionListe
                 introPanel.select = -1;
             }
         } else {
-            introPanel.select = -1;
+            introPanel.select = 0;
         }
         introPanel.repaint();
     }
