@@ -20,7 +20,9 @@ public class IntroPanel extends JPanel{
 		//기본툴킷 객체로부터 getImage메소드를 활용하여 이미지를 불러온다.
 		intro_image = Toolkit.getDefaultToolkit().getImage("images/main.png");
 		this.addKeyListener(new IntroKeyEvent(this));
-		this.addMouseListener(new IntroMouseListener(this));
+		IntroMouseListener mouseListener = new IntroMouseListener(this);
+		this.addMouseMotionListener(mouseListener);
+		this.addMouseListener(mouseListener);
 	}	
 	//패널의 paint 메소드를 오버라이드 하여 그려줌
 	//메소드가 실행될때 Graphics타입의 g를 인자로 받는다
