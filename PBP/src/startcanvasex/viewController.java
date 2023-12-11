@@ -44,6 +44,7 @@ public class viewController {
 	    mainFrame.setVisible(false);
 	    mainFrame.setVisible(true);
 	    introPanel.requestFocus(); // IntroPanel로 돌아갈 때 포커스를 설정
+	    System.out.println("헉");
 	}
 
 }
