@@ -6,7 +6,9 @@ public class viewController {
 	Container contentPane; 
 	IntroPanel introPanel; 
 	Information Information;
+	HowPlay HowPlay;
 	viewController controller;
+	
 	public viewController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame; //생성자로 매인프레임을 받는다
 		init();
@@ -36,6 +38,15 @@ public class viewController {
 		 System.out.println("헉");
 	}
 	
+	public void showHowPlay() {
+		HowPlay = new HowPlay(this);
+		contentPane.remove(Information);
+		contentPane.add(HowPlay);
+		
+		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
+		mainFrame.setVisible(true);
+	}
+	
 	//public void 
 	
 	public void goBack() {
@@ -44,6 +55,15 @@ public class viewController {
 	    mainFrame.setVisible(false);
 	    mainFrame.setVisible(true);
 	    introPanel.requestFocus(); // IntroPanel로 돌아갈 때 포커스를 설정
+	    System.out.println("헉");
+	}
+	
+	public void BackInformation() {
+	    contentPane.remove(HowPlay);
+	    contentPane.add(Information);
+	    mainFrame.setVisible(false);
+	    mainFrame.setVisible(true);
+	    Information.requestFocus();
 	    System.out.println("헉");
 	}
 

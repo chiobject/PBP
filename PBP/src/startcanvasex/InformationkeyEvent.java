@@ -23,7 +23,7 @@ public class InformationkeyEvent implements KeyListener {
 		    } else if (e.getKeyCode() == 10) { // 엔터 키
 		        // select 값에 따라 다른 동작 수행
 		        if (Information.chose == 0) {
-		        //	howtoplay.gameStart();
+		        	Information.howtoplay();
 		        } else if (Information.chose == 1) {
 		        //	howtoplay.How_To_Play();
 		        } else if (Information.chose == 2) {

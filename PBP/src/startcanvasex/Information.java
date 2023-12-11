@@ -57,4 +57,8 @@ public class Information extends JPanel {
         controller.goBack(); // viewController에게 goBack 메서드 호출을 요청
     }
     
+	public void howtoplay() {
+		controller.showHowPlay();
+	}
+    
 }

@@ -50,7 +50,7 @@ public class InformationMouseListener extends MouseAdapter implements MouseMotio
 
     private void performAction() {
         if (Information.chose == 0) {
-        //	howToPlay.gameStart();
+        	Information.howtoplay();
         } else if (Information.chose == 1) {
         //	howToPlay.How_To_Play();
         } else if (Information.chose == 2) {
