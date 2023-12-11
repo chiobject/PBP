@@ -2,8 +2,9 @@ package startcanvasex;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
-public class IntroMouseListener extends MouseAdapter {
+public class IntroMouseListener extends MouseAdapter implements MouseMotionListener {
     IntroPanel introPanel;
 
     public IntroMouseListener(IntroPanel introPanel) {
