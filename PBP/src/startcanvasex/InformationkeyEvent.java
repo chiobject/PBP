@@ -25,9 +25,9 @@ public class InformationkeyEvent implements KeyListener {
 		        if (Information.chose == 0) {
 		        	Information.howtoplay();
 		        } else if (Information.chose == 1) {
-		        //	howtoplay.How_To_Play();
+		        	Information.Brood();
 		        } else if (Information.chose == 2) {
-		        //    System.exit(0);
+		        	Information.War();
 		        }else if (Information.chose ==3) {
 		        	Information.goBack();
 		        }

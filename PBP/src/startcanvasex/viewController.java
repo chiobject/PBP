@@ -1,6 +1,8 @@
 package startcanvasex;
 
 import java.awt.Container;
+import javax.swing.JPanel; 
+
 public class viewController {
 	MainFrame mainFrame;  
 	Container contentPane; 
@@ -8,6 +10,8 @@ public class viewController {
 	Information Information;
 	HowPlay HowPlay;
 	viewController controller;
+	A_Brood A_Brood;
+	A_War A_War;
 	
 	public viewController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame; //생성자로 매인프레임을 받는다
@@ -47,8 +51,24 @@ public class viewController {
 		mainFrame.setVisible(true);
 	}
 	
-	//public void 
+	public void showA_Brood() {
+		A_Brood = new A_Brood(this);
+		contentPane.remove(Information);
+		contentPane.add(A_Brood);
+		
+		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
+		mainFrame.setVisible(true);
+	}
 	
+	
+	public void showA_War() {
+		A_War = new A_War(this);
+		contentPane.remove(Information);
+		contentPane.add(A_War);
+		
+		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
+		mainFrame.setVisible(true);
+	}
 	public void goBack() {
 	    contentPane.remove(Information);
 	    contentPane.add(introPanel);
@@ -58,13 +78,14 @@ public class viewController {
 	    System.out.println("헉");
 	}
 	
-	public void BackInformation() {
-	    contentPane.remove(HowPlay);
+	public void BackInformation(JPanel panelToRemove) {
+	    contentPane.remove(panelToRemove);
 	    contentPane.add(Information);
 	    mainFrame.setVisible(false);
 	    mainFrame.setVisible(true);
 	    Information.requestFocus();
 	    System.out.println("헉");
 	}
+	
 
 }

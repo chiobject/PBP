@@ -60,5 +60,13 @@ public class Information extends JPanel {
 	public void howtoplay() {
 		controller.showHowPlay();
 	}
+	
+	public void Brood() {
+		controller.showA_Brood();
+	}
+	
+	public void War() {
+		controller.showA_War();
+	}
     
 }
