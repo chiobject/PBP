@@ -38,8 +38,8 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	private Image ScreenImage; // 더블 버퍼링을 위한 이미지
 	public Graphics ScreenGraphics; // 더블 버퍼링을 위한 그래픽스
 
-	ImageIcon seaicon2 = new ImageIcon("images\\background\\sample 60.jpg");
-	ImageIcon seaicon1 = new ImageIcon("images\\background\\sea1.png");
+	ImageIcon seaicon2 = new ImageIcon("images\\mainCanvas\\sample 60.jpg");
+	ImageIcon seaicon1 = new ImageIcon("images\\mainCanvas\\sea1.png");
 
 	public mainCanvas() {
 		setLayout(new GridLayout(9, 9));

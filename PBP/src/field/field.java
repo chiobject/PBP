@@ -12,7 +12,10 @@ public abstract class field implements Runnable {
 	public int type;
 	public String name;
 	private int buttonCount;
-	protected String buttonName1, buttonName2, buttonName3, buttonName4;
+	protected String buttonName1 = "";
+	protected String buttonName2 = "";
+	protected String buttonName3 = ""; 
+	protected String buttonName4 = "";
 	private int Owner;
 	public int unitCount = 5000;
 	private boolean running = false;

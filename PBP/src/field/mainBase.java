@@ -7,7 +7,6 @@ public class mainBase extends field {
 	public mainBase() {
 		super(1, "기지", 4);
 		buttonName1 = "소환하기";
-		
 	}
 
 	@Override

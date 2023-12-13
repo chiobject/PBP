@@ -50,7 +50,7 @@ public class gameGUI {
         subcanvas.start();
         subPanel.setLayout(new BorderLayout());
         subPanel.add(subcanvas, BorderLayout.CENTER);
-        subPanel.setPreferredSize(new Dimension(400, 700));
+        subPanel.setPreferredSize(new Dimension(400,700));
         frame.getContentPane().add(subPanel, BorderLayout.EAST);
 
         // logPanel 추가
@@ -70,7 +70,7 @@ public class gameGUI {
 
         JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
         menu.add(mntmNewMenuItem);
-//
+
 //        // System.out 리디렉션
 //        PrintStream printStream = new PrintStream(new CustomOutputStream(logTextArea));
 //        PrintStream customOut = new CustomPrintStream(logTextArea);
@@ -81,43 +81,43 @@ public class gameGUI {
         frame.setVisible(true);
     }
 
-//    public void appendLog(String log) {
-//        logTextArea.append(log + "\n");
-//    }
-//
-//    // CustomOutputStream 클래스 정의
-//    class CustomPrintStream extends PrintStream {
-//        private JTextArea textArea;
-//
-//        public CustomPrintStream(JTextArea textArea) {
-//            super(new CustomOutputStream(textArea));
-//            this.textArea = textArea;
-//        }
-//
-//        @Override
-//        public void println(String x) {
-//            // JTextArea에 문자열을 추가
-//            textArea.append(x + "\n");
-//            // JTextArea를 스크롤하여 가장 최근에 추가된 텍스트를 표시
-//            textArea.setCaretPosition(textArea.getDocument().getLength());
-//        }
-//    }
-//    
-//    class CustomOutputStream extends OutputStream {
-//        private JTextArea textArea;
-//
-//        public CustomOutputStream(JTextArea textArea) {
-//            this.textArea = textArea;
-//        }
-//
-//        @Override
-//        public void write(int b) throws IOException {
-//            // JTextArea에 바이트를 추가
-//            textArea.append(String.valueOf((char) b));
-//            // JTextArea를 스크롤하여 가장 최근에 추가된 텍스트를 표시
-//            textArea.setCaretPosition(textArea.getDocument().getLength());
-//        }
-//    }
+    public void appendLog(String log) {
+        logTextArea.append(log + "\n");
+    }
+
+    // CustomOutputStream 클래스 정의
+    class CustomPrintStream extends PrintStream {
+        private JTextArea textArea;
+
+        public CustomPrintStream(JTextArea textArea) {
+            super(new CustomOutputStream(textArea));
+            this.textArea = textArea;
+        }
+
+        @Override
+        public void println(String x) {
+            // JTextArea에 문자열을 추가
+            textArea.append(x + "\n");
+            // JTextArea를 스크롤하여 가장 최근에 추가된 텍스트를 표시
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        }
+    }
+    
+    class CustomOutputStream extends OutputStream {
+        private JTextArea textArea;
+
+        public CustomOutputStream(JTextArea textArea) {
+            this.textArea = textArea;
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            // JTextArea에 바이트를 추가
+            textArea.append(String.valueOf((char) b));
+            // JTextArea를 스크롤하여 가장 최근에 추가된 텍스트를 표시
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        }
+    }
     
     public static mainCanvas getMainCanvas() {
 		return maincanvas;
@@ -130,5 +130,4 @@ public class gameGUI {
     public static data getData() {
     	return data;
     }
-    
 }

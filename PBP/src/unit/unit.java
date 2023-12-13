@@ -40,7 +40,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	private boolean running = false;
 	private Thread worker;
 	public double speed;
-	public ImageIcon seaicon2 = new ImageIcon("images\\background\\unittest.png");
+	public ImageIcon seaicon2 = new ImageIcon("images\\mainCanvas\\unittest.png");
 	private boolean move;
 	private int owner;
 
