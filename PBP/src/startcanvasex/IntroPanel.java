@@ -54,7 +54,7 @@ public class IntroPanel extends JPanel{
 	}
 	
 	public void gameStart(){
-		controller.showGamePanel();
+		controller.showCCServer();
 	}
 	
 	public void How_To_Play() {

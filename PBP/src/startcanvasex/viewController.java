@@ -12,6 +12,7 @@ public class viewController {
 	viewController controller;
 	A_Brood A_Brood;
 	A_War A_War;
+	Connect_Create_Server Connect_Create_Server;
 	
 	public viewController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame; //생성자로 매인프레임을 받는다
@@ -69,8 +70,18 @@ public class viewController {
 		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
 		mainFrame.setVisible(true);
 	}
-	public void goBack() {
-	    contentPane.remove(Information);
+	
+	public void showCCServer() {
+		 contentPane.remove(introPanel);
+		 Connect_Create_Server = new Connect_Create_Server(this);
+		// howPlay.addKeyListener(new howtokeyEvent(howPlay));
+		 contentPane.add(Connect_Create_Server);
+		 mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
+		 mainFrame.setVisible(true);
+		 System.out.println("헉");
+	}
+	public void goBack(JPanel panelToRemove) {
+	    contentPane.remove(panelToRemove);
 	    contentPane.add(introPanel);
 	    mainFrame.setVisible(false);
 	    mainFrame.setVisible(true);
