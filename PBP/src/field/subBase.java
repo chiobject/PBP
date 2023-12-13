@@ -1,5 +1,7 @@
 package field;
 
+import main.gameGUI;
+
 public class subBase extends field {
 	public subBase(){
 		super(2,"서브",3);
@@ -9,8 +11,8 @@ public class subBase extends field {
 	@Override
 	public void button1() {
 		// TODO Auto-generated method stub
-		unitSummon(0);
-		System.out.println(unitCount);
+		gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
+		gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
 	}
 
 	@Override

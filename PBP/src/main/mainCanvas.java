@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 
+import field.field;
 import unit.unit;
 
 import java.awt.*;
@@ -151,7 +152,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		return select;
 	}
 
-	public Point getFieldSelect() {
+	public Point getFieldSelectPoint() {
 		fieldSelect.x = field.x + select.x * RECTANGLE_SIZE + 1;
 		fieldSelect.y = field.y + select.y * RECTANGLE_SIZE + 1;
 		return fieldSelect;
@@ -172,6 +173,12 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y; j++) {
 				if (isMouseInsideRect(field.x + i * RECTANGLE_SIZE + 1, field.y + j * RECTANGLE_SIZE + 1,
 						RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
+					for (int k = 0; k < gameGUI.getData().map.getPosition().x; k++) {
+						for (int l = 0; l < gameGUI.getData().map.getPosition().y; l++) {
+							gameGUI.getData().map.field[k][l].setDirActivate(false);
+							gameGUI.getData().map.field[k][l].setFieldActivate(true);
+						}
+					}
 					System.out.println("Field Clicked at: (" + i + ", " + j + ") class : ("
 							+ gameGUI.getData().map.field[i][j].name + ")");
 					select.x = i;
@@ -180,6 +187,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 				}
 			}
 		}
+		
 	}
 
 	@Override
@@ -220,5 +228,9 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			gameGUI.getMainCanvas().offScreenGraphics.drawImage(unit.seaicon2.getImage(), unit.getPosition().x,
 					unit.getPosition().y, this);
 		}
+	}
+	
+	public field getSelectField() {
+		return gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
 	}
 }

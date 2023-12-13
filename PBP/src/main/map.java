@@ -36,7 +36,7 @@ public class map extends Area {
 						|| (i == (max_x - 1) / 2 && j == (max_y - 1) / 2)) {
 					field[i][j] = new subBase();
 				} else {
-					field[i][j] = new neutralBase();
+					field[i][j] = new neutralBase();	
 				}
 				field[i][j].start();
 			}
