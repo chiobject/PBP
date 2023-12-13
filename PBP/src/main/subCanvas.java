@@ -30,19 +30,24 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	private JLabel button2Label = new JLabel();
 	private JLabel button3Label = new JLabel();
 	private JLabel button4Label = new JLabel();
+	private JLabel dir[] = new JLabel[4];
 	private Font fontTitle = new Font("굴림", Font.BOLD, 27);
 	private Font fontButton = new Font("굴림", Font.BOLD, 20);
 	private BufferedImage offScreenImage;
+	private boolean fieldActivate = false;
+	private boolean dirActivate = true;
 	private ImageIcon buttonIcon = new ImageIcon(
 			new ImageIcon("images\\subCanvas\\button1.png").getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH));
 	private ImageIcon backGround = new ImageIcon(new ImageIcon("images\\subCanvas\\background2.png").getImage()
 			.getScaledInstance(400, 640, Image.SCALE_SMOOTH));
 	private ImageIcon preview = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\preview.png").getImage()
 			.getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+	private ImageIcon dirIcon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrow.png").getImage()
+			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
 	subCanvas() {
 		addMouseListener(this);
-		createButton();
+		createLabel();
 		setLayout(null);
 
 		button1Label.setFont(fontButton);
@@ -108,29 +113,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 		offScreenGraphics.setColor(Color.black);
 		offScreenGraphics.drawImage(preview.getImage(), getWidth() / 8, 50, this);
-
-		offScreenGraphics.setFont(fontTitle);
-		offScreenGraphics.drawString("[" + selectField.name + "]", getWidth() / 2 - 43, getWidth() - 5);
-
-		switch (selectField.getbuttonCount()) {
-		case 0:
-			button(0);
-			break;
-		case 1:
-			button(1);
-			break;
-		case 2:
-			button(2);
-			break;
-		case 3:
-			button(3);
-			break;
-		case 4:
-			button(4);
-			break;
-		}
-
-		offScreenGraphics.drawString("[" + selectField.name + "]", getWidth() / 2 - 43, getWidth() - 5);
+		fieldmain(offScreenGraphics);
+		dirmain(offScreenGraphics);
 
 		offScreenGraphics.dispose();
 
@@ -161,6 +145,32 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			return button3;
 		} else {
 			return button4;
+		}
+	}
+	
+	// 버튼 메인 화면
+	public void fieldmain(Graphics g) {
+		if (fieldActivate == true) {
+			g.setFont(fontTitle);
+			g.drawString("[" + selectField.name + "]", getWidth() / 2 - 43, getWidth() - 5);
+
+			switch (selectField.getbuttonCount()) {
+			case 0:
+				button(0);
+				break;
+			case 1:
+				button(1);
+				break;
+			case 2:
+				button(2);
+				break;
+			case 3:
+				button(3);
+				break;
+			case 4:
+				button(4);
+				break;
+			}
 		}
 	}
 
@@ -202,10 +212,10 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			button3.setVisible(true);
 			button4.setVisible(true);
 		}
-
 	}
 
-	public void createButton() {
+	//버튼 생성
+	public void createLabel() {
 		selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
 		button1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		button1Label.setVerticalAlignment(SwingConstants.CENTER);
@@ -231,7 +241,35 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		add(button2);
 		add(button3);
 		add(button4);
+		
+		for(int i =0;i<dir.length;i++) {
+			dir[i] = new JLabel();
+			dir[i].setIcon(dirIcon);
+			dir[i].addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// 클릭 시 수행할 동작을 여기에 추가
+					System.out.println("1");
+				}
+			});
+			add(dir[i]);
+		}
+	}
+	
+	
 
+	//방향 선택 화면 메인
+	public void dirmain(Graphics g) {
+		if(dirActivate == true) {
+			for(int i =0;i<dir.length;i++) {
+				dir[0].setBounds(getWidth() / 6, getHeight() / 2 + 130, 100, 50);
+				dir[1].setBounds(getWidth() / 2 + 35, getHeight() / 2 + 130, 100, 50);
+				dir[2].setBounds(getWidth() / 6, getHeight() / 2 + 210, 100, 50);
+				dir[3].setBounds(getWidth() / 2 + 35, getHeight() / 2 + 210, 100, 50);
+				dir[i].setVisible(true);
+			}
+
+		}
 	}
 
 	@Override
