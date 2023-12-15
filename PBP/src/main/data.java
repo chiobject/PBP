@@ -15,5 +15,8 @@ public class data {
 	public void addUnit(unit unit) {
 		units.add(unit);
 	}
-
+	
+	public void removeUnit(unit unit) {
+		unit.remove(unit);
+	}
 }

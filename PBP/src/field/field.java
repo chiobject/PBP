@@ -140,6 +140,10 @@ public abstract class field implements Runnable {
 	public int getOwner() {
 		return Owner;
 	}
+	
+	public int getUnitCount() {
+		return unitCount;
+	}
 
 	public void setOwner(int Owner) {
 		this.Owner = Owner;

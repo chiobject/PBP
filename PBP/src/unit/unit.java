@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import main.gameGUI;
@@ -77,10 +78,33 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			checkCollisions();
+			//유닛 이동 가능
+			setMove(true);
+			
+			//충돌 감지
+	        for (unit allUnits : gameGUI.getData().units) {
+	            if (allUnits != this && isCollision(this, allUnits)) {
+	                if (this.getOwner() != allUnits.getOwner()) {
+	                    System.out.println("적 교집합");
+	                    setMove(false);
+	                } else {
+	                    System.out.println("아군 교집합");
+	                    allUnits.hp += this.hp;
+	                    gameGUI.getData().removeUnit(this);
+	                }
+	            }
+	        }
+	        
+	        // 유닛 이동
 			if(move == true) {
 				unitmove(dir);
 			}
+			
+			//hp0이하일 시 유닛 사망
+			if(hp<=0) {
+				gameGUI.getData().removeUnit(this);
+			}
+			
 			repaint();
 			try {
 				worker.sleep(100); // 원하는 갱신 주기로 조절
@@ -89,6 +113,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 			}
 		}
 	}
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -123,20 +148,6 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		}
 	}
 	
-	public void checkCollisions() {
-		setMove(true);
-        for (unit allUnits : gameGUI.getData().units) {
-            if (allUnits != this && isCollision(this, allUnits)) {
-                if (this.getOwner() != allUnits.getOwner()) {
-                    System.out.println("적 교집합");
-                    setMove(false);
-                } else {
-                    System.out.println("아군 교집합");
-                    setMove(false);
-                }
-            }
-        }
-    }
 
 	public boolean isCollision(unit unit1, unit unit2) {
 		int collision = 30;
