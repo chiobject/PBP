@@ -14,7 +14,7 @@ public abstract class field implements Runnable {
 	private int buttonCount;
 	protected String buttonName1 = "";
 	protected String buttonName2 = "";
-	protected String buttonName3 = ""; 
+	protected String buttonName3 = "";
 	protected String buttonName4 = "";
 	private int Owner;
 	public int unitCount = 5000;
@@ -114,7 +114,7 @@ public abstract class field implements Runnable {
 		cooldownTimer.setRepeats(false); // 한 번만 실행되도록 설정
 		cooldownTimer.start();
 	}
-	
+
 	public boolean getFieldActivate() {
 		return fieldActivate;
 	}
@@ -123,7 +123,6 @@ public abstract class field implements Runnable {
 		return dirActivate;
 	}
 
-	
 	public void setFieldActivate(boolean fieldActivate) {
 		this.fieldActivate = fieldActivate;
 	}
@@ -131,7 +130,6 @@ public abstract class field implements Runnable {
 	public void setDirActivate(boolean dirActivate) {
 		this.dirActivate = dirActivate;
 	}
-
 
 	public void info() {
 //		gameGUI.getSubCanvas().getButton(1).visible=
@@ -148,6 +146,7 @@ public abstract class field implements Runnable {
 	public void setOwner(int Owner) {
 		this.Owner = Owner;
 	}
+
 	public boolean getsummonCooldown() {
 		return summonCooldown;
 	}
