@@ -74,7 +74,7 @@ public class Connect_Create_Server extends JPanel {
     }
     
 	public void gameStart(){
-		controller.showCCServer();
+		controller.selectBrood();
 	}
     
     

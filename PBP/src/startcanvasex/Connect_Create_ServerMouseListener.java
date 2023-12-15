@@ -42,11 +42,8 @@ public class Connect_Create_ServerMouseListener extends MouseAdapter implements 
             }
         }else if(mouseX >= 1200 && mouseX <= 1300) {
         	 if (mouseY >= 600 && mouseY <= 700) {
-             	Connect_Create_Server.chose = -1;
+             	Connect_Create_Server.chose = 3;
              }
-        }
-        else {
-        	Connect_Create_Server.chose = 0;
         }
         Connect_Create_Server.repaint();
     }

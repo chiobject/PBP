@@ -13,6 +13,7 @@ public class viewController {
 	A_Brood A_Brood;
 	A_War A_War;
 	Connect_Create_Server Connect_Create_Server;
+	SelectBrood SelectBrood;
 	
 	public viewController(MainFrame mainFrame) {
 		this.mainFrame = mainFrame; //생성자로 매인프레임을 받는다
@@ -80,6 +81,17 @@ public class viewController {
 		 mainFrame.setVisible(true);
 		 System.out.println("헉");
 	}
+	
+	public void selectBrood() {
+		 contentPane.remove(Connect_Create_Server);
+		 SelectBrood = new SelectBrood(this);
+		// howPlay.addKeyListener(new howtokeyEvent(howPlay));
+		 contentPane.add(SelectBrood);
+		 mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
+		 mainFrame.setVisible(true);
+		 System.out.println("헉");
+	}
+	
 	public void goBack(JPanel panelToRemove) {
 	    contentPane.remove(panelToRemove);
 	    contentPane.add(introPanel);
