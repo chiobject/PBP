@@ -47,4 +47,7 @@ public class map extends Area {
 	public Point getPosition() {
 		return position;
 	}
+	public field getField(int x, int y) {
+		return field[x][y];
+	}
 }

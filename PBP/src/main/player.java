@@ -1,21 +1,38 @@
 package main;
 
+import brood.brood;
+import brood.elf;
+import brood.goblin;
+import brood.human;
+
 public class player {
 	private int player;
-	private int brood;
-	private int unitType;
-	private int unitCount; 
+	private brood brood;
+	
+	public player(int player, int brood){
+		this.player = player;
+		if(brood == 1) {
+			this.brood = new elf();
+		}
+		else if(brood == 2) {
+			this.brood = new goblin();
+		}
+		else if(brood == 3) {
+			this.brood = new human();
+		}
+	}
 	
 	public int getplayer() {
 		return player;
 	}
-	public int getBrood() {
+	public brood getBrood() {
 		return brood;
 	}
-	public int getUnitType() {
-		return unitType; 
+	public void setplayer(int player) {
+		this.player = player;
 	}
-	public int getUnitCount() {
-		return unitCount;
+
+	public void setbrood(int brood) {
+		this.brood.setBrood(brood);
 	}
 }

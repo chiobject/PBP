@@ -32,6 +32,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	private JLabel button2Label = new JLabel();
 	private JLabel button3Label = new JLabel();
 	private JLabel button4Label = new JLabel();
+	private JLabel populationLabel = new JLabel();
 	private JLabel buttonTitleLabel = new JLabel();
 	private JLabel buttonTitle = new JLabel();
 	private JLabel dir[] = new JLabel[4];
@@ -200,6 +201,11 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		buttonTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		buttonTitleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		add(buttonTitleLabel);
+		
+		populationLabel.setFont(fontButton);
+		populationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		populationLabel.setVerticalAlignment(SwingConstants.CENTER);
+		add(populationLabel);
 
 		buttonTitle.setIcon(buttonTitleIcon);
 		add(buttonTitle);
@@ -220,7 +226,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 				public void mousePressed(MouseEvent e) {
 					while (true) {
 						// 다이얼로그를 통해 숫자 입력 받기
-						String input = JOptionPane.showInputDialog(null, "숫자를 입력하세요:", "숫자 입력",
+						String input = JOptionPane.showInputDialog(null, "숫자를 입력하세요: (최대 : "+selectField.getUnitCount() + ")", "숫자 입력",
 								JOptionPane.QUESTION_MESSAGE);
 
 						// 입력이 null이 아니고 빈 문자열이 아닌 경우에만 처리
@@ -233,7 +239,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 									unitSummon(inputValue, dirnum);
 									break; // 올바른 값이 입력되었으므로 반복문 종료
 								} else {
-									JOptionPane.showMessageDialog(null, String.valueOf(inputValue) + " 이하 소환가능합니다",
+									JOptionPane.showMessageDialog(null, String.valueOf(selectField.getUnitCount()) + " 이하 소환가능합니다",
 											"오류", JOptionPane.WARNING_MESSAGE);
 								}
 
@@ -287,7 +293,11 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			buttonTitleLabel.setText("[" + selectField.name + "]");
 			buttonTitle.setBounds(getWidth() / 6 + 70, getHeight() / 2 + 40, 130, 50);
 			buttonTitleLabel.setBounds(getWidth() / 6 + 85, getHeight() / 2 + 42, 100, 50);
-
+			
+			
+			populationLabel.setText("병력 수 : " + selectField.getUnitCount());
+			populationLabel.setBounds(getWidth() / 2 - 70, getHeight() / 2-20, 150, 50);
+			
 			button1Label.setFont(fontButton);
 			button2Label.setFont(fontButton);
 			button3Label.setFont(fontButton);
@@ -300,6 +310,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 			buttonTitle.setVisible(true);
 			buttonTitleLabel.setVisible(true);
+			populationLabel.setVisible(true);
 
 			if (selectField.getbuttonCount() == 0) {
 				button1.setVisible(false);
@@ -364,7 +375,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	// 방향 선택 메인 화면
 	public void dirmain(Graphics g) {
-
+		populationLabel.setText("병력 수 : " + selectField.getUnitCount());
 		if (selectField.getDirActivate() == true) {
 			dirTitle.setBounds(getWidth() / 6 - 15, getHeight() / 2 + 40, 300, 50);
 			dirTitleLabel.setBounds(getWidth() / 6 - 15, getHeight() / 2 + 42, 300, 50);
@@ -421,7 +432,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 				unit.setPosition(gameGUI.getMainCanvas().getFieldSelectPoint().x,
 						gameGUI.getMainCanvas().getFieldSelectPoint().y);
 				unit.setAttack(50);
-				selectField.unitCount -= 50;
+				selectField.unitCount -= hp;
 				unit.setHp(hp);
 				unit.speed = 1;
 				unit.dir = dir;

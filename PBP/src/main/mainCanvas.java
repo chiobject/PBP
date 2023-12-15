@@ -38,9 +38,13 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	public Graphics offScreenGraphics; // 더블 버퍼링을 위한 그래픽스
 	private Image ScreenImage; // 더블 버퍼링을 위한 이미지
 	public Graphics ScreenGraphics; // 더블 버퍼링을 위한 그래픽스
+	public int seaSel = 0;
 
-	ImageIcon seaicon2 = new ImageIcon("images\\mainCanvas\\sample 60.jpg");
-	ImageIcon seaicon1 = new ImageIcon("images\\mainCanvas\\sea1.png");
+	ImageIcon seaIcon = new ImageIcon("images\\mainCanvas\\sea1.png");
+	ImageIcon castle0Icon = new ImageIcon("images/field/castle0.png");
+	ImageIcon castle1Icon = new ImageIcon("images/field/castle1.png");
+	ImageIcon castle2Icon = new ImageIcon("images/field/castle2.png");
+	ImageIcon plainIcon = new ImageIcon("images/field/plain.png");
 
 	public mainCanvas() {
 		setLayout(new GridLayout(9, 9));
@@ -77,11 +81,6 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			offScreenGraphics = offScreenImage.getGraphics();
 		}
 
-		if (ScreenImage == null) {
-			ScreenImage = createImage(getWidth(), getHeight());
-			ScreenGraphics = ScreenImage.getGraphics();
-		}
-
 		// 그림의 크기
 		int imageWidth = gameGUI.getData().map.getPosition().x * RECTANGLE_SIZE;
 		int imageHeight = gameGUI.getData().map.getPosition().y * RECTANGLE_SIZE;
@@ -97,38 +96,35 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		// 그림 그리기
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x * 2; i++) {
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y * 1.5; j++) {
-				offScreenGraphics.drawImage(seaicon1.getImage(), i * RECTANGLE_SIZE, j * RECTANGLE_SIZE - 7, this);
+					offScreenGraphics.drawImage(seaIcon.getImage(), i * RECTANGLE_SIZE , j * RECTANGLE_SIZE - 7, this);
 			}
 		}
+		
 
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x; i++) {
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y; j++) {
-				if (gameGUI.getData().map.field[i][j].getOwner() == 1) {
+				if (gameGUI.getData().map.field[i][j].getOwner() == 0 && gameGUI.getData().map.field[i][j].getType() != 0) {
+					offScreenGraphics.drawImage(castle0Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+							field.y + j * RECTANGLE_SIZE + 1, this);
+				} 
+				else if (gameGUI.getData().map.field[i][j].getOwner() == 1 && gameGUI.getData().map.field[i][j].getType() == 1) {
 					offScreenGraphics.setColor(red);
-				} else if (gameGUI.getData().map.field[i][j].getOwner() == 2) {
+					offScreenGraphics.drawImage(castle1Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+							field.y + j * RECTANGLE_SIZE + 1, this);
+				} else if (gameGUI.getData().map.field[i][j].getOwner() == 2 && gameGUI.getData().map.field[i][j].getType() == 1) {
+					offScreenGraphics.drawImage(castle2Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+							field.y + j * RECTANGLE_SIZE + 1, this);
 					offScreenGraphics.setColor(blue);
-				} else {
-					offScreenGraphics.setColor(black);
-				}
-				if (gameGUI.getData().map.field[i][j].type != 0) {
-					Rectangle rectangle = new Rectangle(field.x + i * RECTANGLE_SIZE + 1,
-							field.y + j * RECTANGLE_SIZE + 1, RECTANGLE_SIZE, RECTANGLE_SIZE);
-					offScreenGraphics.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-
-					if (rectangle.intersects(
-							new Rectangle(seaIconX, seaIconY, seaicon2.getIconWidth(), seaicon2.getIconHeight()))) {
-						// 부딪칠 경우 seaicon2 이미지를 숨김
-						seaIconX = -seaicon2.getIconWidth();
-					} else {
-						offScreenGraphics.drawImage(seaicon2.getImage(), seaIconX, seaIconY, this);
-					}
-				}
+				} 
+				
 				offScreenGraphics.drawString(gameGUI.getData().map.field[i][j].name,
 						field.x + i * RECTANGLE_SIZE + RECTANGLE_SIZE / 2,
 						field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE / 2);
 			}
 		}
-		unitPaint(offScreenGraphics);
+		for (unit unit : gameGUI.getData().units) {
+			unit.paint(offScreenGraphics);
+		}
 		g.drawImage(offScreenImage, 0, 0, this);
 	}
 
@@ -140,6 +136,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	public void run() {
 		while (!stop) {
 			repaint();
+			seaSel++;
 			try {
 				worker.sleep(100);
 			} catch (InterruptedException e) {
@@ -187,7 +184,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -223,14 +220,13 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 	}
 
-	public void unitPaint(Graphics offScreenGraphics) {
-		for (unit unit : gameGUI.getData().units) {
-			gameGUI.getMainCanvas().offScreenGraphics.drawImage(unit.seaicon2.getImage(), unit.getPosition().x,
-					unit.getPosition().y, this);
-		}
-	}
-	
 	public field getSelectField() {
 		return gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+	}
+
+	public Point getFieldPosition(int x, int y) {
+		int centerX = field.x + (x * RECTANGLE_SIZE) + (RECTANGLE_SIZE / 2);
+		int centerY = field.y + (y * RECTANGLE_SIZE) + (RECTANGLE_SIZE / 2);
+		return new Point(centerX, centerY);
 	}
 }

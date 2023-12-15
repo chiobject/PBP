@@ -16,8 +16,8 @@ public abstract class field implements Runnable {
 	protected String buttonName2 = "";
 	protected String buttonName3 = "";
 	protected String buttonName4 = "";
-	private int Owner;
-	public int unitCount = 5000;
+	private int owner;
+	public int unitCount = 0;
 	private boolean running = false;
 	private Thread worker;
 	private int unitType;
@@ -53,7 +53,7 @@ public abstract class field implements Runnable {
 		while (running) {
 			try {
 				unitproduction();
-				worker.sleep(1000); // 원하는 갱신 주기로 조절
+				worker.sleep(gameGUI.getData().getPlayer(owner).getBrood().getpopProdSpeed()); // 원하는 갱신 주기로 조절
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -90,16 +90,20 @@ public abstract class field implements Runnable {
 	private void unitproduction() {
 		if (type != 0) {
 			if (unitMax > unitCount) {
-				unitCount += 5;
-			}
-			if (unitMax <= unitCount) {
-				unitCount = unitMax;
+				unitCount += gameGUI.getData().getPlayer(owner).getBrood().getpopProdRate();
+				if(unitCount >= unitMax) {
+					unitCount = unitMax;
+				}
 			}
 		}
 	}
 
 	public int getUnitType() {
 		return unitType;
+	}
+	
+	public int getType() {
+		return type;
 	}
 
 	public void startSummonCooldown() {
@@ -131,23 +135,30 @@ public abstract class field implements Runnable {
 		this.dirActivate = dirActivate;
 	}
 
-	public void info() {
-//		gameGUI.getSubCanvas().getButton(1).visible=
-	}
-
 	public int getOwner() {
-		return Owner;
+		return owner;
 	}
 	
 	public int getUnitCount() {
 		return unitCount;
 	}
+	
+	public int getUnitMax() {
+		return unitMax;
+	}
+	
+	public void setUnitCount(int unitCount) {
+		this.unitCount = unitCount;
+	}
 
 	public void setOwner(int Owner) {
-		this.Owner = Owner;
+		this.owner = Owner;
 	}
 
 	public boolean getsummonCooldown() {
 		return summonCooldown;
+	}
+	public void changeUnitCount(int unitCount) {
+		this.unitCount += unitCount;
 	}
 }
