@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import brood.elf;
 import field.field;
 import main.gameGUI;
+import main.sound;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +40,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	private boolean move;
 	private int owner;
 	private Point spawnPoint = new Point(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y);
+	private sound warSound ;
 
 	public unit(int unitType, int Onwer) {
 		this.unitType = unitType;
@@ -81,64 +84,49 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	}
 
 	public void paint(Graphics g) {
-		if(move == false) {
+		if (move == false) {
 			sel = 0;
-		}else {
+		} else {
 			if (move == true && sel < 2) {
 				sel++;
-			}else {
+			} else {
 				sel = 0;
 			}
 		}
-		
+
 		// 좌측이나 위로 올라갈 경우
 		if (dir % 3 == 0) {
-			g.drawImage(charactorLeft, position.x + 10, position.y+5, position.x + 52, position.y + 58, sel * 42, 0,
+			g.drawImage(charactorLeft, position.x + 10, position.y + 5, position.x + 52, position.y + 58, sel * 42, 0,
 					sel * 42 + 42, 53, this);
-			
+
 		}
-		
+
 		// 우측이나 아래로 올라갈 경우
 		else {
-			g.drawImage(charactorRight, position.x + 10, position.y+5, position.x + 52, position.y + 58, sel * 42, 0,
+			g.drawImage(charactorRight, position.x + 10, position.y + 5, position.x + 52, position.y + 58, sel * 42, 0,
 					sel * 42 + 42, 53, this);
 		}
-		
-		
+
 	}
 
 	@Override
 	public void run() {
 		while (running) {
-			charactorLeft = Toolkit.getDefaultToolkit().getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitLeft());
-			charactorRight = Toolkit.getDefaultToolkit().getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitRight());
+			charactorLeft = Toolkit.getDefaultToolkit()
+					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitLeft());
+			charactorRight = Toolkit.getDefaultToolkit()
+					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitRight());
 			try {
 				// 유닛 이동 가능
 				setMove(true);
 
-				if (isFieldCollision() == true) {
-					setMove(false);
+				if(isUnitCollision() == true){
+				
+				}else {
+					isFieldCollision();
 				}
+				isUnitCollision();
 
-				// 충돌 감지
-				for (unit allUnits : gameGUI.getData().units) {
-					if (allUnits != this && isUnitCollision(this, allUnits)) {
-						setMove(false);
-						if (this.getOwner() != allUnits.getOwner()) {
-							System.out.println("적 교집합 상대 Hp : " + allUnits.getHp());
-							allUnits.changeHp(-attack);
-							if (hp <= 0) {
-								gameGUI.getData().removeUnit(this);
-								stop();
-								break;
-							}
-						} else {
-							System.out.println("아군 교집합");
-							allUnits.hp += this.hp;
-							gameGUI.getData().removeUnit(this);
-						}
-					}
-				}
 				// 유닛 이동
 				if (move == true) {
 					unitmove(dir);
@@ -191,15 +179,43 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		}
 	}
 
-	//유닛 - 유닛 충돌 감지
-	public boolean isUnitCollision(unit unit1, unit unit2) {
-		int collision = 10;
-		int deltaX = Math.abs(unit1.getPosition().x - unit2.getPosition().x);
-		int deltaY = Math.abs(unit1.getPosition().y - unit2.getPosition().y);
-		return deltaX <= collision && deltaY <= collision;
+	// 유닛 - 유닛 충돌 감지
+	public boolean isUnitCollision() {
+		int collision = 20;
+		for (unit allUnits : gameGUI.getData().units) {
+			int deltaX = Math.abs(this.getPosition().x - allUnits.getPosition().x);
+			int deltaY = Math.abs(this.getPosition().y - allUnits.getPosition().y);
+			if (allUnits != this && deltaX <= collision && deltaY <= collision) {
+				setMove(false);
+				
+				if (this.getOwner() != allUnits.getOwner()) {
+					System.out.println("적 교집합 상대 Hp : " + allUnits.getHp());
+					allUnits.changeHp(-attack);
+					try {
+						warSound = new sound("sounds//싸움1.wav", -30);
+						warSound.play();
+						worker.sleep(200);
+						warSound.stop();
+						warSound.close();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					//수정 필요
+					System.out.println("아군 교집합");
+						allUnits.hp += this.hp;
+						gameGUI.getData().removeUnit(this);
+						stop();
+					setMove(false);
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
-	//유닛 - 필드 충돌 감지
+	// 유닛 - 필드 충돌 감지
 	public boolean isFieldCollision() {
 		int collision = 28;
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x; i++) {
@@ -208,23 +224,53 @@ public class unit extends JPanel implements KeyListener, Runnable {
 				int deltaY = Math.abs(this.getPosition().y - gameGUI.getMainCanvas().getFieldPosition(i, j).y + 31);
 				if (deltaX <= collision && deltaY <= collision && (spawnPoint.x != i || spawnPoint.y != j)
 						&& gameGUI.getData().map.getField(i, j).getType() != 0) {
-					if(gameGUI.getData().map.getField(i, j).getOwner() != owner) {
-						gameGUI.getData().map.getField(i,j).changeUnitCount(-attack);
-						hp -= 50;
-					}
-					if(gameGUI.getData().map.getField(i, j).getUnitCount() <= 0 || gameGUI.getData().map.getField(i, j).getOwner() == owner) {
+					
+					//빈 필드일 때
+					if (gameGUI.getData().map.getField(i, j).getUnitCount() <= 0) {
 						gameGUI.getData().map.getField(i, j).setOwner(owner);
-						gameGUI.getData().map.getField(i, j).changeUnitCount(hp);
-						if(gameGUI.getData().map.getField(i, j).getUnitMax() < gameGUI.getData().map.getField(i, j).getUnitCount()) {
-							hp = gameGUI.getData().map.getField(i, j).getUnitCount() - gameGUI.getData().map.getField(i, j).getUnitMax() ;
-							gameGUI.getData().map.getField(i, j).setUnitCount(gameGUI.getData().map.getField(i, j).getUnitMax());
+						gameGUI.getData().map.getField(i, j).setIsProduction(false);
+						gameGUI.getData().map.getField(i, j).setIsBuilding(true);
+						gameGUI.getData().map.getField(i, j).setUnitCount(hp);
+						gameGUI.getData().removeUnit(this);
+						stop();
+					}
+					// 상대 필드일 때
+					else if (gameGUI.getData().map.getField(i, j).getOwner() != owner) {
+						gameGUI.getData().map.getField(i, j).changeUnitCount(-attack);
+						if(gameGUI.getData().map.getField(i, j).getOwner() != 0) {
+							hp -= gameGUI.getData().getPlayer(gameGUI.getData().map.getField(i, j).getOwner()).getBrood().getAD();
+						}
+						try {
+							warSound = new sound("sounds//싸움1.wav", -30);
+							warSound.play();
+							worker.sleep(200);
+							warSound.stop();
+							warSound.close();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					// 본인 필드일 때
+					else if (gameGUI.getData().map.getField(i, j).getOwner() == owner) {
+						
+						if (hp + gameGUI.getData().map.getField(i, j).getUnitCount() > gameGUI.getData().map.getField(i, j).getUnitMax()) {
+							if(gameGUI.getData().map.getField(i, j).getUnitMax() > gameGUI.getData().map.getField(i, j).getUnitCount()) {
+							hp -= (gameGUI.getData().map.getField(i, j).getUnitMax() - gameGUI.getData().map.getField(i, j).getUnitCount());
+							gameGUI.getData().map.getField(i, j)
+									.setUnitCount(gameGUI.getData().map.getField(i, j).getUnitMax());
+							}
 							System.out.println("성에 유닛 수가 꽉 차서 유닛이 들어갈 수 없습니다.");
 						}
-						if(hp <= 0) {
+						else {
+							gameGUI.getData().map.getField(i, j).changeUnitCount(hp);
 							gameGUI.getData().removeUnit(this);
 							stop();
 						}
 					}
+					
+					setMove(false);
 					return true;
 				}
 			}
@@ -232,7 +278,6 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		return false;
 	}
 
-	
 	public Point getPosition() {
 		return position;
 	}

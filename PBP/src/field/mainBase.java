@@ -11,9 +11,8 @@ public class mainBase extends field {
 
 	@Override
 	public void button1() {
-		gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
-		gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
 		// TODO Auto-generated method stub
+		unitSummon();
 	}
 
 	@Override

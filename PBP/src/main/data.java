@@ -30,4 +30,15 @@ public class data {
 			return player2;
 		}
 	}
+	public int getmainPlainCount(int owner) {
+		int count = 0;
+		for (int i = 0; i < map.getPosition().x; i++) {
+			for (int j = 0; j < map. getPosition().y; j++) {
+				if(map.getField(i,j).getOwner()== owner) {
+					count += 1;
+				}
+			}
+		}
+		return count;
+	}
 }

@@ -16,7 +16,7 @@ public class goblin extends brood {
         unitLeft ="images\\unit\\goblinLeft.png";
         unitRight = "images\\unit\\goblinRight.png";
         speed = 150;
-        AD = 25;
+        AD = 35;
         popProdRate = 80;
         popProdSpeed = 600;
     }

@@ -9,8 +9,7 @@ public class neutralBase extends field {
 
 	@Override
 	public void button1() {
-		gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
-		gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
+		unitSummon();
 	}
 
 	@Override

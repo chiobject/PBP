@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import javax.swing.Timer;
 
 import field.field;
 import unit.unit;
@@ -12,39 +13,40 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.List;
 
 public class mainCanvas extends JPanel implements ActionListener, Runnable, MouseListener, KeyListener {
 	private static final int RECTANGLE_SIZE = 64;
 	private Thread worker;
-	private Timer timer = new Timer();
 	private boolean stop;
 	int x, y;
 	Point field = new Point(x, y);
 	Point select = new Point(x, y);
 	Point fieldSelect = new Point(x, y);
-	private int seaIconX = 90;
-	private int seaIconY = 50;
 	public Graphics g;
 	public unit unit;
-	double time = 0;
-	private Color red = Color.red;
-	private Color blue = Color.blue;
-	private Color black = Color.black;
 	private Image offScreenImage; // 더블 버퍼링을 위한 이미지
 	public Graphics offScreenGraphics; // 더블 버퍼링을 위한 그래픽스
-	private Image ScreenImage; // 더블 버퍼링을 위한 이미지
 	public Graphics ScreenGraphics; // 더블 버퍼링을 위한 그래픽스
 	public int seaSel = 0;
+	private boolean timerIsRunning = false;
 
-	ImageIcon seaIcon = new ImageIcon("images\\mainCanvas\\sea1.png");
+	ImageIcon seaIcon = new ImageIcon("images/mainCanvas/sea1.png");
 	ImageIcon castle0Icon = new ImageIcon("images/field/castle0.png");
-	ImageIcon castle1Icon = new ImageIcon("images/field/castle1.png");
-	ImageIcon castle2Icon = new ImageIcon("images/field/castle2.png");
+	ImageIcon castle1_1Icon = new ImageIcon("images/field/castle1-1.png");
+	ImageIcon castle1_2Icon = new ImageIcon("images/field/castle1-2.png");
+	ImageIcon castle1_3Icon = new ImageIcon("images/field/castle1-3.png");
+	ImageIcon castle1_4Icon = new ImageIcon("images/field/castle1-4.png");
+	ImageIcon castle2_1Icon = new ImageIcon("images/field/castle2-1.png");
+	ImageIcon castle2_2Icon = new ImageIcon("images/field/castle2-2.png");
+	ImageIcon castle2_3Icon = new ImageIcon("images/field/castle2-3.png");
+	ImageIcon castle2_4Icon = new ImageIcon("images/field/castle2-4.png");
+	
 	ImageIcon plainIcon = new ImageIcon("images/field/plain.png");
+
+	private sound click = new sound("sounds//전쟁시대 브금.wav", -30);
 
 	public mainCanvas() {
 		setLayout(new GridLayout(9, 9));
@@ -58,22 +60,11 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	}
 
 	public void start() {
-		timer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-//                // 0.1초마다 변수를 0.1씩 증가
-//                time += 0.1;
-//                time = Math.round(time * 10.0) / 10.0;
-//                // 변수 출력 (예시로 출력만 함)
-//                System.out.println("변수 값: " + time);
-			}
-		}, 0, 100);
 		stop = false;
 		worker = new Thread(this);
 		worker.start();
 		repaint();
-//		unit.start();
-	}
+		}
 
 	public void paintComponent(Graphics g) {
 		if (offScreenImage == null) {
@@ -96,41 +87,77 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		// 그림 그리기
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x * 2; i++) {
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y * 1.5; j++) {
-					offScreenGraphics.drawImage(seaIcon.getImage(), i * RECTANGLE_SIZE , j * RECTANGLE_SIZE - 7, this);
+				offScreenGraphics.drawImage(seaIcon.getImage(), i * RECTANGLE_SIZE, j * RECTANGLE_SIZE - 7, this);
 			}
 		}
-		
 
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x; i++) {
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y; j++) {
-				if (gameGUI.getData().map.field[i][j].getOwner() == 0 && gameGUI.getData().map.field[i][j].getType() != 0) {
+				int getOwner = gameGUI.getData().map.getField(i, j).getOwner();
+				int getType = gameGUI.getData().map.getField(i, j).getType();
+				boolean getIsBuilding = gameGUI.getData().map.getField(i, j).getIsBuilding();
+				if (getOwner == 0 && (getType == 1 || getType == 2)) {
 					offScreenGraphics.drawImage(castle0Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
 							field.y + j * RECTANGLE_SIZE + 1, this);
-				} 
-				else if (gameGUI.getData().map.field[i][j].getOwner() == 1 && gameGUI.getData().map.field[i][j].getType() == 1) {
-					offScreenGraphics.setColor(red);
-					offScreenGraphics.drawImage(castle1Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+				} else if (getOwner == 1 && getType != 0) {
+					if (getIsBuilding == false) {
+						offScreenGraphics.drawImage(castle1_4Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+								field.y + j * RECTANGLE_SIZE + 1, this);
+					} else {
+						if(timerIsRunning == false) {
+							buildingImage(i,j);
+						}
+						if(gameGUI.getData().map.getField(i, j).getBuildingTime()  < 4000) {
+		                	offScreenGraphics.drawImage(castle1_1Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+		                }
+		                else if(gameGUI.getData().map.getField(i, j).getBuildingTime() < 7000) {
+		                	offScreenGraphics.drawImage(castle1_2Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+		                }
+		                else if (gameGUI.getData().map.getField(i, j).getBuildingTime() <  10000) {
+		                	offScreenGraphics.drawImage(castle1_3Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+
+		                }
+					}
+				} else if (getOwner == 2 && getType != 0) {
+					if (getIsBuilding == false) {
+						offScreenGraphics.drawImage(castle2_4Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+								field.y + j * RECTANGLE_SIZE + 1, this);
+					} else {
+						if(timerIsRunning == false) {
+							buildingImage(i,j);
+						}
+						if(gameGUI.getData().map.getField(i, j).getBuildingTime()  < 4000) {
+		                	offScreenGraphics.drawImage(castle2_1Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+		                }
+		                else if(gameGUI.getData().map.getField(i, j).getBuildingTime() < 7000) {
+		                	offScreenGraphics.drawImage(castle2_2Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+		                }
+		                else if (gameGUI.getData().map.getField(i, j).getBuildingTime() <  10000) {
+		                	offScreenGraphics.drawImage(castle2_3Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
+									field.y + j * RECTANGLE_SIZE + 1, this);
+
+		                }
+					}
+				} else if (getType == 3) {
+					offScreenGraphics.drawImage(plainIcon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
 							field.y + j * RECTANGLE_SIZE + 1, this);
-				} else if (gameGUI.getData().map.field[i][j].getOwner() == 2 && gameGUI.getData().map.field[i][j].getType() == 1) {
-					offScreenGraphics.drawImage(castle2Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
-							field.y + j * RECTANGLE_SIZE + 1, this);
-					offScreenGraphics.setColor(blue);
-				} 
-				
-				offScreenGraphics.drawString(gameGUI.getData().map.field[i][j].name,
+				}
+
+				offScreenGraphics.drawString(gameGUI.getData().map.getField(i, j).name,
 						field.x + i * RECTANGLE_SIZE + RECTANGLE_SIZE / 2,
 						field.y + j * RECTANGLE_SIZE + RECTANGLE_SIZE / 2);
 			}
 		}
+		
 		for (unit unit : gameGUI.getData().units) {
 			unit.paint(offScreenGraphics);
 		}
 		g.drawImage(offScreenImage, 0, 0, this);
-	}
-
-	// Implementing the mouseClicked method
-	@Override
-	public void mouseClicked(MouseEvent e) {
 	}
 
 	public void run() {
@@ -160,6 +187,11 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		return mouseX >= rectX && mouseX <= rectX + rectWidth && mouseY >= rectY && mouseY <= rectY + rectHeight;
 	}
 
+	// Implementing the mouseClicked method
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+	
 	// Other methods from the interfaces (not implemented here)
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -172,12 +204,10 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 						RECTANGLE_SIZE, RECTANGLE_SIZE, mouseX, mouseY)) {
 					for (int k = 0; k < gameGUI.getData().map.getPosition().x; k++) {
 						for (int l = 0; l < gameGUI.getData().map.getPosition().y; l++) {
-							gameGUI.getData().map.field[k][l].setDirActivate(false);
-							gameGUI.getData().map.field[k][l].setFieldActivate(true);
+							gameGUI.getData().map.getField(k, l).setDirActivate(false);
+							gameGUI.getData().map.getField(k, l).setFieldActivate(true);
 						}
 					}
-					System.out.println("Field Clicked at: (" + i + ", " + j + ") class : ("
-							+ gameGUI.getData().map.field[i][j].name + ")");
 					select.x = i;
 					select.y = j;
 					break;
@@ -221,12 +251,44 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	}
 
 	public field getSelectField() {
-		return gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+		return gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y);
 	}
 
 	public Point getFieldPosition(int x, int y) {
 		int centerX = field.x + (x * RECTANGLE_SIZE) + (RECTANGLE_SIZE / 2);
 		int centerY = field.y + (y * RECTANGLE_SIZE) + (RECTANGLE_SIZE / 2);
 		return new Point(centerX, centerY);
+	}
+	
+	public void buildingImage(int i,int j) {
+    	timerIsRunning = true;
+		ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                // 10초까지만 타이머 동작
+            	gameGUI.getData().map.getField(i, j).changeBuildingTime(1000);
+                if(gameGUI.getData().map.getField(i, j).getBuildingTime() >= 10000) {
+                    gameGUI.getData().map.getField(i, j).setIsBuilding(false);
+                    gameGUI.getData().map.getField(i, j).setIsProduction(true);
+                    timerIsRunning = false;
+                    ((Timer) evt.getSource()).stop();
+                }
+            }
+        };
+
+        // 타이머 생성 및 시작
+        Timer timer = new Timer(1000, taskPerformer);
+        timer.setInitialDelay(0);
+        timer.start();
+
+        // while 루프
+        while (!timer.isRunning()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
 	}
 }

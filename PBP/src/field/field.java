@@ -25,6 +25,9 @@ public abstract class field implements Runnable {
 	private boolean summonCooldown = false;
 	private boolean fieldActivate = true;
 	private boolean dirActivate = false;
+	private boolean isProduction = true;
+	private boolean isBuilding = false;
+	public int buildingTime = 0;
 
 	field(int type, String name, int buttonCount) {
 		this.type = type;
@@ -88,7 +91,7 @@ public abstract class field implements Runnable {
 	}
 
 	private void unitproduction() {
-		if (type != 0) {
+		if (owner != 0 && isProduction == true) {
 			if (unitMax > unitCount) {
 				unitCount += gameGUI.getData().getPlayer(owner).getBrood().getpopProdRate();
 				if(unitCount >= unitMax) {
@@ -108,7 +111,7 @@ public abstract class field implements Runnable {
 
 	public void startSummonCooldown() {
 		summonCooldown = true;
-		Timer cooldownTimer = new Timer(10000, new ActionListener() {
+		Timer cooldownTimer = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				summonCooldown = false;
@@ -150,9 +153,17 @@ public abstract class field implements Runnable {
 	public void setUnitCount(int unitCount) {
 		this.unitCount = unitCount;
 	}
+	
+	public void setIsBuilding(boolean isBuilding) {
+		this.isBuilding = isBuilding;
+	}
+	
+	public boolean getIsBuilding() {
+		return isBuilding;
+	}
 
-	public void setOwner(int Owner) {
-		this.owner = Owner;
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 
 	public boolean getsummonCooldown() {
@@ -160,5 +171,27 @@ public abstract class field implements Runnable {
 	}
 	public void changeUnitCount(int unitCount) {
 		this.unitCount += unitCount;
+	}
+	public void setIsProduction(boolean isProduction) {
+		this.isProduction = isProduction;
+	}
+	public int getBuildingTime() {
+		return buildingTime;
+	}
+	public void setbuildingTime(int buildingTime) {
+		this.buildingTime = buildingTime;
+	}
+	public void changeBuildingTime(int buildingTime) {
+		this.buildingTime += buildingTime;
+	}
+	
+	public void unitSummon(){
+		if(gameGUI.getMainCanvas().getSelectField().getIsBuilding() ==false) {
+			gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
+			gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
+		}
+		else {
+			System.out.println("지금은 유닛을 소환할 수 없습니다.");
+		}
 	}
 }

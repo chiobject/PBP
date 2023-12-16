@@ -75,7 +75,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
 						.button1();
 			}
 		});
@@ -83,7 +83,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
 						.button2();
 			}
 		});
@@ -91,7 +91,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
 						.button3();
 			}
 		});
@@ -99,7 +99,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
 						.button4();
 			}
 		});
@@ -125,7 +125,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		Graphics offScreenGraphics = offScreenImage.getGraphics();
 		super.paintComponent(offScreenGraphics);
 
-		selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
 
 		offScreenGraphics.drawImage(backGround.getImage(), 0, 0, this);
 
@@ -168,7 +168,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	// 라벨 생성
 	public void createLabel() {
-		selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
 		button1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		button1Label.setVerticalAlignment(SwingConstants.CENTER);
 		button1Label.setText(selectField.getButtonName(1));
@@ -423,8 +423,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	}
 
 	public void unitSummon(int hp, int dir) {
-		field selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().getSelect().x][gameGUI.getMainCanvas()
-				.getSelect().y];
+		field selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
 		if (selectField.unitCount > 50) {
 			if (selectField.getsummonCooldown() == false) {
 //				if (selectField.getOwner() != 0) {
@@ -463,7 +462,6 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("x: " + mouse.x + " | y: " + mouse.y);
 	}
 
 	@Override

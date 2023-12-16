@@ -11,9 +11,9 @@ public class map extends Area {
 	int type = 0; // 0: 평야 | 1: 사막 | 2: 설원 | 3:유적지
 	private int max_x = 9;
 	private int max_y = 9;
-	public Point position = new Point(max_x, max_y);
+	private Point position = new Point(max_x, max_y);
 
-	public field[][] field = new field[max_x][max_y];
+	private field[][] field = new field[max_x][max_y];
 
 	void reset() {
 		for (int x = 0; x < max_x; x++) {
