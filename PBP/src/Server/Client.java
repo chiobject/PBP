@@ -156,14 +156,14 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
 }
 
 
-//public void updateData(ServerData data) {  서버 편에서 알려드렸듯이 서버도 이 메서드가 중요하지만클라이언트도 중요합니다.
-//	서버와 클라이언트가 받는 데이터를 최종적으로 여기서 받고 값이 변경하기 때문에중요한 메서드입니다. 
-//	 이 메서드를 처음 볼 때는 이해가 안됩니다. 저걸 사용하기 위해서 자바 "직렬화(Serialization)" 를 사용했습니다.
-//	즉, 쉽게 말해서 구조체를 byte형식으로 바꿔서 데이터를 보냈다고 생각하시면 될거 같습니다.
-//	public void makeConnection(String host, String nam) {  서버 접속메서드 입니다. 
-//	소스를 해석 하자면 소켓에 접속을 하고, 그것을 ObjectOutputStream(객체 직렬화) 해서 데이터를 Out(보내거나)In(받습니다.)그리고 
-//	"ServerData" 라는 서버에 ServerData.Login 가 있는 위치로 데이터를이름과 정보를 보냅니다.그리고 ClientThread가 실행이 됩니다.
-//	 public synchronized void sendMessage(ServerData data)서버한테 데이터 보내는 메서드입니다.
+//public void updateData(ServerData data) {  
+//	서버와 클라이언트가 받는 데이터를 최종적으로 여기서 받고 값이 변경하기 때문에중요한 메서드. 
+//	 자바 "직렬화(Serialization)" 를 사용.
+//	즉, 쉽게 말해서 구조체를 byte형식으로 바꿔서 데이터를 보냈다고 생각하면됨.
+//	public void makeConnection(String host, String nam) {  서버 접속메서드. 
+//	소스를 해석 하자면 소켓에 접속을 하고, 그것을 ObjectOutputStream(객체 직렬화) 해서 데이터를 Out(보내거나)In(받음.)그리고 
+//	"ServerData" 라는 서버에 ServerData.Login 가 있는 위치로 데이터를이름과 정보를 보냅니다.그리고 ClientThread가 실행.
+//	 public synchronized void sendMessage(ServerData data)서버한테 데이터 보내는 메서드.
 //
 
 
