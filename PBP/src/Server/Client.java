@@ -92,6 +92,7 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
                 }
                 break;
         }
+        nameLabel.setText("클라이언트Num" + divisionN);
     }
 
     static String name;
@@ -126,6 +127,10 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
         } catch (IOException ioe) {
             System.out.println("sendMessage1 error Ioe :" + ioe);
         }
+    }
+    
+    public int getDivisionN() {
+        return divisionN;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package startcanvasex;
+package FirstCanvas;
 
 import java.awt.FlowLayout;
 import java.awt.Label;

@@ -1,4 +1,4 @@
-package startcanvasex;
+package FirstCanvas;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,11 +12,15 @@ import Server.Login;
 
 import javax.swing.JPanel;
 
+import Server.Client;
+
 public class Connect_Create_Server extends JPanel {
     int chose = 0;
+    private int clientDivisionN;
     Image intro_image;
     viewController controller;
     int currentPage = 0;  // 현재 페이지를 나타내는 변수
+
 
     public Connect_Create_Server(viewController controller) {
         this.controller = controller;
@@ -57,6 +61,11 @@ public class Connect_Create_Server extends JPanel {
 			g.drawString("→", 400, 710);
 		else
 			g.drawString("→", 1150, 700);
+		clientDivisionN = getClient();
+		g.drawString("Client DivisionN: " + clientDivisionN, 800, 730);
+		
+		
+		
 
 	}
 
@@ -75,6 +84,12 @@ public class Connect_Create_Server extends JPanel {
     
 	public void gameStart(){
 		controller.selectBrood();
+	}
+	
+	private int getClient() {
+	    Client client = new Client();
+
+	    return client.getDivisionN();
 	}
     
     

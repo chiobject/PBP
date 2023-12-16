@@ -1,4 +1,4 @@
-package startcanvasex;
+package FirstCanvas;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,13 +9,13 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
-public class A_Brood extends JPanel {
-    int chose2 = 0;
+public class A_War extends JPanel {
+    int chose3 = 0;
     Image intro_image;
     viewController controller;
-    int currentPage1 = 0;  // 현재 페이지를 나타내는 변수
+    int currentPage2 = 0;  // 현재 페이지를 나타내는 변수
 
-    public A_Brood(viewController controller) {
+    public A_War(viewController controller) {
         this.controller = controller;
         
         intro_image = Toolkit.getDefaultToolkit().getImage("images/explain.png");
@@ -24,8 +24,8 @@ public class A_Brood extends JPanel {
         setFocusable(true);
 
         // KeyListener를 패널에 추가
-        addKeyListener(new A_BroodKeyEvent(this));
-        A_BroodMouseListener mouseListener = new A_BroodMouseListener(this);
+        addKeyListener(new A_WarKeyEvent(this));
+        A_WarMouseListener mouseListener = new A_WarMouseListener(this);
         this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);
     }
@@ -35,7 +35,7 @@ public class A_Brood extends JPanel {
         g.drawImage(intro_image, 0, 0, 1310, 775, this);
         g.setFont(new Font("myFont", Font.BOLD, 40));
         g.setColor(Color.BLACK);
-        g.drawString("About Brood", 50, 50);
+        g.drawString("About War", 50, 50);
         g.setFont(new Font("secondFont", Font.ITALIC, 20));
         g.setColor(Color.RED);
         g.drawString("Return Information", 1100, 750);
@@ -44,24 +44,24 @@ public class A_Brood extends JPanel {
         g.drawString("Next", 1180, 650);
         g.drawString("Back", 1080, 650);
         // 선택한 메뉴에 따라 화살표를 그림
-        if (chose2 == 0)
+        if (chose3 == 0)
             g.drawString("→", 1160, 650);
-        else if (chose2 == 1)
+        else if (chose3 == 1)
             g.drawString("→", 1060, 650);
-        else if (chose2 == 2)
+        else if (chose3 == 2)
             g.drawString("→", 1080, 750);
         
-        if (currentPage1 == 0) {
-            drawInstructionsOverlay(g, "종족1: 페이지 1");
-        } else if (currentPage1 == 1) {
-            drawInstructionsOverlay(g, "종족2: 페이지 2");
-        }else if (currentPage1 == 2) {
-        	 drawInstructionsOverlay(g, "종족3: 페이지 3");
+        if (currentPage2 == 0) {
+            drawInstructionsOverlay(g, "전쟁개요: 페이지 1");
+        } else if (currentPage2 == 1) {
+            drawInstructionsOverlay(g, "전쟁개요: 페이지 2");
+        }else if (currentPage2 == 2) {
+        	 drawInstructionsOverlay(g, "전쟁개요: 페이지 3");
         }
    }	
 
     public void BackInformation() {
-        controller.BackInformation(this); 
+        controller.BackInformation(this);
     }
     private void drawInstructionsOverlay(Graphics g, String instructionText) {
         // 반투명한 회색 오버레이 그리기
@@ -78,18 +78,18 @@ public class A_Brood extends JPanel {
     }
     public void next() {
         // 다음 페이지로 이동
-        currentPage1++;
-        if (currentPage1 >= getMaxPages()) {
-            currentPage1 = getMaxPages() - 1;
+        currentPage2++;
+        if (currentPage2 >= getMaxPages()) {
+            currentPage2 = getMaxPages() - 1;
         }
         repaint(); // 화면 다시 그리기
     }
     
     public void previous() {
         // 이전 페이지로 이동
-        currentPage1--;
-        if (currentPage1 < 0) {
-            currentPage1 = 0;
+        currentPage2--;
+        if (currentPage2 < 0) {
+            currentPage2 = 0;
         }
         repaint(); // 화면 다시 그리기
     }

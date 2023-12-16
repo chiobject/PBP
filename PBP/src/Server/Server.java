@@ -230,7 +230,7 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 	
 	// 데이터를 받거나 보내는 쪽	
 	public void updateData(ServerData data) {
-		ServerData sndData = null;		// 접속자 수..이건 응용해보시길...몇번 테스트하면 보입니다..:D
+		ServerData sndData = null;
 		int count = cp.getLogName().size();		
 		switch (data.getState()) {		
 		case ServerData.LOGIN:			
@@ -276,10 +276,10 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 				}	
 		}
 	
-//	public static void main(String args[]) {
-//		Server test = new Server();	
-//		test.initialize();	
-//		}
+	public static void main(String args[]) {
+		Server test = new Server();	
+		test.initialize();	
+		}
 	}
 
 

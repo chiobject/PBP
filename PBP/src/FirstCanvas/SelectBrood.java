@@ -1,4 +1,4 @@
-package startcanvasex;
+package FirstCanvas;
 
 import java.awt.Color;
 import java.awt.Font;
