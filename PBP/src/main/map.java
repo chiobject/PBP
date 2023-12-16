@@ -26,7 +26,7 @@ public class map extends Area {
 	void create() {
 		for (int i = 0; i < max_x; i++) {
 			for (int j = 0; j < max_y; j++) {
-				field[i][j].setOwner(0);
+				field[i][j].setOwner("null");
 				if (i % 2 == 1 || j % 2 == 1) {
 					field[i][j] = new blank();
 				} else if ((i % (max_x - 1) == 0 && j % (max_y - 1) == 0)) {
@@ -41,8 +41,6 @@ public class map extends Area {
 				field[i][j].start();
 			}
 		}
-		field[0][0].setOwner(1);
-		field[max_x-1][max_y-1].setOwner(2);
 	}
 	public Point getPosition() {
 		return position;

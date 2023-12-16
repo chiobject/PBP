@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.Timer;
 
 import field.field;
+import server.main;
 import unit.unit;
 
 import java.awt.*;
@@ -60,6 +61,9 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 	}
 
 	public void start() {
+		gameGUI.getData().map.getField(0, 0).setOwner(gameGUI.getData().player1.getUUID());
+		System.out.println(gameGUI.getData().player1.getUUID()+ "+sdfasdf");
+		gameGUI.getData().map.getField(8, 8).setOwner(gameGUI.getData().player2.getUUID());
 		stop = false;
 		worker = new Thread(this);
 		worker.start();
@@ -93,13 +97,13 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 		for (int i = 0; i < gameGUI.getData().map.getPosition().x; i++) {
 			for (int j = 0; j < gameGUI.getData().map.getPosition().y; j++) {
-				int getOwner = gameGUI.getData().map.getField(i, j).getOwner();
+				String getOwner = gameGUI.getData().map.getField(i, j).getOwner();
 				int getType = gameGUI.getData().map.getField(i, j).getType();
 				boolean getIsBuilding = gameGUI.getData().map.getField(i, j).getIsBuilding();
-				if (getOwner == 0 && (getType == 1 || getType == 2)) {
+				if (getOwner == null && (getType == 1 || getType == 2)) {
 					offScreenGraphics.drawImage(castle0Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
 							field.y + j * RECTANGLE_SIZE + 1, this);
-				} else if (getOwner == 1 && getType != 0) {
+				} else if (getOwner == gameGUI.getData().player1.getUUID() && getType != 0) {
 					if (getIsBuilding == false) {
 						offScreenGraphics.drawImage(castle1_4Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
 								field.y + j * RECTANGLE_SIZE + 1, this);
@@ -121,7 +125,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 		                }
 					}
-				} else if (getOwner == 2 && getType != 0) {
+				} else if (getOwner == gameGUI.getData().player2.getUUID() && getType != 0) {
 					if (getIsBuilding == false) {
 						offScreenGraphics.drawImage(castle2_4Icon.getImage(), field.x + i * RECTANGLE_SIZE + 1,
 								field.y + j * RECTANGLE_SIZE + 1, this);
@@ -164,6 +168,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		while (!stop) {
 			repaint();
 			seaSel++;
+			main.originalrefresh();
 			try {
 				worker.sleep(100);
 			} catch (InterruptedException e) {

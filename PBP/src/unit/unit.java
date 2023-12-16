@@ -38,12 +38,13 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	Image charactorLeft, charactorRight;
 	int sel;
 	private boolean move;
-	private int owner;
+	private String owner;
 	private Point spawnPoint = new Point(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y);
 	private sound warSound ;
 
-	public unit(int unitType, int Onwer) {
+	public unit(int unitType, String owner) {
 		this.unitType = unitType;
+		this.owner = owner;
 	}
 
 	public void setAttack(int attack) {
@@ -237,7 +238,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 					// 상대 필드일 때
 					else if (gameGUI.getData().map.getField(i, j).getOwner() != owner) {
 						gameGUI.getData().map.getField(i, j).changeUnitCount(-attack);
-						if(gameGUI.getData().map.getField(i, j).getOwner() != 0) {
+						if(gameGUI.getData().map.getField(i, j).getOwner() == null) {
 							hp -= gameGUI.getData().getPlayer(gameGUI.getData().map.getField(i, j).getOwner()).getBrood().getAD();
 						}
 						try {
@@ -290,11 +291,11 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		return move;
 	}
 
-	public int getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 
-	public void setOwner(int owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 

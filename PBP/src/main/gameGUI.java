@@ -72,13 +72,13 @@ public class gameGUI {
 
         JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
         menu.add(mntmNewMenuItem);
-//
-//        // System.out 리디렉션
-//        PrintStream printStream = new PrintStream(new CustomOutputStream(logTextArea));
-//        PrintStream customOut = new CustomPrintStream(logTextArea);
-//        System.setOut(printStream);
-//        System.setOut(customOut);
-//        System.setErr(printStream);
+
+        // System.out 리디렉션
+        PrintStream printStream = new PrintStream(new CustomOutputStream(logTextArea));
+        PrintStream customOut = new CustomPrintStream(logTextArea);
+        System.setOut(printStream);
+        System.setOut(customOut);
+        System.setErr(printStream);
 
         bgm.play();
         

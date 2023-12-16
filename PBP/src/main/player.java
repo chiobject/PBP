@@ -8,8 +8,9 @@ import brood.human;
 public class player {
 	private int player;
 	private brood brood;
+	private String uuid="0";
 	
-	public player(int player, int brood){
+	public player(int brood){
 		this.player = player;
 		if(brood == 1) {
 			this.brood = new elf();
@@ -34,5 +35,11 @@ public class player {
 
 	public void setbrood(int brood) {
 		this.brood.setBrood(brood);
+	}
+	public void setUUID(String uuid) {
+		this.uuid = uuid;
+	}
+	public String getUUID() {
+		return uuid;
 	}
 }

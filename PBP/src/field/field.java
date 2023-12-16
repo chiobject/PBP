@@ -16,7 +16,7 @@ public abstract class field implements Runnable {
 	protected String buttonName2 = "";
 	protected String buttonName3 = "";
 	protected String buttonName4 = "";
-	private int owner;
+	private String owner;
 	public int unitCount = 0;
 	private boolean running = false;
 	private Thread worker;
@@ -91,7 +91,7 @@ public abstract class field implements Runnable {
 	}
 
 	private void unitproduction() {
-		if (owner != 0 && isProduction == true) {
+		if (owner != null && isProduction == true) {
 			if (unitMax > unitCount) {
 				unitCount += gameGUI.getData().getPlayer(owner).getBrood().getpopProdRate();
 				if(unitCount >= unitMax) {
@@ -110,7 +110,6 @@ public abstract class field implements Runnable {
 	}
 
 	public void startSummonCooldown() {
-		summonCooldown = true;
 		Timer cooldownTimer = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +137,7 @@ public abstract class field implements Runnable {
 		this.dirActivate = dirActivate;
 	}
 
-	public int getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 	
@@ -162,7 +161,7 @@ public abstract class field implements Runnable {
 		return isBuilding;
 	}
 
-	public void setOwner(int owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 

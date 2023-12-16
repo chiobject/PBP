@@ -75,7 +75,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button1();
 			}
 		});
@@ -83,7 +83,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button2();
 			}
 		});
@@ -91,7 +91,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button3();
 			}
 		});
@@ -99,7 +99,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y)
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button4();
 			}
 		});
@@ -125,7 +125,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		Graphics offScreenGraphics = offScreenImage.getGraphics();
 		super.paintComponent(offScreenGraphics);
 
-		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,
+				gameGUI.getMainCanvas().select.y);
 
 		offScreenGraphics.drawImage(backGround.getImage(), 0, 0, this);
 
@@ -168,7 +169,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	// 라벨 생성
 	public void createLabel() {
-		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,
+				gameGUI.getMainCanvas().select.y);
 		button1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		button1Label.setVerticalAlignment(SwingConstants.CENTER);
 		button1Label.setText(selectField.getButtonName(1));
@@ -201,7 +203,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		buttonTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		buttonTitleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		add(buttonTitleLabel);
-		
+
 		populationLabel.setFont(fontButton);
 		populationLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		populationLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -226,7 +228,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 				public void mousePressed(MouseEvent e) {
 					while (true) {
 						// 다이얼로그를 통해 숫자 입력 받기
-						String input = JOptionPane.showInputDialog(null, "숫자를 입력하세요: (최대 : "+selectField.getUnitCount() + ")", "숫자 입력",
+						String input = JOptionPane.showInputDialog(null,
+								"숫자를 입력하세요: (최대 : " + selectField.getUnitCount() + ")", "숫자 입력",
 								JOptionPane.QUESTION_MESSAGE);
 
 						// 입력이 null이 아니고 빈 문자열이 아닌 경우에만 처리
@@ -236,11 +239,13 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 								int inputValue = Integer.parseInt(input);
 
 								if (selectField.getUnitCount() >= inputValue) {
-									unitSummon(inputValue, dirnum);
+									gameGUI.getData().dirnum = dirnum;
+									gameGUI.getData().inputValue = inputValue;
 									break; // 올바른 값이 입력되었으므로 반복문 종료
 								} else {
-									JOptionPane.showMessageDialog(null, String.valueOf(selectField.getUnitCount()) + " 이하 소환가능합니다",
-											"오류", JOptionPane.WARNING_MESSAGE);
+									JOptionPane.showMessageDialog(null,
+											String.valueOf(selectField.getUnitCount()) + " 이하 소환가능합니다", "오류",
+											JOptionPane.WARNING_MESSAGE);
 								}
 
 							} catch (NumberFormatException ex) {
@@ -293,11 +298,10 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			buttonTitleLabel.setText("[" + selectField.name + "]");
 			buttonTitle.setBounds(getWidth() / 6 + 70, getHeight() / 2 + 40, 130, 50);
 			buttonTitleLabel.setBounds(getWidth() / 6 + 85, getHeight() / 2 + 42, 100, 50);
-			
-			
+
 			populationLabel.setText("병력 수 : " + selectField.getUnitCount());
-			populationLabel.setBounds(getWidth() / 2 - 70, getHeight() / 2-20, 150, 50);
-			
+			populationLabel.setBounds(getWidth() / 2 - 70, getHeight() / 2 - 20, 150, 50);
+
 			button1Label.setFont(fontButton);
 			button2Label.setFont(fontButton);
 			button3Label.setFont(fontButton);
@@ -422,35 +426,29 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		}
 	}
 
-	public void unitSummon(int hp, int dir) {
-		field selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,gameGUI.getMainCanvas().select.y);
-		if (selectField.unitCount > 50) {
-			if (selectField.getsummonCooldown() == false) {
+	public void unitSummon(int hp, int dir, int x, int y,int selectX, int selectY) {
+		
+		if (selectField.getsummonCooldown() == false) {
 //				if (selectField.getOwner() != 0) {
-				unit unit = new unit(selectField.getUnitType(), selectField.getOwner());
-				unit.setPosition(gameGUI.getMainCanvas().getFieldSelectPoint().x,
-						gameGUI.getMainCanvas().getFieldSelectPoint().y);
-				unit.setAttack(50);
-				selectField.unitCount -= hp;
-				unit.setHp(hp);
-				unit.speed = 1;
-				unit.dir = dir;
-				unit.setOwner(selectField.getOwner());
-				unit.unitmove(1);
-				unit.start();
-				gameGUI.getData().addUnit(unit);
-
-				selectField.startSummonCooldown();
+			unit unit = new unit(gameGUI.getData().map.getField(selectX,selectY).getUnitType(), gameGUI.getData().map.getField(selectX,selectY).getOwner());
+			unit.setPosition(x, y);
+			unit.setAttack(50);
+			selectField.unitCount -= hp;
+			unit.setHp(hp);
+			unit.speed = 1;
+			unit.dir = dir;
+			unit.setOwner(gameGUI.getData().map.getField(selectX,selectY).getOwner());
+			unit.unitmove(1);
+			unit.start();
+			gameGUI.getData().addUnit(unit);
 //				} 
 //			else {
 //					System.out.println("권한이 없습니다.");
 //				}
-			} else {
-				System.out.println("소환 쿨타임 입니다.");
-			}
 		} else {
-			System.out.println("유닛 수 부족");
+			System.out.println("소환 쿨타임 입니다.");
 		}
+
 	}
 
 	@Override
