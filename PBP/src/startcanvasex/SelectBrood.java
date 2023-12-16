@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 public class SelectBrood extends JPanel {    
 	int chose = 0;
-	int selectP=0;
 	Image intro_image;
 	Image[] buttonImages;
 	Image[]	Unit;
@@ -62,15 +61,8 @@ public class SelectBrood extends JPanel {
 	    g.drawString("Elf", 100, 300);
 	    g.drawString("Goblin", 100, 400);
 	    g.setFont(new Font("choseplayer", Font.BOLD ,30));
-	    g.drawString("Player 1", 1100, 200);
-	    g.drawString("Player 2", 1100, 300);
 	    g.drawString("Game Start", 1100, 400);
 	    // 선택한 메뉴에 따라 화살표를 그림
-	    if (selectP==1) {
-	    	 g.drawString("◈", 1080, 200);
-	    }else if(selectP==2) {
-	    	 g.drawString("◈", 1080, 300);
-	    }
 	    if (chose == 0)
 	        g.drawString("←", 180, 200);
 	    else if (chose == 1)

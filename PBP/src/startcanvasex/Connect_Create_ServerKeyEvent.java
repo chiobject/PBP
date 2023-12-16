@@ -23,9 +23,9 @@ public class Connect_Create_ServerKeyEvent implements KeyListener {
 		    } else if (e.getKeyCode() == 10) { // 엔터 키
 		        // select 값에 따라 다른 동작 수행
 		        if (Connect_Create_Server.chose == 0) {
-		        	Connect_Create_Server.showServerDialog();
+		        	Connect_Create_Server.showServer();
 		        } else if (Connect_Create_Server.chose == 1) {
-		        	Connect_Create_Server.showClientDialog();
+		        	Connect_Create_Server.showLogin();
 		        } else if (Connect_Create_Server.chose == 2) {
 		        	Connect_Create_Server.gameStart();
 		        }else if (Connect_Create_Server.chose ==3) {

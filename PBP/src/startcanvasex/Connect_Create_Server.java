@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import server.ClientDialog;
-import server.ServerDialog;
+import Server.Server;
+import Server.Login;
 
 
 import javax.swing.JPanel;
@@ -45,7 +45,7 @@ public class Connect_Create_Server extends JPanel {
 		//폰트변경후 문자열 삽입.
 		g.setFont(new Font("secondFont",Font.PLAIN,60));
 		g.setColor(Color.WHITE);
-		g.drawString("Create Server",460,450);
+		g.drawString("Server Open",460,450);
 		g.drawString("Connect Server", 450, 585);
 		g.drawString("Select Brood",460,710);
 		//기본값 게임시작바로 옆에 화살표를 위치시킨다
@@ -64,13 +64,13 @@ public class Connect_Create_Server extends JPanel {
         controller.goBack(this);
     }
     
-    public void showClientDialog() {
-        ClientDialog clientDialog = new ClientDialog();
-        clientDialog.setVisible(true);
+    public void showServer() {
+        Server server = new Server();
+        server.initialize(); // 서버 화면을 띄우는 메서드 호출
     }
-    public void showServerDialog() {
-    	ServerDialog serverDialog = new ServerDialog();
-    	serverDialog.setVisible(true);
+    public void showLogin() {
+        Login login = new Login();
+        login.initialize(); // 로그인 화면을 띄우는 메서드 호출
     }
     
 	public void gameStart(){
