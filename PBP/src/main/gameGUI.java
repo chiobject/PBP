@@ -11,6 +11,10 @@ public class gameGUI {
 
     private JFrame frame;
     private JTextArea logTextArea;  // logTextArea를 멤버 변수로 이동
+    private static data data = new data();	
+    private static mainCanvas maincanvas = new mainCanvas();
+    private static subCanvas subcanvas = new subCanvas();
+    private sound bgm = new sound("sounds//전쟁시대 브금.wav",-30);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -33,24 +37,27 @@ public class gameGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1300,810);
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
 
-        mainCanvas canvas = new mainCanvas();
         // Canvas를 패널에 추가
         JPanel mainPanel = new JPanel();
-        canvas.start();
+        maincanvas.start();
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(canvas, BorderLayout.CENTER);
+        mainPanel.add(maincanvas, BorderLayout.CENTER);
         mainPanel.setPreferredSize(new Dimension(900, 700));
         frame.getContentPane().add(mainPanel);
 
         // subPanel 추가
         JPanel subPanel = new JPanel();
-        subPanel.setPreferredSize(new Dimension(400, 700));
+        subcanvas.start();
+        subPanel.setLayout(new BorderLayout());
+        subPanel.add(subcanvas, BorderLayout.CENTER);
+        subPanel.setPreferredSize(new Dimension(400,700));
         frame.getContentPane().add(subPanel, BorderLayout.EAST);
 
         // logPanel 추가
         JPanel logPanel = new JPanel(new BorderLayout());
-        logPanel.setPreferredSize(new Dimension(1280, 100));
+        logPanel.setPreferredSize(new Dimension(1300, 110));
         logTextArea = new JTextArea();
         logTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(logTextArea);
@@ -73,6 +80,8 @@ public class gameGUI {
         System.setOut(customOut);
         System.setErr(printStream);
 
+        bgm.play();
+        
         frame.setVisible(true);
     }
 
@@ -112,5 +121,17 @@ public class gameGUI {
             // JTextArea를 스크롤하여 가장 최근에 추가된 텍스트를 표시
             textArea.setCaretPosition(textArea.getDocument().getLength());
         }
+    }
+    
+    public static mainCanvas getMainCanvas() {
+		return maincanvas;
+	}
+	
+    public static subCanvas getSubCanvas() {
+		return subcanvas;
+	}
+	
+    public static data getData() {
+    	return data;
     }
 }
