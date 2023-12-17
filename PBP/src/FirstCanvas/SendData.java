@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SendData {
-    private int data; // 전송할 데이터
+import Server.ServerData;
 
-    public SendData(int data) {
-        this.data = data;
+public class SendData {
+    private int selectedCharacter; // 전송할 데이터
+
+    public SendData(int selectedCharacter) {
+        this.selectedCharacter = selectedCharacter;
     }
 
     public void sendDataToServer(String serverHost, int serverPort) {
@@ -16,8 +18,8 @@ public class SendData {
              ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
 
             // 서버로 데이터 전송
-            out.writeObject(data);
-            System.out.println("데이터 전송 완료");
+        	 ServerData serverData = new ServerData("", "", ServerData.SENDDATA, null, null, selectedCharacter);
+             out.writeObject(serverData);
 
         } catch (IOException e) {
             e.printStackTrace();
