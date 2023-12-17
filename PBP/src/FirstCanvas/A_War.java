@@ -39,23 +39,25 @@ public class A_War extends JPanel {
         g.drawString("Return Information", 1100, 750);
         g.setFont(new Font("thirdFont", Font.BOLD ,20));
         g.setColor(Color.black);
-        g.drawString("Next", 1180, 650);
-        g.drawString("Back", 1080, 650);
-        // 선택한 메뉴에 따라 화살표를 그림
-        if (chose3 == 0)
-            g.drawString("→", 1160, 650);
-        else if (chose3 == 1)
-            g.drawString("→", 1060, 650);
-        else if (chose3 == 2)
+        if (chose3 == 2)
             g.drawString("→", 1080, 750);
         
         if (currentPage2 == 0) {
-            drawInstructionsOverlay(g, "전쟁개요: 페이지 1");
-        } else if (currentPage2 == 1) {
-            drawInstructionsOverlay(g, "전쟁개요: 페이지 2");
-        }else if (currentPage2 == 2) {
-        	 drawInstructionsOverlay(g, "전쟁개요: 페이지 3");
-        }
+            drawInstructionsOverlay(g, "대전쟁의 발생");
+            g.drawString("한 때 친했던 세 종족이 있었습니다. 각각 \"인간\", \"엘프\", 그리고 \"고블린\"이라 불리었습니다.", 70, 150);
+            g.drawString("이들은 수세기 동안 평화롭게 공존해왔고 자연의 섭리에 따라 자원을 나누어 사용하여 번영하고 있었습니다.",70,170);
+            g.drawString("그러나 어느 날, 그들의 땅에 이상한 현상이 일어났습니다. 식물이 죽어가고 동물들이 이탈하며 물은 변질되고 있었습니다.",70,190);
+            g.drawString("세 종족은 각자 자신들이 다른 부족의 잘못된 행동 때문이라고 의심하기 시작했습니다.",70,210);
+            g.drawString("\"만드는걸 좋아하는 인간이 그랬어!!\", \"더럽게 생활하는 고블린이 그랬어!!!\",\" 크릭케륽륵(엘프가 물에 이상한 짓을 하는걸 봤다)\"",70,260);
+            g.drawString("라며 세 종족은 각자 자신들의 피해가 다른 부족의 행동으로 발생했다며 의심하였습니다.",70,310);
+            g.drawString("이에따라 각 종족은 자신들의 주장을 입증하려 노력하였지만, 이상한 현상은 더욱 악화되었습니다.",70,330);
+            g.drawString("각 종족은 자신들의 생존을 위해 더 많은 자원을 축적하려 하였고, 자연의 섭리에 따르지 않는 행동을 취하기 시작하였습니다.",70,350);
+            g.drawString("이러한 갈등으로 인해 세 부족간의 싸움은 불거지게 되었습니다. 자원 경쟁, 영토 분쟁, ",70,370);
+            g.drawString("그리고 상호간의 공격가 방어가 이루어지며 예전의 평화로운 공동체는 사라져갔습니다.",70,390);
+            g.setFont(new Font("job", Font.BOLD ,30));
+            g.drawString("이 대전쟁에서 당신은 특정 종족의 지휘관이자 왕이자 우두머리입니다.",70,490);
+            g.drawString("당신의 종족을 이끌어 대전쟁에서 승리하십시오.",70,550);
+        } 
    }	
 
     public void BackInformation() {
@@ -70,31 +72,9 @@ public class A_War extends JPanel {
         // 게임 방법 설명 텍스트 그리기
         g.setFont(new Font("instructionFont", Font.PLAIN, 18));
         g.setColor(Color.WHITE);
-        g.drawString(instructionText, 70, 100);
+        g.drawString(instructionText, 600, 100);
 
         // 추가적인 설명 텍스트 그리기...
-    }
-    public void next() {
-        // 다음 페이지로 이동
-        currentPage2++;
-        if (currentPage2 >= getMaxPages()) {
-            currentPage2 = getMaxPages() - 1;
-        }
-        repaint(); // 화면 다시 그리기
-    }
-    
-    public void previous() {
-        // 이전 페이지로 이동
-        currentPage2--;
-        if (currentPage2 < 0) {
-            currentPage2 = 0;
-        }
-        repaint(); // 화면 다시 그리기
-    }
-
-    private int getMaxPages() {
-        // 전체 페이지 수 반환 (최대 페이지 수)
-        return 3;  // 예시로 2 페이지까지 있다고 가정
     }
     
     

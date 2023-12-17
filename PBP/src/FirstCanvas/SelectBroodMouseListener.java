@@ -56,6 +56,8 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
 			} else if (mouseX >= 1050 && mouseX <= 1250) {
 				if (mouseY >= 720 && mouseY <= 770) {
 					selectBrood.chose = 3;
+				}else if ( mouseY >= 200 && mouseY <=280 ) {
+					selectBrood.chose = 5;
 				}
 			}
 		}
@@ -66,7 +68,8 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
 		if (selectBrood.chose >= 0 && selectBrood.chose <= 2) {
 			// 클릭 시 캐릭터 선택 정보 확정, SendData 클래스를 통해 서버로 전송
 			System.out.println("캐릭터 선택 정보: " + selectBrood.chose);
-
+			
+			selectBrood.selectedBroodName = selectBrood.broodNames[selectBrood.chose];
 			// 서버 정보
 			String serverHost = "127.0.0.1"; // 서버 호스트 주소
 			int serverPort = 0302; // 서버 포트
@@ -76,7 +79,23 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
 			sendData.sendDataToServer(serverHost, serverPort);
 		} else if (selectBrood.chose == 3) {
 			selectBrood.BackIntro();
-		}
+		}else if (selectBrood.chose == 5) {
+            // ready 버튼 클릭 시 상태 변경
+            selectBrood.isReady = !selectBrood.isReady;
+
+            // 상대방에게 레디 상태를 전송하는 코드가 있다면 여기에 추가
+            // 예: sendOpponentReadyStatus(selectBrood.isReady);
+        }else if (selectBrood.chose == 4) {
+            // Game Start 버튼 클릭 시 상태 변경 및 타이머 시작
+            if (selectBrood.isReady && selectBrood.opponentReady && !selectBrood.gameStarted) {
+                selectBrood.gameStarted = true;
+                SelectBrood.startGameTimer();
+                
+            }
+        }
+		 selectBrood.repaint();
 	}
+	
+	
 
 }

@@ -4,7 +4,7 @@ import main.gameGUI;
 
 public class subBase extends field {
 	public subBase(){
-		super(2,"서브",3);
+		super(2,"공터",3);
 		buttonName1 = "소환하기";
 	}
 
