@@ -10,7 +10,7 @@ public class MainFrame extends JFrame{
 	public MainFrame(String title) {
 		super(title);
 		//윈도우상의 창의 위치를 잡아준다.
-		this.setLocation(new Point(700,350));
+		this.setLocation(new Point(0,0));
 		//프레임을 보여준다. default = false
 		this.setVisible(true);
 		//프레임의 창크기를 설정한다.

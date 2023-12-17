@@ -112,6 +112,8 @@ public class SelectBrood extends JPanel {
 	
 	    // 추가적인 설명 텍스트 그리기...
 	}
+	
+
 //	public void next() {
 //	    // 다음 페이지로 이동
 //	    currentPage++;

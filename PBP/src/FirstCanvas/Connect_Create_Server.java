@@ -47,6 +47,7 @@ public class Connect_Create_Server extends JPanel {
 //		//문자열 삽입
 		g.drawString("Back", 1200, 700);
 		//폰트변경후 문자열 삽입.
+		
 		g.setFont(new Font("secondFont",Font.PLAIN,60));
 		g.setColor(Color.WHITE);
 		g.drawString("Server Open",460,450);
@@ -61,7 +62,7 @@ public class Connect_Create_Server extends JPanel {
 			g.drawString("→", 400, 710);
 		else
 			g.drawString("→", 1150, 700);
-		clientDivisionN = getClient();
+		//clientDivisionN = getClient();
 		g.drawString("Client DivisionN: " + clientDivisionN, 800, 730);
 		
 		
@@ -78,7 +79,7 @@ public class Connect_Create_Server extends JPanel {
         server.initialize(); // 서버 화면을 띄우는 메서드 호출
     }
     public void showLogin() {
-        Login login = new Login();
+        Login login = new Login(null);
         login.initialize(); // 로그인 화면을 띄우는 메서드 호출
     }
     
@@ -86,11 +87,11 @@ public class Connect_Create_Server extends JPanel {
 		controller.selectBrood();
 	}
 	
-	private int getClient() {
-	    Client client = new Client();
-
-	    return client.getDivisionN();
-	}
+//	private int getClient() {
+//	    Client client = new Client();
+//
+//	    return client.getDivisionN();
+//	}
     
     
 }

@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -47,7 +48,8 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 	private int clientOne, clientTwo, clientThree;
 	private String userOne, userTwo, userThree;	
 	private Vector vector;
-
+    UUID divisionUUID1 = UUID.randomUUID();
+    UUID divisionUUID2 = UUID.randomUUID();
 	
 	private Point point;	
 	
@@ -172,7 +174,7 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 			try {			
 				st = new ServerThread(this, soc);				
 				if (bStart) { // 게임 진행중	
-					ServerData data = new ServerData(st.getName(),"죄송합니다...게임이 진행중입니다.\n잠시 후에 다시 시도해주세요", 0, 0);			
+					ServerData data = new ServerData(st.getName(),"죄송합니다...게임이 진행중입니다.\n잠시 후에 다시 시도해주세요",clientOne, divisionUUID1 , divisionUUID2);			
 					st.sendMessage(data);				
 					continue;				
 					}			
@@ -186,7 +188,7 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 	
 	// 서버 닫기	
 	void closeServ() {		
-		ServerData data = new ServerData("Server", "서버를 종료를 시도합니다.",ServerData.LOGOUT, 0);
+		ServerData data = new ServerData("Server", "서버를 종료를 시도합니다.",ServerData.LOGOUT, divisionUUID1, divisionUUID2);
 		cp.broadCasting(data);		
 		cp.setStop(data);		
 		if (st != null)			
@@ -230,51 +232,48 @@ public class Server extends JFrame implements Runnable, ActionListener,Adjustmen
 	
 	// 데이터를 받거나 보내는 쪽	
 	public void updateData(ServerData data) {
-		ServerData sndData = null;
-		int count = cp.getLogName().size();		
-		switch (data.getState()) {		
-		case ServerData.LOGIN:			
-			stateMessage(data.getName() + "님이 접속하였습니다. 접속자수:" + (count + 1)+ "\n");		
-			divisionNN = count;		
-			sndData = new ServerData(data.getName(), "하이", ServerData.LOGIN,divisionNN);		
-			if (count == 0) {				
-				clientOne = 1;				
-				userOne = data.getName();			
-				} else if (count == 1) {			
-					clientTwo = 2;			
-					userTwo = data.getName();			
-					} else if (count == 2) {	
-						clientThree = 3;			
-						userThree = data.getName();		
-						}		
-			cp.addClient(st);		
-			cp.broadCasting(sndData);		
-			break;		
-			case ServerData.SENDDATA:	
-				if (data.getDivision() == 11) {		
-					stateMessage(userOne + "에게 데이터를 보냅니다.\n");			
-					sndData = new ServerData(userOne, "One Client!",		
-							ServerData.SENDDATA, 11);				
-					cp.addClient(st);				
-					cp.broadCasting(sndData);			
-					break;			
-					} else if (data.getDivision() == 12) {		
-						stateMessage(userTwo + "에게 데이터를 보냅니다.\n");	
-						sndData = new ServerData(userTwo, "Two Client!",	
-								ServerData.SENDDATA, 12);			
-						cp.addClient(st);			
-						cp.broadCasting(sndData);			
-						break;		
-						} else if (data.getDivision() == 13) {	
-							stateMessage(userThree + "에게 데이터를 보냅니다.\n");		
-							sndData = new ServerData(userThree, "Three Client!",	
-									ServerData.SENDDATA, data.getDivision());		
-							cp.broadCasting(sndData);			
-							break;			
-							}		
-				break;	
-				}	
-		}
+	    ServerData sndData = null;
+	    int count = cp.getLogName().size();
+
+	    switch (data.getState()) {
+	        case ServerData.LOGIN:
+	            stateMessage(data.getName() + "님이 접속하였습니다. 접속자수:" + (count + 1) + "\n");
+	            divisionNN = count;
+	            sndData = new ServerData(data.getName(), "하이", ServerData.LOGIN, divisionUUID1, divisionUUID2);
+	            
+	            if (count == 0) {
+	                clientOne = 1;
+	                userOne = data.getName();
+	            } else if (count == 1) {
+	                clientTwo = 2;
+	                userTwo = data.getName();
+	            } else if (count == 2) {
+	                clientThree = 3;
+	                userThree = data.getName();
+	            }
+	            
+	            cp.addClient(st);
+	            cp.broadCasting(sndData);
+	            break;
+
+	        case ServerData.SENDDATA:
+	            UUID division1 = data.getDivision1();
+	            UUID division2 = data.getDivision2();
+
+	            if (division1 != null && division1.equals(divisionUUID1)) {
+	                stateMessage(userOne + "에게 데이터를 보냅니다.\n");
+	                sndData = new ServerData(userOne, "One Client!", ServerData.SENDDATA, divisionUUID1, divisionUUID2);
+	                cp.addClient(st);
+	                cp.broadCasting(sndData);
+	            } else if (division2 != null && division2.equals(divisionUUID2)) {
+	                stateMessage(userTwo + "에게 데이터를 보냅니다.\n");
+	                sndData = new ServerData(userTwo, "Two Client!", ServerData.SENDDATA, divisionUUID1, divisionUUID2);
+	                cp.addClient(st);
+	                cp.broadCasting(sndData);
+	            }
+	            break;
+	    }
+	}
 	
 	public static void main(String args[]) {
 		Server test = new Server();	

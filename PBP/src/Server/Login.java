@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.UUID;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +22,7 @@ public class Login extends JFrame implements ActionListener {
     JTextField ipTextField, nameTextField;
     JLabel ipLabel, nameLabel;
 
-    public Login() {
+    public Login(Client client) {
         super("Login");
     }
 
@@ -80,7 +82,9 @@ public class Login extends JFrame implements ActionListener {
             String name;
             host = ipTextField.getText().trim();
             name = nameTextField.getText().trim();
-            Client test = new Client();
+            UUID divisionUUID2 = null;
+			UUID divisionUUID1 = null;
+			Client test = new Client(divisionUUID1,divisionUUID2);
             test.makeConnection(host, name);
             test.initialize();
             setVisible(false);

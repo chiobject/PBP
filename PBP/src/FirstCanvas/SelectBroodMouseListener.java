@@ -53,19 +53,25 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
             if (mouseY >= 650 && mouseY <= 800) {
                 selectBrood.chose = 3;
             }
-        } else {
-            selectBrood.chose = 0;
-        }
+        } 
         selectBrood.repaint();
     }
 
     private void performAction() {
         if (selectBrood.chose >= 0 && selectBrood.chose <= 2) {
-            // 클릭 시 캐릭터 선택 정보 확정, 서버로 전송
+            // 클릭 시 캐릭터 선택 정보 확정, SendData 클래스를 통해 서버로 전송
             System.out.println("캐릭터 선택 정보: " + selectBrood.chose);
-            allowMouseInput = false; // 마우스 입력 비허용 상태로 전환
+
+            // 서버 정보
+            String serverHost = "127.0.0.1"; // 서버 호스트 주소
+            int serverPort = 0302; // 서버 포트
+
+            // SendData 객체 생성 및 데이터 전송
+            SendData sendData = new SendData(selectBrood.chose);
+            sendData.sendDataToServer(serverHost, serverPort);
         } else if (selectBrood.chose == 3) {
             selectBrood.BackIntro();
         }
     }
+    
 }

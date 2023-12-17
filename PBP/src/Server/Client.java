@@ -18,11 +18,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.util.UUID;
+
 public class Client extends JFrame implements ActionListener, AdjustmentListener, ItemListener {
     JLabel nameLabel, divisionLabel;
     JButton divisionButton;
     private int divisionN = 10;
     private String Name;
+
 
     // 서버 접속
     private Socket soc;
@@ -30,9 +33,13 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
     private ObjectInputStream in;
     private ClientThread ct;
     private ServerThread st;
+    UUID divisionUUID1 = UUID.randomUUID();
+    UUID divisionUUID2 = UUID.randomUUID();
 
-    public Client() {
+
+    public Client(UUID divisionUUID1, UUID divisionUUID2) {
         super("Client");
+
     }
 
     public void initialize() {
@@ -61,38 +68,28 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
         setSize(500, 400);
         setResizable(false);
         setVisible(true);
+        
+        ServerData data = new ServerData("", "", ServerData.SENDDATA, divisionUUID1, divisionUUID2);
+        sendMessage(data);
     }
 
     public void updateData(ServerData data) {
         ServerData sd = null;
         switch (data.getState()) {
             case ServerData.LOGIN:
-                if (data.getDivision() + 10 == divisionN) {
+                if (data.getDivision1().equals(divisionUUID1) || data.getDivision2().equals(divisionUUID2)) {
                     Name = data.getName();
                     nameLabel.setText(data.getName() + "님 환영합니다.");
-                    divisionN = 11;
-                    break;
-                } else if (data.getDivision() < divisionN) {
-                    Name = data.getName();
-                    nameLabel.setText(data.getName() + "님 환영합니다.");
-                    divisionN = 12;
-                    break;
+                    
                 }
-                // 이런식으로 각 클라이언트에게 값을 지정하고 그 지정한 값을
-                // 이용하여 서버가 클라한테 값을 보내주면 됩니다.
+                break;
             case ServerData.SENDDATA:
-                if (data.getDivision() == 11 && divisionN == 11) {
+                if (data.getDivision1().equals(divisionUUID1) || data.getDivision2().equals(divisionUUID2)) {
                     nameLabel.setText(data.getMessage() + "값을 받았습니다.");
-                    divisionN = 11;
-                    break;
-                } else if (data.getDivision() == 12 && divisionN == 12) {
-                    nameLabel.setText(data.getMessage() + "값을 받았습니다.");
-                    divisionN = 12;
-                    break;
                 }
                 break;
         }
-        nameLabel.setText("클라이언트Num" + divisionN);
+        nameLabel.setText("클라이언트Num" + divisionUUID1.toString() + " " + divisionUUID2.toString());
     }
 
     static String name;
@@ -114,7 +111,7 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
             setVisible(false);
             return;
         }
-        ServerData data = new ServerData(name, "가 입장\n", ServerData.LOGIN, 0);
+        ServerData data = new ServerData(name, "가 입장\n", ServerData.LOGIN, divisionUUID1, divisionUUID2);
         sendMessage(data);
         ct = new ClientThread(this, in);
     }
@@ -124,6 +121,7 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
         try {
             out.writeObject(data);
             System.out.println("작동중");
+            System.out.print(divisionUUID1);
         } catch (IOException ioe) {
             System.out.println("sendMessage1 error Ioe :" + ioe);
         }
@@ -149,7 +147,7 @@ public class Client extends JFrame implements ActionListener, AdjustmentListener
         Object o = e.getSource();
         if (o.equals(divisionButton)) {
             divisionLabel.setText("클라이언트Num" + divisionN);
-            ServerData sndData = new ServerData("", "", ServerData.SENDDATA, divisionN);
+            ServerData sndData = new ServerData("", "", ServerData.SENDDATA, divisionUUID1, divisionUUID2);
             sendMessage(sndData);
         }
     }
