@@ -23,8 +23,6 @@ public class A_War extends JPanel {
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
 
-        // KeyListener를 패널에 추가
-        addKeyListener(new A_WarKeyEvent(this));
         A_WarMouseListener mouseListener = new A_WarMouseListener(this);
         this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);

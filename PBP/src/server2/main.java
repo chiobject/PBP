@@ -13,7 +13,6 @@ import main.gameGUI;
 
 public class main {
 	private static TetrisClient originalclient = null;
-	
     public static void main(String[] args) {
         JFrame frame = new JFrame("Button Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

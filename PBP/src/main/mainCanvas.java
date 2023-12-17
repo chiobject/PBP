@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import javax.swing.Timer;
 
+import FirstCanvas.Connect_Create_ServerMouseListener;
+
 import field.field;
 import server2.main;
 import unit.unit;
@@ -59,7 +61,6 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 	public void start() {
 		gameGUI.getData().map.getField(0, 0).setOwner(gameGUI.getData().player1.getUUID());
-		System.out.println(gameGUI.getData().player1.getUUID()+ "+sdfasdf");
 		gameGUI.getData().map.getField(8, 8).setOwner(gameGUI.getData().player2.getUUID());
 		stop = false;
 		worker = new Thread(this);
@@ -165,6 +166,7 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		while (!stop) {
 			repaint();
 			seaSel++;
+			Connect_Create_ServerMouseListener.originalrefresh();
 			main.originalrefresh();
 			try {
 				worker.sleep(100);

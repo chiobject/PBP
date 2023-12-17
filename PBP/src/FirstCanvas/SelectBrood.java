@@ -35,8 +35,6 @@ public class SelectBrood extends JPanel {
 	    // 패널이 포커스를 받을 수 있도록 설정
 	    setFocusable(true);
 	
-	    // KeyListener를 패널에 추가
-	    addKeyListener(new SelectBroodKeyEvent(this));
 	    SelectBroodMouseListener mouseListener = new SelectBroodMouseListener(this);
 	    this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);
@@ -70,7 +68,9 @@ public class SelectBrood extends JPanel {
 	    else if (chose == 2)
 	        g.drawString("←", 180, 400);
 	    else if (chose == 3)
-	    	g.drawString("→", 1080, 750);
+	    	g.drawString("→", 1060, 750);
+	    else if (chose == 4)
+	    	g.drawString("→", 1060, 400);
 	    else
 	    g.setFont(new Font("instructionFont", Font.PLAIN, 18));
 	    g.setColor(Color.WHITE);
@@ -96,7 +96,6 @@ public class SelectBrood extends JPanel {
 	    	g.drawString("이동력 : ", 650, 350);
 	    	g.drawString("이능 : ", 650, 400);
 	    }
-	    
 	    		
 	}	
 	

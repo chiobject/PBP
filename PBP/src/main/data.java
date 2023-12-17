@@ -6,14 +6,18 @@ import unit.unit;
 
 public class data {
 	public List<unit> units = new ArrayList<>();
+	public List<player> playerList = new ArrayList<>();
 	public map map = new map();
-
+	
 	public player player0 = new player(1);
 	public player player1 = new player(2);
 	public player player2 = new player(3);
 	public int inputValue, dirnum;
 	
 	public data() {
+		playerList.add(player0);
+		playerList.add(player1);
+		playerList.add(player2);
 	}
 
 	public void addUnit(unit unit) {

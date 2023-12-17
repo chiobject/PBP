@@ -22,8 +22,6 @@ public class Information extends JPanel {
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
 
-        // KeyListener를 패널에 추가
-        addKeyListener(new InformationkeyEvent(this));
         InformationMouseListener mouseListener = new InformationMouseListener(this);
         this.addMouseListener(mouseListener);
         this.addMouseMotionListener(mouseListener);

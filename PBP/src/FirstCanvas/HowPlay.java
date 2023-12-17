@@ -22,9 +22,7 @@ public class HowPlay extends JPanel {
 
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
-
-        // KeyListener를 패널에 추가
-        addKeyListener(new HowPlayKeyEvent(this));
+        
         HowPlayMouseListener mouseListener = new HowPlayMouseListener(this);
         this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);

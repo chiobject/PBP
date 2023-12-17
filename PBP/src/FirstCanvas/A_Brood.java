@@ -23,8 +23,6 @@ public class A_Brood extends JPanel {
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
 
-        // KeyListener를 패널에 추가
-        addKeyListener(new A_BroodKeyEvent(this));
         A_BroodMouseListener mouseListener = new A_BroodMouseListener(this);
         this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);

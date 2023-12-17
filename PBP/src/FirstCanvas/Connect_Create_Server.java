@@ -30,8 +30,6 @@ public class Connect_Create_Server extends JPanel {
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
 
-        // KeyListener를 패널에 추가
-        addKeyListener(new Connect_Create_ServerKeyEvent(this));
         Connect_Create_ServerMouseListener mouseListener = new Connect_Create_ServerMouseListener(this);
         this.addMouseListener(mouseListener);
 		this.addMouseMotionListener(mouseListener);
@@ -64,10 +62,6 @@ public class Connect_Create_Server extends JPanel {
 			g.drawString("→", 1150, 700);
 		//clientDivisionN = getClient();
 		g.drawString("Client DivisionN: " + clientDivisionN, 800, 730);
-		
-		
-		
-
 	}
 
     public void BackIntro() {

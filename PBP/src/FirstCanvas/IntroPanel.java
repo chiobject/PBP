@@ -19,7 +19,6 @@ public class IntroPanel extends JPanel{
 		this.controller = controller; //<-- 받은 생성자를 여기에서 controller 라는 변수로 사용
 		//기본툴킷 객체로부터 getImage메소드를 활용하여 이미지를 불러온다.
 		intro_image = Toolkit.getDefaultToolkit().getImage("images/main.png");
-		this.addKeyListener(new IntroKeyEvent(this));
 		IntroMouseListener mouseListener = new IntroMouseListener(this);
 		this.addMouseMotionListener(mouseListener);
 		this.addMouseListener(mouseListener);
@@ -50,7 +49,6 @@ public class IntroPanel extends JPanel{
 			g.drawString("→", 450, 585);
 		else 
 			g.drawString("→", 540, 710);
-
 	}
 	
 	public void gameStart(){
