@@ -6,7 +6,7 @@ import javax.swing.Timer;
 import FirstCanvas.Connect_Create_ServerMouseListener;
 
 import field.field;
-import server2.main;
+import server.main;
 import unit.unit;
 
 import java.awt.*;
@@ -162,6 +162,25 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 
 	public void run() {
 		while (!stop) {
+			int n1 = 0;
+			int n2 = 0;
+			for (int i = 0; i < gameGUI.getData().map.getPosition().x; i++) {
+				for (int j = 0; j < gameGUI.getData().map.getPosition().y; j++) {
+					if(gameGUI.getData().map.getField(i, j).getType() == 1 && gameGUI.getData().map.getField(i, j).getOwner() == 1) {
+						n1++;
+					}
+					else if(gameGUI.getData().map.getField(i, j).getType() == 1 && gameGUI.getData().map.getField(i, j).getOwner() == 2) {
+						n2++;
+					}
+				}
+			}
+			if(n1 ==0 ) {
+				System.out.println("player1의 패배");
+			}
+			else if(n2 == 0 ) {
+				System.out.println("player2의 패배");
+			}
+
 			repaint();
 			seaSel++;
 			Connect_Create_ServerMouseListener.originalrefresh();

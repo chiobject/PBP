@@ -1,17 +1,17 @@
-package server2;
+package server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
 
-public class TetrisServer extends Thread {
+public class Server extends Thread {
     private Vector<ServerHandler> handlers;
     private int port;
     private int connectCount;
     
     // 생성자: 포트를 인수로 받아와서 저장
-    public TetrisServer(int port) {
+    public Server(int port) {
         this.port = port;
     }
 

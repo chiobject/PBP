@@ -1,4 +1,4 @@
-package server2;
+package server;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ClientDialog extends JDialog {
+public class clientDialog extends JDialog {
     private static final long serialVersionUID = 1L;
     private JLabel label1 = new JLabel("Host:"); // "Host" 레이블 생성
     private JTextField text1 = new JTextField(10); // "Host" 입력 필드 생성
@@ -30,7 +30,7 @@ public class ClientDialog extends JDialog {
     // 사용자의 선택 (기본값은 NONE)
     public Choice userChoice = Choice.NONE;
 
-    public ClientDialog() {
+    public clientDialog() {
         setModal(true);	// 모달 다이얼로그로 설정
         setTitle("서버 접속");	// 다이얼로그 제목 설정
         setLayout(new GridLayout(3, 1));  // 3x1 그리드 레이아웃 설정

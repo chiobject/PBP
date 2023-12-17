@@ -110,6 +110,7 @@ public abstract class field implements Runnable {
 	}
 
 	public void startSummonCooldown() {
+		summonCooldown = true;
 		Timer cooldownTimer = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -1,4 +1,4 @@
-package server2;
+package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,26 +12,25 @@ import java.util.UUID;
 
 import main.gameGUI;
 
-public class TetrisClient extends Thread {
+public class client extends Thread {
 	private String host; // 호스트(서버 주소)를 저장할 변수
 	private int port; // 포트(통신용 역할)를 저장할 변수
 	private BufferedReader input; // 입력 스트림
 	private PrintWriter output; // 출력 스트림
-	private String key, inputValue, dirnum, x, y, selectX, selectY; // 데이터 관련 변수들
-	private String Owner;
+	private String key, inputValue, dirnum, x, y, selectX, selectY, Owner; // 데이터 관련 변수들
+	public String brood, ready;
 
 	/**
-	 * TetrisClient 클래스의 생성자입니다.
-	 *
-	 * @param tetrisCanvas TetrisClient와 관련된 TetrisCanvas 인스턴스
-	 * @param netCanvas    TetrisNetworkCanvas 인스턴스 (네트워크 통신용)
-	 * @param host         서버의 호스트명 또는 IP 주소
-	 * @param port         서버가 수신 대기하는 포트 번호
+	 * @param host 서버의 호스트명 또는 IP 주소
+	 * @param port 서버가 수신 대기하는 포트 번호
 	 */
 
-	public TetrisClient(String host, int port) {
+	public client(String host, int port) {
 		this.host = host;
 		this.port = port;
+		System.out.println("안녕");
+		brood = "0";
+		ready = "false";
 	}
 
 	/**
@@ -51,16 +50,17 @@ public class TetrisClient extends Thread {
 		y = String.valueOf(gameGUI.getMainCanvas().getFieldSelectPoint().y);
 		selectX = String.valueOf(gameGUI.getMainCanvas().getSelect().x);
 		selectY = String.valueOf(gameGUI.getMainCanvas().getSelect().y);
-
 		// 본인 유닛 소환
 		if (gameGUI.getData().inputValue != 0) {
-			if (gameGUI.getData().map.getField(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y).getOwner() == Integer.parseInt(Owner)) {
-				//유닛 소환
+			if (gameGUI.getData().map
+					.getField(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y)
+					.getOwner() == Integer.parseInt(Owner)) {
+				// 유닛 소환
 				gameGUI.getSubCanvas().unitSummon(gameGUI.getData().inputValue, gameGUI.getData().dirnum,
 						gameGUI.getMainCanvas().getFieldSelectPoint().x,
 						gameGUI.getMainCanvas().getFieldSelectPoint().y, gameGUI.getMainCanvas().getSelect().x,
 						gameGUI.getMainCanvas().getSelect().y);
-				//필드 쿨타임
+				// 필드 쿨타임
 				gameGUI.getData().map
 						.getField(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y)
 						.startSummonCooldown();
@@ -68,12 +68,12 @@ public class TetrisClient extends Thread {
 				System.out.println("권환이 없습니다");
 				gameGUI.getData().inputValue = 0;
 				inputValue = "0";
-				
+
 			}
 		}
-
 		// 서버에 데이터 값 보냄
-		output.println(key + x + ";" + y + ";" + inputValue + ";" + dirnum + ";" + selectX + ";" + selectY);
+		output.println(key + x + ";" + y + ";" + inputValue + ";" + dirnum + ";" + selectX + ";" + selectY + ";" + brood
+				+ ";" + ready);
 		gameGUI.getData().inputValue = 0;
 	}
 
@@ -93,24 +93,39 @@ public class TetrisClient extends Thread {
 			while (true) {
 				// 서버에서 데이터 값 받음
 				String line = input.readLine();
+				System.out.println("와!");
 				if (line.length() != 0) {
 					String[] parsedData = line.split(";");
 					String checkKey = parsedData[0] + ";";
-					
 					if (!checkKey.equals(key) && parsedData.length > 1) {
 						int[] intArray = new int[parsedData.length];
+						int key = Integer.parseInt(parsedData[0]);
+						int x = Integer.parseInt(parsedData[1]);
+						int y = Integer.parseInt(parsedData[2]);
 						int inputvalue = Integer.parseInt(parsedData[3]);
 						int dirnum = Integer.parseInt(parsedData[4]);
 						int selectX = Integer.parseInt(parsedData[5]);
 						int selectY = Integer.parseInt(parsedData[6]);
+						if (ready != null) {
+							System.out.println(ready.equals(parsedData[8]));
+						}
 						// 상대의 유닛 소환
 						if ("null".equals(parsedData[1]) && "null".equals(parsedData[2])) {
 						} else {
-							int x = Integer.parseInt(parsedData[1]);
-							int y = Integer.parseInt(parsedData[2]);
 							if (Integer.parseInt(parsedData[3]) != 0) {
 								gameGUI.getSubCanvas().unitSummon(inputvalue, dirnum, x, y, selectX, selectY);
 							}
+							if (key > 0) {
+								if (parsedData[7] != null) {
+									int brood = Integer.parseInt(parsedData[7]);
+								}
+							}
+						}
+						System.out.println(parsedData[8] + "=" + ready + "/" + Owner + "=" + parsedData[0]);
+						if ("true".equals(parsedData[8]) && "true".equals(ready)&& Owner != parsedData[0]) {
+							gameGUI gamegui = new gameGUI();
+							System.out.println("하!");
+							ready = "false";
 						}
 						try {
 

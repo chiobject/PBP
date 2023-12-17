@@ -427,11 +427,10 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	}
 
 	public void unitSummon(int hp, int dir, int x, int y,int selectX, int selectY) {
-		System.out.println("아");
 		if (gameGUI.getData().map.getField(selectX,selectY).getsummonCooldown() == false) {
 			unit unit = new unit(gameGUI.getData().map.getField(selectX,selectY).getUnitType(), gameGUI.getData().map.getField(selectX,selectY).getOwner());
 			unit.setPosition(x, y);
-			unit.setSpawnPoint(selectX, selectX);
+			unit.setSpawnPoint(selectX, selectY);
 			unit.setAttack(gameGUI.getData().getPlayer(gameGUI.getData().map.getField(selectX, selectY).getOwner()).getBrood().getAD());
 			gameGUI.getData().map.getField(selectX,selectY).unitCount -= hp;
 			unit.setHp(hp);
@@ -441,6 +440,9 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			unit.unitmove(dir);
 			unit.start();
 			gameGUI.getData().addUnit(unit);
+		}
+		else {
+			System.out.println("소환 쿨타임 입니다.");
 		}
 	}
 

@@ -21,10 +21,7 @@ public class TetrisClient extends Thread {
 	private UUID uuid;
 
 	/**
-	 * TetrisClient 클래스의 생성자입니다.
 	 *
-	 * @param tetrisCanvas TetrisClient와 관련된 TetrisCanvas 인스턴스
-	 * @param netCanvas    TetrisNetworkCanvas 인스턴스 (네트워크 통신용)
 	 * @param host         서버의 호스트명 또는 IP 주소
 	 * @param port         서버가 수신 대기하는 포트 번호
 	 */

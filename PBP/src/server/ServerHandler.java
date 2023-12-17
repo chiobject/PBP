@@ -1,4 +1,4 @@
-package server2;
+package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,11 +19,11 @@ public class ServerHandler extends Thread {
 	private Socket s; // 클라이언트와의 소켓 연결
 	private BufferedReader i; // 클라이언트로부터의 입력 스트림
 	private PrintWriter o; // 클라이언트로의 출력 스트림
-	private TetrisServer server; // 테트리스 서버 객체
+	private Server server; // 테트리스 서버 객체
 	private int connectCount = 0;
 
 	// 생성자: 테트리스 서버 및 소켓을 초기화
-	public ServerHandler(TetrisServer server, Socket s, int connectCount) throws IOException {
+	public ServerHandler(Server server, Socket s, int connectCount) throws IOException {
 		this.s = s;
 		this.server = server;
 		this.connectCount = connectCount;

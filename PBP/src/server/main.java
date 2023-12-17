@@ -1,4 +1,4 @@
-package server2;
+package server;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +12,7 @@ import java.util.UUID;
 import main.gameGUI;
 
 public class main {
-	private static TetrisClient originalclient = null;
+	private static client originalclient = null;
     public static void main(String[] args) {
         JFrame frame = new JFrame("Button Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,8 +32,8 @@ public class main {
 				dialog.setLocationRelativeTo(null); 
 				dialog.setVisible(true);
 				if (dialog.userChoice == ServerDialog.Choice.OK) {
-					TetrisServer tetrisserver = new TetrisServer(dialog.getPortNumber());
-					tetrisserver.start();
+					Server server = new Server(dialog.getPortNumber());
+					server.start();
 				}
 				
 			}
@@ -43,11 +43,11 @@ public class main {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-				ClientDialog dialog = new ClientDialog();
+				clientDialog dialog = new clientDialog();
 				dialog.setLocationRelativeTo(null); 
 				dialog.setVisible(true);
-				if (dialog.userChoice == ClientDialog.Choice.OK) {
-					originalclient = new TetrisClient(dialog.getHost(),dialog.getPortNumber());
+				if (dialog.userChoice == clientDialog.Choice.OK) {
+					originalclient = new client(dialog.getHost(),dialog.getPortNumber());
 					originalclient.start();
 				}
                 gameGUI gamegui = new gameGUI();
