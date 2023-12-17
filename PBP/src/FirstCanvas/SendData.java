@@ -18,7 +18,7 @@ public class SendData {
              ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
 
             // 서버로 데이터 전송
-        	 ServerData serverData = new ServerData("", "", ServerData.SENDDATA, null, null, selectedCharacter);
+        	 ServerData serverData = new ServerData("", "", ServerData.SENDDATA, null, null);
              out.writeObject(serverData);
 
         } catch (IOException e) {

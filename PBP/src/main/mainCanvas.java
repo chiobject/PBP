@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.Timer;
 
 import field.field;
-import server.main;
+import server2.main;
 import unit.unit;
 
 import java.awt.*;
@@ -14,9 +14,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.util.ArrayList;
-import java.util.List;
 
 public class mainCanvas extends JPanel implements ActionListener, Runnable, MouseListener, KeyListener {
 	private static final int RECTANGLE_SIZE = 64;

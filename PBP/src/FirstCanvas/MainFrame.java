@@ -9,7 +9,8 @@ public class MainFrame extends JFrame{
 	//생성자로 프레임의 이름을 받아 그대로 부모클래스로 전달해준다.
 	public MainFrame(String title) {
 		super(title);
-		//윈도우상의 창의 위치를 잡아준다.
+		this.setSize(1320,810);
+		//프레임 크기를 설정한다.
 		this.setLocation(new Point(0,0));
 		//프레임을 보여준다. default = false
 		this.setVisible(true);
@@ -21,6 +22,8 @@ public class MainFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//사진
 		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		//윈도우상의 창의 위치를 잡아준다.
 	//	this.getContentPane().add(new IntroPanel(controller));
 		//뷰컨트롤러
 		controller = new viewController(this);

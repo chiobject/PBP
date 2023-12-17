@@ -428,27 +428,21 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	public void unitSummon(int hp, int dir, int x, int y,int selectX, int selectY) {
 		
-		if (selectField.getsummonCooldown() == false) {
-//				if (selectField.getOwner() != 0) {
+		if (gameGUI.getData().map.getField(selectX,selectY).getsummonCooldown() == false) {
 			unit unit = new unit(gameGUI.getData().map.getField(selectX,selectY).getUnitType(), gameGUI.getData().map.getField(selectX,selectY).getOwner());
 			unit.setPosition(x, y);
+			unit.setSpawnPoint(selectX, selectX);
 			unit.setAttack(50);
-			selectField.unitCount -= hp;
+			gameGUI.getData().map.getField(selectX,selectY).unitCount -= hp;
 			unit.setHp(hp);
 			unit.speed = 1;
 			unit.dir = dir;
 			unit.setOwner(gameGUI.getData().map.getField(selectX,selectY).getOwner());
-			unit.unitmove(1);
+			unit.unitmove(dir);
 			unit.start();
+			System.out.println(unit.getPosition().x+ "/" + unit.getPosition().y);
 			gameGUI.getData().addUnit(unit);
-//				} 
-//			else {
-//					System.out.println("권한이 없습니다.");
-//				}
-		} else {
-			System.out.println("소환 쿨타임 입니다.");
 		}
-
 	}
 
 	@Override

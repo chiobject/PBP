@@ -39,7 +39,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	int sel;
 	private boolean move;
 	private String owner;
-	private Point spawnPoint = new Point(gameGUI.getMainCanvas().getSelect().x, gameGUI.getMainCanvas().getSelect().y);
+	private Point spawnPoint;
 	private sound warSound ;
 
 	public unit(int unitType, String owner) {
@@ -113,24 +113,30 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void run() {
 		while (running) {
+			System.out.println("아1");
 			charactorLeft = Toolkit.getDefaultToolkit()
 					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitLeft());
 			charactorRight = Toolkit.getDefaultToolkit()
 					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitRight());
 			try {
+				System.out.println(running);
 				// 유닛 이동 가능
 				setMove(true);
-
+				System.out.println("아2");
 				if(isUnitCollision() == true){
-				
+					System.out.println("아3");
+					System.out.println(running);
 				}else {
 					isFieldCollision();
+					System.out.println("아4");
+					System.out.println(running);
 				}
 				isUnitCollision();
-
+				System.out.println("아5");
 				// 유닛 이동
 				if (move == true) {
 					unitmove(dir);
+					System.out.println("아6");
 				}
 
 				// hp0이하일 시 유닛 사망
@@ -138,7 +144,8 @@ public class unit extends JPanel implements KeyListener, Runnable {
 					gameGUI.getData().removeUnit(this);
 					stop();
 				}
-
+				System.out.println(running);
+				System.out.println("아7");
 				worker.sleep(speed);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -279,6 +286,9 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		return false;
 	}
 
+	public void setSpawnPoint(int x,int y) {
+		spawnPoint = new Point(x,y);
+	}
 	public Point getPosition() {
 		return position;
 	}

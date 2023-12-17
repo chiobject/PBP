@@ -38,6 +38,7 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
     private void handleMouseClick(int mouseX, int mouseY) {
         handleMouseMovement(mouseX, mouseY);
         performAction();
+        System.out.println("대기중");
     }
 
     private void handleMouseMovement(int mouseX, int mouseY) {
