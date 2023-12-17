@@ -39,21 +39,20 @@ public class HowPlay extends JPanel {
         g.drawString("Return Information", 1100, 750);
         g.setFont(new Font("thirdFont", Font.BOLD ,20));
         g.setColor(Color.black);
-        g.drawString("Next", 1180, 650);
-        g.drawString("Back", 1080, 650);
         // 선택한 메뉴에 따라 화살표를 그림
-        if (chose1 == 0)
-            g.drawString("→", 1160, 650);
-        else if (chose1 == 1)
-            g.drawString("→", 1060, 650);
-        else if (chose1 == 2)
+        if (chose1 == 2)
             g.drawString("→", 1080, 750);
         
         if (currentPage == 0) {
-            drawInstructionsOverlay(g, "게임 방법 설명: 페이지 1");
-        } else if (currentPage == 1) {
-            drawInstructionsOverlay(g, "게임 방법 설명: 페이지 2");
-        }
+            drawInstructionsOverlay(g, "게임 방법 설명: 유닛을 소환하여 상대방 기지를 점령하는 게임입니다!");
+            g.drawString("기본 조작 : 오른쪽 패널의 방향키와 버튼을 클릭하여 유닛을 조작할 수 있습니다.", 70, 150);
+            g.drawString("필드 정보: 본진 / 공터 / 빈 성 ", 70, 200);
+            g.drawString("본진 : 내 유닛의 시작 지점", 70, 230);
+            g.drawString("공터 : 아무 기능 없는 공터", 70, 250);
+            g.drawString("빈성 : 점령하여 본진과 동일한 시스템 사용 가능", 70, 270);
+            g.drawString("유닛 : 인간 / 엘프 / 고블린", 70, 320);
+            g.drawString("승리 조건 : 상대방의 기지를 점령", 70, 370);
+        } 
    }	
 
     public void BackInformation() {
@@ -73,28 +72,8 @@ public class HowPlay extends JPanel {
 
         // 추가적인 설명 텍스트 그리기...
     }
-    public void next() {
-        // 다음 페이지로 이동
-        currentPage++;
-        if (currentPage >= getMaxPages()) {
-            currentPage = getMaxPages() - 1;
-        }
-        repaint(); // 화면 다시 그리기
-    }
-    
-    public void previous() {
-        // 이전 페이지로 이동
-        currentPage--;
-        if (currentPage < 0) {
-            currentPage = 0;
-        }
-        repaint(); // 화면 다시 그리기
-    }
 
-    private int getMaxPages() {
-        // 전체 페이지 수 반환 (최대 페이지 수)
-        return 2;  // 예시로 2 페이지까지 있다고 가정
-    }
+
     
     
 }

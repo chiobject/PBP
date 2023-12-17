@@ -32,15 +32,7 @@ public class HowPlayMouseListener extends MouseAdapter implements MouseMotionLis
     }
 
     private void handleMouseMovement(int mouseX, int mouseY) {
-        if (mouseX >= 1170 && mouseX <= 1230) {
-            if (mouseY >= 630 && mouseY <= 660) {
-            	HowPlay.chose1 = 0;
-            }
-        	}else if (mouseX >= 1075 && mouseX <= 1135){
-            	if(mouseY >= 630 && mouseY <= 660) {
-            		HowPlay.chose1 = 1;
-            	}
-            } else if (mouseX >= 1080 && mouseX <= 1280) { // Return Information 버튼 좌표 범위
+            if (mouseX >= 1080 && mouseX <= 1280) { // Return Information 버튼 좌표 범위
                 if (mouseY >= 720 && mouseY <= 790) {
                     HowPlay.chose1 = 2;
                 }
@@ -49,11 +41,7 @@ public class HowPlayMouseListener extends MouseAdapter implements MouseMotionLis
 }
 
     private void performAction() {
-        if (HowPlay.chose1 == 0) {
-        	HowPlay.next();
-        } else if (HowPlay.chose1 == 1) {
-        	HowPlay.previous();
-        } else if (HowPlay.chose1 == 2) {
+    	if (HowPlay.chose1 == 2) {
         	HowPlay.BackInformation();
         }
     }

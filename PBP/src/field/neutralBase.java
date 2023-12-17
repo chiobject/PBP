@@ -4,7 +4,7 @@ import main.gameGUI;
 
 public class neutralBase extends field {
 	public neutralBase() {
-		super(3,"중립",2);
+		super(3,"빈 성",2);
 	}
 
 	@Override

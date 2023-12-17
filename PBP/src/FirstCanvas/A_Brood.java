@@ -14,11 +14,17 @@ public class A_Brood extends JPanel {
     Image intro_image;
     viewController controller;
     int currentPage1 = 0;  // 현재 페이지를 나타내는 변수
+    Image[]	Unit;
 
     public A_Brood(viewController controller) {
         this.controller = controller;
         
         intro_image = Toolkit.getDefaultToolkit().getImage("images/explain.png");
+        
+        Unit = new Image[3];
+        Unit[0] = Toolkit.getDefaultToolkit().getImage("unitImage/human.png");
+        Unit[1] = Toolkit.getDefaultToolkit().getImage("unitImage/elf.png");
+        Unit[2] = Toolkit.getDefaultToolkit().getImage("unitImage/goblin.png");
 
         // 패널이 포커스를 받을 수 있도록 설정
         setFocusable(true);
@@ -50,11 +56,29 @@ public class A_Brood extends JPanel {
             g.drawString("→", 1080, 750);
         
         if (currentPage1 == 0) {
-            drawInstructionsOverlay(g, "종족1: 페이지 1");
+            drawInstructionsOverlay(g, "인간 - 다재다능");
+	    	g.drawImage(Unit[0], 230, 70, 450, 400, this);
+	    	g.drawString("공격력 : 60", 650, 250);
+	    	g.drawString("생산력 : 50", 650, 300);
+	    	g.drawString("이동력 : 150", 650, 350);
+	    	g.drawString("인간은 특출난 능력이 없는 대신 모든 수치가 균등하게 분배되어 있습니다.", 70, 500);
+
         } else if (currentPage1 == 1) {
-            drawInstructionsOverlay(g, "종족2: 페이지 2");
+            drawInstructionsOverlay(g, "엘프 - 신속");
+	        g.drawImage(Unit[1], 230, 70, 450, 400, this);
+	    	g.drawString("공격력 : 50 ", 650, 250);
+	    	g.drawString("생산력 : 50", 650, 300);
+	    	g.drawString("이동력 : 200", 650, 350);
+	    	g.drawString("엘프는 인간과 고블린에 비해 생산력이나 공격력이 떨어지지만, 이동력이 빠릅니다.", 70, 500);
+
         }else if (currentPage1 == 2) {
-        	 drawInstructionsOverlay(g, "종족3: 페이지 3");
+        	drawInstructionsOverlay(g, "고블린 - 다산");
+        	g.drawImage(Unit[2],230, 70, 450, 400, this);
+	 	    g.drawString("공격력 : 35", 650, 250);
+	 	    g.drawString("생산력 : 80", 650, 300);
+	 	    g.drawString("이동력 : 150 ", 650, 350);
+	 	    g.drawString("고블린은 인간과 엘프에 비해 공격력과 이동력이 떨어지지만, 그것을 메울수 있는 생산력이 있습니다.", 70, 500);
+
         }
    }	
 

@@ -16,7 +16,7 @@ public class elf extends brood {
         unitLeft ="images\\unit\\elfLeft.png";
         unitRight = "images\\unit\\elfRight.png";
         AD = 50;
-        speed = 100;
+        speed = 200;
         popProdRate = 50;
         popProdSpeed = 800;
     }

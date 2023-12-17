@@ -32,15 +32,7 @@ public class A_WarMouseListener extends MouseAdapter implements MouseMotionListe
     }
 
     private void handleMouseMovement(int mouseX, int mouseY) {
-        if (mouseX >= 1180 && mouseX <= 1280) {
-            if (mouseY >= 600 && mouseY <= 700) {
-            	A_War.chose3 = 0;
-            }
-        }else if (mouseX >= 1050 && mouseX <= 1130){
-            	if(mouseY >= 600 && mouseY <= 700) {
-            		A_War.chose3 = 1;
-            	}
-            } else if (mouseX >= 1000 && mouseX <= 1200) { // Return Information 버튼 좌표 범위
+    	if (mouseX >= 1000 && mouseX <= 1200) { // Return Information 버튼 좌표 범위
                 if (mouseY >= 730 && mouseY <= 800) {
                 	A_War.chose3 = 2;
                 }
@@ -52,11 +44,7 @@ public class A_WarMouseListener extends MouseAdapter implements MouseMotionListe
 }
 
     private void performAction() {
-        if (A_War.chose3 == 0) {
-        	A_War.next();
-        } else if (A_War.chose3 == 1) {
-        	A_War.previous();
-        } else if (A_War.chose3 == 2) {
+    	if (A_War.chose3 == 2) {
         	A_War.BackInformation();
         }
     }
