@@ -11,8 +11,7 @@ public class subBase extends field {
 	@Override
 	public void button1() {
 		// TODO Auto-generated method stub
-		gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
-		gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
+		unitSummon();
 	}
 
 	@Override

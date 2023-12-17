@@ -16,8 +16,8 @@ public abstract class field implements Runnable {
 	protected String buttonName2 = "";
 	protected String buttonName3 = "";
 	protected String buttonName4 = "";
-	private int Owner;
-	public int unitCount = 5000;
+	private String owner;
+	public int unitCount = 0;
 	private boolean running = false;
 	private Thread worker;
 	private int unitType;
@@ -25,6 +25,9 @@ public abstract class field implements Runnable {
 	private boolean summonCooldown = false;
 	private boolean fieldActivate = true;
 	private boolean dirActivate = false;
+	private boolean isProduction = true;
+	private boolean isBuilding = false;
+	public int buildingTime = 0;
 
 	field(int type, String name, int buttonCount) {
 		this.type = type;
@@ -53,7 +56,7 @@ public abstract class field implements Runnable {
 		while (running) {
 			try {
 				unitproduction();
-				worker.sleep(1000); // 원하는 갱신 주기로 조절
+				worker.sleep(gameGUI.getData().getPlayer(owner).getBrood().getpopProdSpeed()); // 원하는 갱신 주기로 조절
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -88,12 +91,12 @@ public abstract class field implements Runnable {
 	}
 
 	private void unitproduction() {
-		if (type != 0) {
+		if (owner != null && isProduction == true) {
 			if (unitMax > unitCount) {
-				unitCount += 5;
-			}
-			if (unitMax <= unitCount) {
-				unitCount = unitMax;
+				unitCount += gameGUI.getData().getPlayer(owner).getBrood().getpopProdRate();
+				if(unitCount >= unitMax) {
+					unitCount = unitMax;
+				}
 			}
 		}
 	}
@@ -101,10 +104,13 @@ public abstract class field implements Runnable {
 	public int getUnitType() {
 		return unitType;
 	}
+	
+	public int getType() {
+		return type;
+	}
 
 	public void startSummonCooldown() {
-		summonCooldown = true;
-		Timer cooldownTimer = new Timer(10000, new ActionListener() {
+		Timer cooldownTimer = new Timer(5000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				summonCooldown = false;
@@ -131,19 +137,60 @@ public abstract class field implements Runnable {
 		this.dirActivate = dirActivate;
 	}
 
-	public void info() {
-//		gameGUI.getSubCanvas().getButton(1).visible=
+	public String getOwner() {
+		return owner;
+	}
+	
+	public int getUnitCount() {
+		return unitCount;
+	}
+	
+	public int getUnitMax() {
+		return unitMax;
+	}
+	
+	public void setUnitCount(int unitCount) {
+		this.unitCount = unitCount;
+	}
+	
+	public void setIsBuilding(boolean isBuilding) {
+		this.isBuilding = isBuilding;
+	}
+	
+	public boolean getIsBuilding() {
+		return isBuilding;
 	}
 
-	public int getOwner() {
-		return Owner;
-	}
-
-	public void setOwner(int Owner) {
-		this.Owner = Owner;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public boolean getsummonCooldown() {
 		return summonCooldown;
+	}
+	public void changeUnitCount(int unitCount) {
+		this.unitCount += unitCount;
+	}
+	public void setIsProduction(boolean isProduction) {
+		this.isProduction = isProduction;
+	}
+	public int getBuildingTime() {
+		return buildingTime;
+	}
+	public void setbuildingTime(int buildingTime) {
+		this.buildingTime = buildingTime;
+	}
+	public void changeBuildingTime(int buildingTime) {
+		this.buildingTime += buildingTime;
+	}
+	
+	public void unitSummon(){
+		if(gameGUI.getMainCanvas().getSelectField().getIsBuilding() ==false) {
+			gameGUI.getMainCanvas().getSelectField().setFieldActivate(false);
+			gameGUI.getMainCanvas().getSelectField().setDirActivate(true);
+		}
+		else {
+			System.out.println("지금은 유닛을 소환할 수 없습니다.");
+		}
 	}
 }

@@ -9,6 +9,7 @@ public class neutralBase extends field {
 
 	@Override
 	public void button1() {
+		unitSummon();
 	}
 
 	@Override

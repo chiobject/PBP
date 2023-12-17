@@ -14,6 +14,7 @@ public class gameGUI {
     private static data data = new data();	
     private static mainCanvas maincanvas = new mainCanvas();
     private static subCanvas subcanvas = new subCanvas();
+    private sound bgm = new sound("sounds//전쟁시대 브금.wav",-30);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -36,6 +37,7 @@ public class gameGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1300,810);
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
 
         // Canvas를 패널에 추가
         JPanel mainPanel = new JPanel();
@@ -71,13 +73,15 @@ public class gameGUI {
         JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
         menu.add(mntmNewMenuItem);
 
-//        // System.out 리디렉션
-//        PrintStream printStream = new PrintStream(new CustomOutputStream(logTextArea));
-//        PrintStream customOut = new CustomPrintStream(logTextArea);
-//        System.setOut(printStream);
-//        System.setOut(customOut);
-//        System.setErr(printStream);
+        // System.out 리디렉션
+        PrintStream printStream = new PrintStream(new CustomOutputStream(logTextArea));
+        PrintStream customOut = new CustomPrintStream(logTextArea);
+        System.setOut(printStream);
+        System.setOut(customOut);
+        System.setErr(printStream);
 
+        bgm.play();
+        
         frame.setVisible(true);
     }
 

@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,6 +32,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	private JLabel button2Label = new JLabel();
 	private JLabel button3Label = new JLabel();
 	private JLabel button4Label = new JLabel();
+	private JLabel populationLabel = new JLabel();
 	private JLabel buttonTitleLabel = new JLabel();
 	private JLabel buttonTitle = new JLabel();
 	private JLabel dir[] = new JLabel[4];
@@ -55,14 +57,14 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 	private ImageIcon dir4Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowLeft.png").getImage()
 			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-	private ImageIcon dirDisable1Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableUp.png").getImage()
-			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-	private ImageIcon dirDisable2Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableRight.png").getImage()
-			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-	private ImageIcon dirDisable3Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableDown.png").getImage()
-			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-	private ImageIcon dirDisable4Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableLeft.png").getImage()
-			.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+	private ImageIcon dirDisable1Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableUp.png")
+			.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+	private ImageIcon dirDisable2Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableRight.png")
+			.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+	private ImageIcon dirDisable3Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableDown.png")
+			.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+	private ImageIcon dirDisable4Icon = new ImageIcon(new ImageIcon("images\\\\subCanvas\\\\arrowDisableLeft.png")
+			.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
 	subCanvas() {
 		addMouseListener(this);
@@ -73,7 +75,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button1();
 			}
 		});
@@ -81,7 +83,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button2();
 			}
 		});
@@ -89,7 +91,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button3();
 			}
 		});
@@ -97,7 +99,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// 클릭 시 수행할 동작을 여기에 추가
-				gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y]
+				gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x, gameGUI.getMainCanvas().select.y)
 						.button4();
 			}
 		});
@@ -123,7 +125,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		Graphics offScreenGraphics = offScreenImage.getGraphics();
 		super.paintComponent(offScreenGraphics);
 
-		selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,
+				gameGUI.getMainCanvas().select.y);
 
 		offScreenGraphics.drawImage(backGround.getImage(), 0, 0, this);
 
@@ -166,7 +169,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	// 라벨 생성
 	public void createLabel() {
-		selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().select.x][gameGUI.getMainCanvas().select.y];
+		selectField = gameGUI.getData().map.getField(gameGUI.getMainCanvas().select.x,
+				gameGUI.getMainCanvas().select.y);
 		button1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		button1Label.setVerticalAlignment(SwingConstants.CENTER);
 		button1Label.setText(selectField.getButtonName(1));
@@ -200,6 +204,11 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		buttonTitleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		add(buttonTitleLabel);
 
+		populationLabel.setFont(fontButton);
+		populationLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		populationLabel.setVerticalAlignment(SwingConstants.CENTER);
+		add(populationLabel);
+
 		buttonTitle.setIcon(buttonTitleIcon);
 		add(buttonTitle);
 
@@ -217,8 +226,39 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			dir[i].addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// 클릭 시 수행할 동작을 여기에 추가
-					unitSummon(dirnum);
+					while (true) {
+						// 다이얼로그를 통해 숫자 입력 받기
+						String input = JOptionPane.showInputDialog(null,
+								"숫자를 입력하세요: (최대 : " + selectField.getUnitCount() + ")", "숫자 입력",
+								JOptionPane.QUESTION_MESSAGE);
+
+						// 입력이 null이 아니고 빈 문자열이 아닌 경우에만 처리
+						if (input != null && !input.trim().isEmpty()) {
+							try {
+								// 문자열을 숫자로 변환하여 변수에 저장
+								int inputValue = Integer.parseInt(input);
+
+								if (selectField.getUnitCount() >= inputValue) {
+									gameGUI.getData().dirnum = dirnum;
+									gameGUI.getData().inputValue = inputValue;
+									break; // 올바른 값이 입력되었으므로 반복문 종료
+								} else {
+									JOptionPane.showMessageDialog(null,
+											String.valueOf(selectField.getUnitCount()) + " 이하 소환가능합니다", "오류",
+											JOptionPane.WARNING_MESSAGE);
+								}
+
+							} catch (NumberFormatException ex) {
+								// 숫자로 변환할 수 없는 경우 예외 처리
+								JOptionPane.showMessageDialog(null, "올바른 숫자를 입력하세요.", "오류", JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							// 사용자가 취소 버튼을 눌렀거나 빈 문자열을 입력한 경우
+							break; // 반복문 종료
+						}
+					}
+					selectField.setFieldActivate(true);
+					selectField.setDirActivate(false);
 				}
 			});
 			dirDisable[i] = new JLabel();
@@ -227,6 +267,8 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 				public void mousePressed(MouseEvent e) {
 					// 클릭 시 수행할 동작을 여기에 추가]
 					System.out.println("그쪽으로는 소환할 수 없겠는데요?");
+					selectField.setFieldActivate(true);
+					selectField.setDirActivate(false);
 				}
 			});
 			add(dir[i]);
@@ -257,6 +299,9 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			buttonTitle.setBounds(getWidth() / 6 + 70, getHeight() / 2 + 40, 130, 50);
 			buttonTitleLabel.setBounds(getWidth() / 6 + 85, getHeight() / 2 + 42, 100, 50);
 
+			populationLabel.setText("병력 수 : " + selectField.getUnitCount());
+			populationLabel.setBounds(getWidth() / 2 - 70, getHeight() / 2 - 20, 150, 50);
+
 			button1Label.setFont(fontButton);
 			button2Label.setFont(fontButton);
 			button3Label.setFont(fontButton);
@@ -269,6 +314,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 			buttonTitle.setVisible(true);
 			buttonTitleLabel.setVisible(true);
+			populationLabel.setVisible(true);
 
 			if (selectField.getbuttonCount() == 0) {
 				button1.setVisible(false);
@@ -333,7 +379,7 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 
 	// 방향 선택 메인 화면
 	public void dirmain(Graphics g) {
-
+		populationLabel.setText("병력 수 : " + selectField.getUnitCount());
 		if (selectField.getDirActivate() == true) {
 			dirTitle.setBounds(getWidth() / 6 - 15, getHeight() / 2 + 40, 300, 50);
 			dirTitleLabel.setBounds(getWidth() / 6 - 15, getHeight() / 2 + 42, 300, 50);
@@ -345,12 +391,12 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			dir[1].setBounds(getWidth() / 2 + 30, getHeight() / 2 + 170, 50, 50);
 			dir[2].setBounds(getWidth() / 2 - 25, getHeight() / 2 + 220, 50, 50);
 			dir[3].setBounds(getWidth() / 2 - 80, getHeight() / 2 + 170, 50, 50);
-			
+
 			dirDisable[0].setBounds(getWidth() / 2 - 25, getHeight() / 2 + 120, 50, 50);
 			dirDisable[1].setBounds(getWidth() / 2 + 30, getHeight() / 2 + 170, 50, 50);
 			dirDisable[2].setBounds(getWidth() / 2 - 25, getHeight() / 2 + 220, 50, 50);
 			dirDisable[3].setBounds(getWidth() / 2 - 80, getHeight() / 2 + 170, 50, 50);
-			
+
 			for (int i = 0; i < dir.length; i++) {
 				dir[i].setVisible(true);
 				if (gameGUI.getMainCanvas().select.x == 0) {
@@ -361,11 +407,11 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 					dir[0].setVisible(false);
 					dirDisable[0].setVisible(true);
 				}
-				if (gameGUI.getMainCanvas().select.x == gameGUI.getData().map.getPosition().x -1) {
+				if (gameGUI.getMainCanvas().select.x == gameGUI.getData().map.getPosition().x - 1) {
 					dir[1].setVisible(false);
 					dirDisable[1].setVisible(true);
 				}
-				if (gameGUI.getMainCanvas().select.y == gameGUI.getData().map.getPosition().y -1) {
+				if (gameGUI.getMainCanvas().select.y == gameGUI.getData().map.getPosition().y - 1) {
 					dir[2].setVisible(false);
 					dirDisable[2].setVisible(true);
 				}
@@ -380,37 +426,29 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 		}
 	}
 
-	public void unitSummon(int dir) {
-		field selectField = gameGUI.getData().map.field[gameGUI.getMainCanvas().getSelect().x][gameGUI.getMainCanvas()
-				.getSelect().y];
-
-		if (selectField.unitCount > 50) {
-			if (selectField.getsummonCooldown() == false) {
+	public void unitSummon(int hp, int dir, int x, int y,int selectX, int selectY) {
+		
+		if (selectField.getsummonCooldown() == false) {
 //				if (selectField.getOwner() != 0) {
-				unit unit = new unit(selectField.getUnitType(), selectField.getOwner());
-				unit.setPosition(gameGUI.getMainCanvas().getFieldSelectPoint().x,
-						gameGUI.getMainCanvas().getFieldSelectPoint().y);
-				unit.setAttack(50);
-				selectField.unitCount -= 50;
-				unit.setHp(2000);
-				unit.speed = 1;
-				unit.dir = dir;
-				unit.setOwner(selectField.getOwner());
-				unit.unitmove(1);
-				unit.start();
-				gameGUI.getData().addUnit(unit);
-
-				selectField.startSummonCooldown();
+			unit unit = new unit(gameGUI.getData().map.getField(selectX,selectY).getUnitType(), gameGUI.getData().map.getField(selectX,selectY).getOwner());
+			unit.setPosition(x, y);
+			unit.setAttack(50);
+			selectField.unitCount -= hp;
+			unit.setHp(hp);
+			unit.speed = 1;
+			unit.dir = dir;
+			unit.setOwner(gameGUI.getData().map.getField(selectX,selectY).getOwner());
+			unit.unitmove(1);
+			unit.start();
+			gameGUI.getData().addUnit(unit);
 //				} 
 //			else {
 //					System.out.println("권한이 없습니다.");
 //				}
-			} else {
-				System.out.println("소환 쿨타임 입니다.");
-			}
 		} else {
-			System.out.println("유닛 수 부족");
+			System.out.println("소환 쿨타임 입니다.");
 		}
+
 	}
 
 	@Override
@@ -422,7 +460,6 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("x: " + mouse.x + " | y: " + mouse.y);
 	}
 
 	@Override
