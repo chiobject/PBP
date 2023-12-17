@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.UUID;
 
+import FirstCanvas.SelectBrood;
 import main.gameGUI;
 
 public class client extends Thread {
@@ -19,6 +20,9 @@ public class client extends Thread {
 	private PrintWriter output; // 출력 스트림
 	private String key, inputValue, dirnum, x, y, selectX, selectY, Owner; // 데이터 관련 변수들
 	public String brood, ready;
+	private boolean isRunning = true;
+	public int a = 2;
+	public int b= 1;
 
 	/**
 	 * @param host 서버의 호스트명 또는 IP 주소
@@ -93,7 +97,6 @@ public class client extends Thread {
 			while (true) {
 				// 서버에서 데이터 값 받음
 				String line = input.readLine();
-				System.out.println("와!");
 				if (line.length() != 0) {
 					String[] parsedData = line.split(";");
 					String checkKey = parsedData[0] + ";";
@@ -106,29 +109,29 @@ public class client extends Thread {
 						int dirnum = Integer.parseInt(parsedData[4]);
 						int selectX = Integer.parseInt(parsedData[5]);
 						int selectY = Integer.parseInt(parsedData[6]);
-						if (ready != null) {
-							System.out.println(ready.equals(parsedData[8]));
-						}
 						// 상대의 유닛 소환
 						if ("null".equals(parsedData[1]) && "null".equals(parsedData[2])) {
 						} else {
 							if (Integer.parseInt(parsedData[3]) != 0) {
 								gameGUI.getSubCanvas().unitSummon(inputvalue, dirnum, x, y, selectX, selectY);
 							}
-							if (key > 0) {
-								if (parsedData[7] != null) {
-									int brood = Integer.parseInt(parsedData[7]);
-								}
+						}
+						if ("true".equals(parsedData[8]) && "true".equals(ready)&& Owner != parsedData[0]) {
+							int brood = Integer.parseInt(parsedData[7]);
+							if(a == key) {
+								gameGUI gamegui = new gameGUI();
+								gameGUI.getData().getPlayer(key).setbrood(brood);
+								System.out.println("p1 : "+gameGUI.getData().getPlayer(key).getBrood());
+								a = -1;
+							}
+							else if (b == key) {
+								gameGUI gamegui = new gameGUI();
+								gameGUI.getData().getPlayer(key).setbrood(brood);
+								System.out.println("p2 :" +gameGUI.getData().getPlayer(key).getBrood());
+								b = -1;
 							}
 						}
-						System.out.println(parsedData[8] + "=" + ready + "/" + Owner + "=" + parsedData[0]);
-						if ("true".equals(parsedData[8]) && "true".equals(ready)&& Owner != parsedData[0]) {
-							gameGUI gamegui = new gameGUI();
-							System.out.println("하!");
-							ready = "false";
-						}
 						try {
-
 						} catch (Exception e) {
 							System.out.println("클라이언트 문제: " + e);
 						}

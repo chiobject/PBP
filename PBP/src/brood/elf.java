@@ -12,12 +12,12 @@ public class elf extends brood {
 
     public elf() {
         // 종족,공격력,이동속도,최대인구수
-        super(3);
+        super(2);
         unitLeft ="images\\unit\\elfLeft.png";
         unitRight = "images\\unit\\elfRight.png";
         AD = 50;
         speed = 200;
         popProdRate = 50;
-        popProdSpeed = 800;
+        popProdSpeed = 1000;
     }
 }

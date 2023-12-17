@@ -71,7 +71,6 @@ public class SelectBrood extends JPanel {
 	    g.setFont(new Font("choseplayer", Font.BOLD ,30));
 	    g.drawString("Ready", 1100,250);
 	    g.drawString("Opponent", 1100, 300);
-	    g.drawString("Game Start", 1100, 400);
         if (!selectedBroodName.isEmpty()) {
             g.setFont(new Font("selectedBrood", Font.BOLD, 30));
             g.drawString("종족 : " + selectedBroodName, 1100, 450);
@@ -81,15 +80,6 @@ public class SelectBrood extends JPanel {
             g.drawString("준비완료!", 1100, 500);
         }
 
-        if (opponentReady) {
-            g.setFont(new Font("readyStatus", Font.BOLD, 30));
-            g.drawString("상대방 준비완료!", 1100, 550);
-        }
-        
-        if (gameStarted) {
-            g.setFont(new Font("gameStartTimer", Font.BOLD, 20));
-            g.drawString("게임 시작 " + secondsLeft + "초 전", 1100, 600);
-        }
 	    // 선택한 메뉴에 따라 화살표를 그림
 	    if (chose == 0)
 	        g.drawString("←", 180, 200);
@@ -99,8 +89,6 @@ public class SelectBrood extends JPanel {
 	        g.drawString("←", 180, 400);
 	    else if (chose == 3)
 	    	g.drawString("→", 1060, 750);
-	    else if (chose == 4)
-	    	g.drawString("→", 1060, 400);
 	    else if (chose == 5)
 	    	g.drawString("→", 1060, 250);
 
@@ -157,7 +145,6 @@ public class SelectBrood extends JPanel {
             @Override
             public void run() {
                 if (secondsLeft > 0) {
-                    System.out.println("게임 시작 " + secondsLeft + "초 전");
                     secondsLeft--;
                 } else {
                     System.out.println("게임 시작!");

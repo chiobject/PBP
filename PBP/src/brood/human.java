@@ -18,9 +18,9 @@ public class human extends brood {
         unitLeft ="images\\unit\\humanLeft.png";
         unitRight = "images\\unit\\humanRight.png";
         speed = 150;
-        AD = 60;
-        popProdRate = 50;
-        popProdSpeed = 800;
+        AD = 70;
+        popProdRate = 40;
+        popProdSpeed = 1000;
     }
 
 }

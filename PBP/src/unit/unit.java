@@ -170,7 +170,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 			position.x += 1;
 			break;
 		case 2:
-			position.y += 5;
+			position.y += 1;
 			break;
 		case 3:
 			position.x -= 1;
@@ -236,9 +236,11 @@ public class unit extends JPanel implements KeyListener, Runnable {
 					// 상대 필드일 때
 					else if (gameGUI.getData().map.getField(i, j).getOwner() != owner) {
 						gameGUI.getData().map.getField(i, j).changeUnitCount(-attack);
-						if (gameGUI.getData().map.getField(i, j).getOwner() == 0) {
+						gameGUI.getData().map.getField(i, j).setIsProduction(false);
+						if (gameGUI.getData().map.getField(i, j).getOwner() != 0) {
 							hp -= gameGUI.getData().getPlayer(gameGUI.getData().map.getField(i, j).getOwner())
 									.getBrood().getAD();
+							System.out.println(hp);
 						}
 						try {
 							warSound = new sound("sounds//싸움1.wav", -30);
@@ -270,6 +272,9 @@ public class unit extends JPanel implements KeyListener, Runnable {
 							gameGUI.getData().removeUnit(this);
 							stop();
 						}
+					}
+					else {
+						gameGUI.getData().map.getField(i, j).setIsProduction(true);
 					}
 
 					setMove(false);

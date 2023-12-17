@@ -36,7 +36,15 @@ public class player {
 	}
 
 	public void setbrood(int brood) {
-		this.brood.setBrood(brood);
+		if(brood == 1) {
+			this.brood = new human();
+		}
+		else if(brood == 2) {
+			this.brood = new elf();
+		}
+		else if(brood == 3) {
+			this.brood = new goblin();
+		}
 	}
 	public void setisOwner(boolean isOwner) {
 		this.isOwner = isOwner;

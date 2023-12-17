@@ -65,6 +65,10 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 		worker.start();
 		repaint();
 		}
+	public void stop() {
+		stop = true;
+		worker.stop();
+	}
 
 	public void paintComponent(Graphics g) {
 		if (offScreenImage == null) {
@@ -176,15 +180,15 @@ public class mainCanvas extends JPanel implements ActionListener, Runnable, Mous
 			}
 			if(n1 ==0 ) {
 				System.out.println("player1의 패배");
+				stop();
 			}
 			else if(n2 == 0 ) {
 				System.out.println("player2의 패배");
+				stop();
 			}
 
 			repaint();
 			seaSel++;
-			Connect_Create_ServerMouseListener.originalrefresh();
-			main.originalrefresh();
 			try {
 				worker.sleep(100);
 			} catch (InterruptedException e) {

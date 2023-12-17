@@ -40,7 +40,6 @@ public class viewController {
 		 contentPane.add(Information);
 		 mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
 		 mainFrame.setVisible(true);
-		 System.out.println("헉");
 	}
 	
 	public void showHowPlay() {

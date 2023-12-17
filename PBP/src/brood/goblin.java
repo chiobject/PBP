@@ -12,13 +12,13 @@ public class goblin extends brood {
     
     public goblin() {
         // 종족,공격력,이동속도,최대인구수
-        super(2);
+        super(3);
         unitLeft ="images\\unit\\goblinLeft.png";
         unitRight = "images\\unit\\goblinRight.png";
         speed = 150;
         AD = 35;
         popProdRate = 80;
-        popProdSpeed = 600;
+        popProdSpeed = 1000;
     }
 
 }
