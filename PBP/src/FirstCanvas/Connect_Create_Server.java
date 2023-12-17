@@ -6,13 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import Server.Server;
-import Server.Login;
-
-
 import javax.swing.JPanel;
-
-import Server.Client;
 
 public class Connect_Create_Server extends JPanel {
     int chose = 0;
@@ -67,15 +61,7 @@ public class Connect_Create_Server extends JPanel {
     public void BackIntro() {
         controller.goBack(this);
     }
-    
-    public void showServer() {
-        Server server = new Server();
-        server.initialize(); // 서버 화면을 띄우는 메서드 호출
-    }
-    public void showLogin() {
-        Login login = new Login(null);
-        login.initialize(); // 로그인 화면을 띄우는 메서드 호출
-    }
+
     
 	public void gameStart(){
 		controller.selectBrood();

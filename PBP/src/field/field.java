@@ -16,7 +16,7 @@ public abstract class field implements Runnable {
 	protected String buttonName2 = "";
 	protected String buttonName3 = "";
 	protected String buttonName4 = "";
-	private String owner;
+	private int owner;
 	public int unitCount = 0;
 	private boolean running = false;
 	private Thread worker;
@@ -91,7 +91,7 @@ public abstract class field implements Runnable {
 	}
 
 	private void unitproduction() {
-		if (owner != null && isProduction == true) {
+		if (owner != 0 && isProduction == true) {
 			if (unitMax > unitCount) {
 				unitCount += gameGUI.getData().getPlayer(owner).getBrood().getpopProdRate();
 				if(unitCount >= unitMax) {
@@ -137,7 +137,7 @@ public abstract class field implements Runnable {
 		this.dirActivate = dirActivate;
 	}
 
-	public String getOwner() {
+	public int getOwner() {
 		return owner;
 	}
 	
@@ -161,7 +161,7 @@ public abstract class field implements Runnable {
 		return isBuilding;
 	}
 
-	public void setOwner(String owner) {
+	public void setOwner(int owner) {
 		this.owner = owner;
 	}
 

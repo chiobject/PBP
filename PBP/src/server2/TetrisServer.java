@@ -8,6 +8,7 @@ import java.util.Vector;
 public class TetrisServer extends Thread {
     private Vector<ServerHandler> handlers;
     private int port;
+    private int connectCount;
     
     // 생성자: 포트를 인수로 받아와서 저장
     public TetrisServer(int port) {
@@ -24,7 +25,8 @@ public class TetrisServer extends Thread {
             while (true) {
                 Socket client = server.accept(); // 클라이언트의 연결을 대기하고, 연결되면 클라이언트 소켓을 생성
                 System.out.println("Connected from " + client.getInetAddress() + ":" + client.getPort()); // 클라이언트의 IP 주소와 포트 출력
-                ServerHandler c = new ServerHandler(this, client); // 클라이언트 핸들러 생성
+                connectCount++;
+                ServerHandler c = new ServerHandler(this, client, connectCount); // 클라이언트 핸들러 생성
                 c.start(); // 클라이언트 핸들러를 실행
             }
         } catch (Exception e) {

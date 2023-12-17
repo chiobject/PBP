@@ -47,8 +47,7 @@ public class main {
 				dialog.setLocationRelativeTo(null); 
 				dialog.setVisible(true);
 				if (dialog.userChoice == ClientDialog.Choice.OK) {
-					UUID uuid = UUID.randomUUID();
-					originalclient = new TetrisClient(dialog.getHost(),dialog.getPortNumber(),uuid);
+					originalclient = new TetrisClient(dialog.getHost(),dialog.getPortNumber());
 					originalclient.start();
 				}
                 gameGUI gamegui = new gameGUI();

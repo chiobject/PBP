@@ -71,9 +71,6 @@ public class SelectBroodMouseListener extends MouseAdapter implements MouseMotio
 			String serverHost = "127.0.0.1"; // 서버 호스트 주소
 			int serverPort = 0302; // 서버 포트
 
-			// SendData 객체 생성 및 데이터 전송
-			SendData sendData = new SendData(selectBrood.chose);
-			sendData.sendDataToServer(serverHost, serverPort);
 		} else if (selectBrood.chose == 3) {
 			selectBrood.BackIntro();
 		}

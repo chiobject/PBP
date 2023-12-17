@@ -31,7 +31,6 @@ public class viewController {
 		contentPane.add(new GamePanel()); //새로운 Panel을 추가한다.
 		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
 		mainFrame.setVisible(true); //다시 보이게 한다.
-		System.out.println("헉");
 	}
 
 	public void showInformation() {

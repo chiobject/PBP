@@ -1,12 +1,13 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 import unit.unit;
 
 public class data {
-	public List<unit> units = new ArrayList<>();
-	public List<player> playerList = new ArrayList<>();
+	public List<unit> units = new CopyOnWriteArrayList<>();
+	public List<player> playerList = new CopyOnWriteArrayList<>();
 	public map map = new map();
 	
 	public player player0 = new player(1);
@@ -35,7 +36,7 @@ public class data {
 //			return player2;
 //		}
 //	}
-	public int getmainPlainCount(String owner) {
+	public int getmainPlainCount(int owner) {
 		int count = 0;
 		for (int i = 0; i < map.getPosition().x; i++) {
 			for (int j = 0; j < map. getPosition().y; j++) {
@@ -46,13 +47,14 @@ public class data {
 		}
 		return count;
 	}
-	public player getPlayer(String Owner) {
-		if(player1.getUUID() == Owner) {
-			return player1;
+
+	public player getPlayer(int owner) {
+		if(owner == 1){
+			return playerList.get(1);
 		}
-		else if(player2.getUUID() == Owner) {
-			return player2;
+		else if (owner == 2) {
+			return playerList.get(2);
 		}
-		else return player0;
+		else return playerList.get(0);
 	}
 }

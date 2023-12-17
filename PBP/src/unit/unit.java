@@ -38,11 +38,11 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	Image charactorLeft, charactorRight;
 	int sel;
 	private boolean move;
-	private String owner;
+	private int owner;
 	private Point spawnPoint;
 	private sound warSound ;
 
-	public unit(int unitType, String owner) {
+	public unit(int unitType, int owner) {
 		this.unitType = unitType;
 		this.owner = owner;
 	}
@@ -113,30 +113,21 @@ public class unit extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void run() {
 		while (running) {
-			System.out.println("아1");
 			charactorLeft = Toolkit.getDefaultToolkit()
 					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitLeft());
 			charactorRight = Toolkit.getDefaultToolkit()
 					.getImage(gameGUI.getData().getPlayer(owner).getBrood().getUnitRight());
 			try {
-				System.out.println(running);
 				// 유닛 이동 가능
 				setMove(true);
-				System.out.println("아2");
 				if(isUnitCollision() == true){
-					System.out.println("아3");
-					System.out.println(running);
 				}else {
 					isFieldCollision();
-					System.out.println("아4");
-					System.out.println(running);
 				}
 				isUnitCollision();
-				System.out.println("아5");
 				// 유닛 이동
 				if (move == true) {
 					unitmove(dir);
-					System.out.println("아6");
 				}
 
 				// hp0이하일 시 유닛 사망
@@ -144,8 +135,6 @@ public class unit extends JPanel implements KeyListener, Runnable {
 					gameGUI.getData().removeUnit(this);
 					stop();
 				}
-				System.out.println(running);
-				System.out.println("아7");
 				worker.sleep(speed);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -245,7 +234,7 @@ public class unit extends JPanel implements KeyListener, Runnable {
 					// 상대 필드일 때
 					else if (gameGUI.getData().map.getField(i, j).getOwner() != owner) {
 						gameGUI.getData().map.getField(i, j).changeUnitCount(-attack);
-						if(gameGUI.getData().map.getField(i, j).getOwner() == null) {
+						if(gameGUI.getData().map.getField(i, j).getOwner() == 0) {
 							hp -= gameGUI.getData().getPlayer(gameGUI.getData().map.getField(i, j).getOwner()).getBrood().getAD();
 						}
 						try {
@@ -301,11 +290,11 @@ public class unit extends JPanel implements KeyListener, Runnable {
 		return move;
 	}
 
-	public String getOwner() {
+	public int getOwner() {
 		return owner;
 	}
 
-	public void setOwner(String owner) {
+	public void setOwner(int owner) {
 		this.owner = owner;
 	}
 

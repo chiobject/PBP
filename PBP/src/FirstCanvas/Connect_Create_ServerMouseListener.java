@@ -3,7 +3,6 @@ package FirstCanvas;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.UUID;
 
 import main.gameGUI;
 import server2.ClientDialog;
@@ -72,8 +71,7 @@ public class Connect_Create_ServerMouseListener extends MouseAdapter implements 
 			dialog.setLocationRelativeTo(null); 
 			dialog.setVisible(true);
 			if (dialog.userChoice == ClientDialog.Choice.OK) {
-				UUID uuid = UUID.randomUUID();
-				originalclient = new TetrisClient(dialog.getHost(),dialog.getPortNumber(),uuid);
+				originalclient = new TetrisClient(dialog.getHost(),dialog.getPortNumber());
 				originalclient.start();
 			}
             gameGUI gamegui = new gameGUI();

@@ -427,12 +427,12 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 	}
 
 	public void unitSummon(int hp, int dir, int x, int y,int selectX, int selectY) {
-		
+		System.out.println("아");
 		if (gameGUI.getData().map.getField(selectX,selectY).getsummonCooldown() == false) {
 			unit unit = new unit(gameGUI.getData().map.getField(selectX,selectY).getUnitType(), gameGUI.getData().map.getField(selectX,selectY).getOwner());
 			unit.setPosition(x, y);
 			unit.setSpawnPoint(selectX, selectX);
-			unit.setAttack(50);
+			unit.setAttack(gameGUI.getData().getPlayer(gameGUI.getData().map.getField(selectX, selectY).getOwner()).getBrood().getAD());
 			gameGUI.getData().map.getField(selectX,selectY).unitCount -= hp;
 			unit.setHp(hp);
 			unit.speed = 1;
@@ -440,7 +440,6 @@ public class subCanvas extends JPanel implements Runnable, MouseListener {
 			unit.setOwner(gameGUI.getData().map.getField(selectX,selectY).getOwner());
 			unit.unitmove(dir);
 			unit.start();
-			System.out.println(unit.getPosition().x+ "/" + unit.getPosition().y);
 			gameGUI.getData().addUnit(unit);
 		}
 	}

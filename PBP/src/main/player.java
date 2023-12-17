@@ -8,7 +8,7 @@ import brood.human;
 public class player {
 	private int player;
 	private brood brood;
-	private String uuid="0";
+	private boolean isOwner;
 	
 	public player(int brood){
 		this.player = player;
@@ -23,6 +23,8 @@ public class player {
 		}
 	}
 	
+	
+	
 	public int getplayer() {
 		return player;
 	}
@@ -36,10 +38,10 @@ public class player {
 	public void setbrood(int brood) {
 		this.brood.setBrood(brood);
 	}
-	public void setUUID(String uuid) {
-		this.uuid = uuid;
+	public void setisOwner(boolean isOwner) {
+		this.isOwner = isOwner;
 	}
-	public String getUUID() {
-		return uuid;
+	public boolean getUUID() {
+		return isOwner;
 	}
 }
