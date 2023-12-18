@@ -75,6 +75,7 @@ public class client extends Thread {
 
 			}
 		}
+		
 		// 서버에 데이터 값 보냄
 		output.println(key + x + ";" + y + ";" + inputValue + ";" + dirnum + ";" + selectX + ";" + selectY + ";" + brood
 				+ ";" + ready);
@@ -120,15 +121,21 @@ public class client extends Thread {
 							int brood = Integer.parseInt(parsedData[7]);
 							if(a == key) {
 								gameGUI gamegui = new gameGUI();
-								gameGUI.getData().getPlayer(key).setbrood(brood);
-								System.out.println("p1 : "+gameGUI.getData().getPlayer(key).getBrood());
 								a = -1;
+								gameGUI.getData().getPlayer(key).setbrood(brood);
+								System.out.println("key : " + key + " brood :" +gameGUI.getData().getPlayer(key).getBrood());
+								key = Integer.parseInt((this.key).replaceAll("[^0-9]", ""));
+								brood = Integer.parseInt(this.brood);
+								gameGUI.getData().getPlayer(key).setbrood(brood);
 							}
 							else if (b == key) {
 								gameGUI gamegui = new gameGUI();
-								gameGUI.getData().getPlayer(key).setbrood(brood);
-								System.out.println("p2 :" +gameGUI.getData().getPlayer(key).getBrood());
 								b = -1;
+								gameGUI.getData().getPlayer(key).setbrood(brood);
+								System.out.println("key : " + key + " brood :" +gameGUI.getData().getPlayer(key).getBrood());
+								key = Integer.parseInt((this.key).replaceAll("[^0-9]", ""));
+								brood = Integer.parseInt(this.brood);
+								gameGUI.getData().getPlayer(key).setbrood(brood);
 							}
 						}
 						try {
