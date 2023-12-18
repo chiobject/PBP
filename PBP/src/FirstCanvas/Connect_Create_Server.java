@@ -54,8 +54,6 @@ public class Connect_Create_Server extends JPanel {
 			g.drawString("→", 400, 710);
 		else
 			g.drawString("→", 1150, 700);
-		//clientDivisionN = getClient();
-		g.drawString("Client DivisionN: " + clientDivisionN, 800, 730);
 	}
 
     public void BackIntro() {

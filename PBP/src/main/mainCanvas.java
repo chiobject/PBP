@@ -6,7 +6,6 @@ import javax.swing.Timer;
 import FirstCanvas.Connect_Create_ServerMouseListener;
 
 import field.field;
-import server.main;
 import unit.unit;
 
 import java.awt.*;

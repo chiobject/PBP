@@ -5,6 +5,7 @@ import main.gameGUI;
 public class neutralBase extends field {
 	public neutralBase() {
 		super(3,"빈 성",2);
+		buttonName1 = "소환하기";
 	}
 
 	@Override
