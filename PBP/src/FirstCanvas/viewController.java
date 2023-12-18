@@ -25,13 +25,6 @@ public class viewController {
 		contentPane.add(introPanel); //컨텐트패인에 시작패널 추가
 		introPanel.requestFocus();   //키이벤트를 받기위해 패널을 포커싱해준다.(패널에 이벤트가 달려있기때문에)
 	}
-	
-	public void showGamePanel(){
-		contentPane.remove(introPanel); //introPanel을 제거한다
-		contentPane.add(new GamePanel()); //새로운 Panel을 추가한다.
-		mainFrame.setVisible(false); //메인프레임을 보이지 않게한 후 
-		mainFrame.setVisible(true); //다시 보이게 한다.
-	}
 
 	public void showInformation() {
 		 contentPane.remove(introPanel);
